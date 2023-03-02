@@ -1,10 +1,14 @@
 import React from 'react';
+import Header from '../components/Header';
 
 function Profile() {
   return (
-    <main>
-      <p>Profile</p>
-    </main>
+    <>
+      <Header title="Profile" />
+      <main>
+        <p>Profile</p>
+      </main>
+    </>
   );
 }
 

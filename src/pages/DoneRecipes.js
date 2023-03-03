@@ -1,10 +1,14 @@
 import React from 'react';
+import Header from '../components/Header';
 
 function DoneRecipes() {
   return (
-    <main>
-      <p>DoneRecipes</p>
-    </main>
+    <>
+      <Header title="Done Recipes" />
+      <main>
+        <p>DoneRecipes</p>
+      </main>
+    </>
   );
 }
 

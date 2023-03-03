@@ -1,3 +1,31 @@
+.header {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  padding: 6px 0;
+}
+
+.header .icons {
+  display: flex;
+  justify-self: end;
+  gap: 4px;
+  height: fit-content;
+}
+
+.header .icons .icon-button {
+  background-color: transparent;
+  border: none;
+}
+
+.search-bar {
+  display: flex;
+  grid-column: 1 / span 2;
+  justify-content: center;
+}
+
+.search-bar .search-input {
+  padding: 4px 8px;
+}
+
 .meals {
   align-items: center;
   background: #0fa36b;

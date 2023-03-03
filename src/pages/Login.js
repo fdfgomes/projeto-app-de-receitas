@@ -25,7 +25,7 @@ function Login() {
     localStorage.setItem('user', JSON.stringify({ email }));
     // Aqui talvez tenha uma lógica pra alterar pro /drinks? talvez não?
     history.push('/meals');
-  }, []);
+  }, [email, history]);
 
   return (
     <main>

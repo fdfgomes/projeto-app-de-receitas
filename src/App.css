@@ -6,9 +6,9 @@
 
 .header .icons {
   display: flex;
-  justify-self: end;
   gap: 4px;
   height: fit-content;
+  justify-self: end;
 }
 
 .header .icons .icon-button {

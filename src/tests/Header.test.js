@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import renderWithRouter from '../utility/renderWithRouter';
 import App from '../App';
 
+const PROFILE_TOP_BTN = 'profile-top-btn';
 const SEARCH_TOP_BTN = 'search-top-btn';
 const SEARCH_INPUT = 'search-input';
 
@@ -43,12 +44,10 @@ describe('Testando o componente Header', () => {
     ];
 
     routes.forEach(({ name, pathname }) => {
-      act(() => {
-        history.push(pathname);
-      });
+      act(() => history.push(pathname));
 
       const title = screen.getByRole('heading', { level: 1, name: new RegExp(name, 'i') });
-      const profileIcon = screen.getByTestId('profile-top-btn');
+      const profileIcon = screen.getByTestId(PROFILE_TOP_BTN);
       const searchIcon = screen.getByTestId(SEARCH_TOP_BTN);
 
       expect(title).toBeInTheDocument();
@@ -76,12 +75,10 @@ describe('Testando o componente Header', () => {
     ];
 
     routes.forEach(({ name, pathname }) => {
-      act(() => {
-        history.push(pathname);
-      });
+      act(() => history.push(pathname));
 
       const title = screen.getByRole('heading', { level: 1, name: new RegExp(name, 'i') });
-      const profileIcon = screen.getByTestId('profile-top-btn');
+      const profileIcon = screen.getByTestId(PROFILE_TOP_BTN);
       const searchIcon = screen.queryByTestId(SEARCH_TOP_BTN);
 
       expect(title).toBeInTheDocument();
@@ -106,5 +103,17 @@ describe('Testando o componente Header', () => {
     userEvent.click(searchIcon);
 
     expect(screen.queryByTestId(SEARCH_INPUT)).not.toBeInTheDocument();
+  });
+
+  it('Ao clicar no ícone de perfil o usuário é redirecionado à rota /profile', () => {
+    const { history } = renderWithRouter(<App />);
+
+    act(() => history.push('/meals'));
+
+    const profileIcon = screen.getByTestId(PROFILE_TOP_BTN);
+
+    userEvent.click(profileIcon);
+
+    expect(history.location.pathname).toBe('/profile');
   });
 });

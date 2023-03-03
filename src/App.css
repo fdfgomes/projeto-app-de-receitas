@@ -5,8 +5,8 @@
 }
 
 .header .icons {
-  justify-self: end;
   display: flex;
+  justify-self: end;
   gap: 4px;
   height: fit-content;
 }

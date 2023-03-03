@@ -5,10 +5,10 @@
 }
 
 .header .icons {
-  justify-self: end;
   display: flex;
   gap: 4px;
   height: fit-content;
+  justify-self: end;
 }
 
 .header .icons .icon-button {

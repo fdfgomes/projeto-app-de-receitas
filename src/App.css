@@ -1,13 +1,29 @@
 .header {
-  display: flex;
-  justify-content: space-between;
-  padding: 6px 10px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  padding: 6px 0;
 }
 
 .header .icons {
+  justify-self: end;
   display: flex;
-  gap: 8px;
+  gap: 4px;
   height: fit-content;
+}
+
+.header .icons .icon-button {
+  background-color: transparent;
+  border: none;
+}
+
+.search-bar {
+  display: flex;
+  grid-column: 1 / span 2;
+  justify-content: center;
+}
+
+.search-bar .search-input {
+  padding: 4px 8px;
 }
 
 .meals {

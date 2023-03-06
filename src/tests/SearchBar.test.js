@@ -156,9 +156,11 @@ describe('Testando o componente SearchBar', () => {
 
       expect(letterRadioButton).toBeInTheDocument();
 
-      userEvent.type(textInput, 'vvv');
-      userEvent.click(letterRadioButton);
-      userEvent.click(submitButton);
+      waitFor(() => {
+        userEvent.type(textInput, 'vvv');
+        userEvent.click(letterRadioButton);
+        userEvent.click(submitButton);
+      });
 
       expect(global.alert).toHaveBeenCalled();
     });
@@ -334,9 +336,11 @@ describe('Testando o componente SearchBar', () => {
 
       expect(letterRadioButton).toBeInTheDocument();
 
-      userEvent.type(textInput, 'sss');
-      userEvent.click(letterRadioButton);
-      userEvent.click(submitButton);
+      waitFor(() => {
+        userEvent.type(textInput, 'sss');
+        userEvent.click(letterRadioButton);
+        userEvent.click(submitButton);
+      });
 
       expect(global.alert).toHaveBeenCalled();
     });

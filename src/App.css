@@ -40,6 +40,10 @@
   gap: 4px;
 }
 
+.search-results:last-of-type {
+  margin-bottom: 60px;
+}
+
 .search-results .wrapper {
   display: grid;
   gap: 12px;

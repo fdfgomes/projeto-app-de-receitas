@@ -2,11 +2,11 @@ import React from 'react';
 import { screen, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
-import renderWithRouter from '../utility/renderWithRouter';
+import renderWithRouterAndContext from './helpers/renderWithRouterAndContext';
 
 describe('Testes referentes ao componente Footer.js', () => {
   it('O footer deve ser renderizado na página /meals', () => {
-    const { history } = renderWithRouter(<App />);
+    const { history } = renderWithRouterAndContext(<App />);
 
     act(() => {
       history.push('/meals');
@@ -18,7 +18,7 @@ describe('Testes referentes ao componente Footer.js', () => {
   });
 
   it('O footer deve ser renderizado na página /drinks', () => {
-    const { history } = renderWithRouter(<App />);
+    const { history } = renderWithRouterAndContext(<App />);
 
     act(() => {
       history.push('/drinks');
@@ -30,7 +30,7 @@ describe('Testes referentes ao componente Footer.js', () => {
   });
 
   it('O footer deve ser renderizado na página /profile', () => {
-    const { history } = renderWithRouter(<App />);
+    const { history } = renderWithRouterAndContext(<App />);
 
     act(() => {
       history.push('/profile');
@@ -42,7 +42,7 @@ describe('Testes referentes ao componente Footer.js', () => {
   });
 
   it('Ao clicar nos ícones, deve realizar o devido redirecionamento', () => {
-    const { history } = renderWithRouter(<App />);
+    const { history } = renderWithRouterAndContext(<App />);
 
     act(() => {
       history.push('/profile');

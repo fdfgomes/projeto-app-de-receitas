@@ -39,6 +39,8 @@ export const fetchSearchResults = async (searchTerm, searchType, route) => {
 
   endpoint += searchTerm;
 
+  const SEARCH_RESULTS_LIMIT = 12;
+
   try {
     const response = await fetch(endpoint);
     const data = await response.json();
@@ -48,7 +50,8 @@ export const fetchSearchResults = async (searchTerm, searchType, route) => {
     if (data[dataKeys[0]] === null) {
       data[dataKeys[0]] = [];
     }
-    return data[dataKeys[0]];
+    // retornar apenas os 12 primeiros resultados
+    return data[dataKeys[0]].filter((_data, index) => index < SEARCH_RESULTS_LIMIT);
   } catch (err) {
     console.error(err);
   }

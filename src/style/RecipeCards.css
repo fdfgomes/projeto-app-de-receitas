@@ -1,0 +1,15 @@
+.container-cards {
+    align-items: center;
+    justify-content: space-around;
+    margin: 5px;
+}
+.card{
+    width: 15rem;
+    align-items: center;
+    margin-bottom: 5px;
+    margin-top: 10px;
+}
+.card-img-top{
+    width: 14rem;
+    margin: 4px;
+}

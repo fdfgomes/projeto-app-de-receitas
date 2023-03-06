@@ -1,7 +1,7 @@
 import React from 'react';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import renderWithRouter from '../utility/renderWithRouter';
+import renderWithRouter from './helpers/RenderWithRouter';
 import App from '../App';
 
 const PROFILE_TOP_BTN = 'profile-top-btn';
@@ -57,6 +57,7 @@ describe('Testando o componente Header', () => {
   });
 
   it('É renderizado com título, ícone de perfil e sem o ícone de pesquisa nas rotas /profile, /done-recipes e /favorite-recipes', async () => {
+    localStorage.setItem('user', JSON.stringify('teste@email.com'));
     const { history } = renderWithRouter(<App />);
 
     const routes = [
@@ -106,6 +107,7 @@ describe('Testando o componente Header', () => {
   });
 
   it('Ao clicar no ícone de perfil o usuário é redirecionado à rota /profile', () => {
+    localStorage.setItem('user', JSON.stringify('teste@email.com'));
     const { history } = renderWithRouter(<App />);
 
     act(() => history.push('/meals'));
@@ -117,3 +119,6 @@ describe('Testando o componente Header', () => {
     expect(history.location.pathname).toBe('/profile');
   });
 });
+
+// Para mais informações sobre o uso do localStorage no jest:
+// https://jogilvyt.medium.com/storing-and-testing-state-in-localstorage-with-react-fdf8b8b211a4

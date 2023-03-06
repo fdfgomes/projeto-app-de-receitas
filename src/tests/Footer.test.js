@@ -2,7 +2,7 @@ import React from 'react';
 import { screen, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
-import renderWithRouter from '../utility/renderWithRouter';
+import renderWithRouter from './helpers/RenderWithRouter';
 
 describe('Testes referentes ao componente Footer.js', () => {
   it('O footer deve ser renderizado na página /meals', () => {
@@ -30,8 +30,8 @@ describe('Testes referentes ao componente Footer.js', () => {
   });
 
   it('O footer deve ser renderizado na página /profile', () => {
+    localStorage.setItem('user', JSON.stringify('teste@email.com'));
     const { history } = renderWithRouter(<App />);
-
     act(() => {
       history.push('/profile');
     });
@@ -42,12 +42,12 @@ describe('Testes referentes ao componente Footer.js', () => {
   });
 
   it('Ao clicar nos ícones, deve realizar o devido redirecionamento', () => {
+    localStorage.setItem('user', JSON.stringify('teste@email.com'));
     const { history } = renderWithRouter(<App />);
 
     act(() => {
       history.push('/profile');
     });
-
     const mealsBtn = screen.getByTestId('meals-bottom-btn');
     expect(mealsBtn).toBeInTheDocument();
 
@@ -64,3 +64,6 @@ describe('Testes referentes ao componente Footer.js', () => {
     expect(history.location.pathname).toBe('/drinks');
   });
 });
+
+// Para mais informações sobre o uso do localStorage no jest:
+// https://jogilvyt.medium.com/storing-and-testing-state-in-localstorage-with-react-fdf8b8b211a4

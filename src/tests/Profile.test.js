@@ -2,13 +2,13 @@ import React from 'react';
 import { screen, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
-import renderWithRouter from './helpers/RenderWithRouter';
+import renderWithRouterAndContext from './helpers/renderWithRouterAndContext';
 
 describe('Testes referentes a página de perfil', () => {
   const TEST_EMAIL = 'email@teste.com';
   const TEST_PASSWORD = '123456789';
   it('A página deve renderizar o email digitado na página de login', () => {
-    const { history } = renderWithRouter(<App />);
+    const { history } = renderWithRouterAndContext(<App />);
 
     const emailInput = screen.getByTestId('email-input');
     const passwordInput = screen.getByTestId('password-input');
@@ -26,7 +26,7 @@ describe('Testes referentes a página de perfil', () => {
     expect(userEmail).toHaveTextContent(TEST_EMAIL);
   });
   it('Ao clicar no botão Done Recipes, deve realizar o devido redirecionamento', () => {
-    const { history } = renderWithRouter(<App />);
+    const { history } = renderWithRouterAndContext(<App />);
 
     act(() => {
       history.push('/profile');
@@ -37,7 +37,7 @@ describe('Testes referentes a página de perfil', () => {
     expect(history.location.pathname).toBe('/done-recipes');
   });
   it('Ao clicar no botão Favorite Recipes, deve realizar o devido redirecionamento', () => {
-    const { history } = renderWithRouter(<App />);
+    const { history } = renderWithRouterAndContext(<App />);
 
     act(() => {
       history.push('/profile');
@@ -49,7 +49,7 @@ describe('Testes referentes a página de perfil', () => {
   });
   it('Ao clicar no botão logout, deve realizar o devido redirecionamento e limpar o localstorage', () => {
     const clear = jest.spyOn(Storage.prototype, 'clear');
-    const { history } = renderWithRouter(<App />);
+    const { history } = renderWithRouterAndContext(<App />);
 
     act(() => {
       history.push('/profile');

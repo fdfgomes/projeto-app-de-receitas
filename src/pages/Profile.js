@@ -18,8 +18,8 @@ function Profile() {
           <Link data-testid="profile-done-btn" to="/done-recipes">
             Done Recipes
           </Link>
-          <Link to="/favorite-recipes">
-            <button data-testid="profile-favorite-btn">Favorite Recipes</button>
+          <Link data-testid="profile-favorite-btn" to="/favorite-recipes">
+            Favorite Recipes
           </Link>
           {/* no caso do link que redireciona p/ a pagina inicial, o localstorage
             deve ter todas suas chaves limpas */}

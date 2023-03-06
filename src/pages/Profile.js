@@ -15,8 +15,8 @@ function Profile() {
         <h4 data-testid="profile-email">{email}</h4>
         <div>
           {/* div com os links de redirecionamento */}
-          <Link to="/done-recipes">
-            <button data-testid="profile-done-btn">Done Recipes</button>
+          <Link data-testid="profile-done-btn" to="/done-recipes">
+            Done Recipes
           </Link>
           <Link to="/favorite-recipes">
             <button data-testid="profile-favorite-btn">Favorite Recipes</button>

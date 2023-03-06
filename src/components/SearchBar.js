@@ -149,7 +149,7 @@ export default function SearchBar() {
       </div>
       <button
         data-testid="exec-search-btn"
-        disabled={ searchResults[currentRoute].isLoading }
+        disabled={ searchResults[currentRoute]?.isLoading }
         type="submit"
       >
         Search

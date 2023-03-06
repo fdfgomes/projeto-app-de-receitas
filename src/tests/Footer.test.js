@@ -47,7 +47,6 @@ describe('Testes referentes ao componente Footer.js', () => {
     act(() => {
       history.push('/profile');
     });
-
     const mealsBtn = screen.getByTestId('meals-bottom-btn');
     expect(mealsBtn).toBeInTheDocument();
 
@@ -64,3 +63,6 @@ describe('Testes referentes ao componente Footer.js', () => {
     expect(history.location.pathname).toBe('/drinks');
   });
 });
+
+// Para mais informações sobre o uso do localStorage no jest:
+// https://jogilvyt.medium.com/storing-and-testing-state-in-localstorage-with-react-fdf8b8b211a4

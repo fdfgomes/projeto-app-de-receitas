@@ -117,3 +117,6 @@ describe('Testando o componente Header', () => {
     expect(history.location.pathname).toBe('/profile');
   });
 });
+
+// Para mais informações sobre o uso do localStorage no jest:
+// https://jogilvyt.medium.com/storing-and-testing-state-in-localstorage-with-react-fdf8b8b211a4

@@ -23,8 +23,11 @@ function Profile() {
           </Link>
           {/* no caso do link que redireciona p/ a pagina inicial, o localstorage
             deve ter todas suas chaves limpas */}
-          <Link to="/" onClick={ () => { localStorage.clear(); } }>
-            <button data-testid="profile-logout-btn">Logout</button>
+          <Link
+            data-testid="profile-logout-btn"
+            to="/" onClick={ () => localStorage.clear() }
+          >
+            Logout
           </Link>
         </div>
       </main>

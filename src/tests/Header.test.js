@@ -9,6 +9,12 @@ const SEARCH_TOP_BTN = 'search-top-btn';
 const SEARCH_INPUT = 'search-input';
 
 describe('Testando o componente Header', () => {
+  beforeEach(() => {
+    localStorage.setItem('user', JSON.stringify({
+      email: 'teste@teste.com',
+    }));
+  });
+
   it('Não é renderizado nas rotas /, /meals/:id-da-receita, /drinks/:id-da-receita, /meals/:id-da-receita/in-progress e /drinks/:id-da-receita/in-progress', () => {
     const { container, history } = renderWithRouterAndContext(<App />);
 

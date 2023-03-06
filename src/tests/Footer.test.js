@@ -5,6 +5,12 @@ import App from '../App';
 import renderWithRouterAndContext from './helpers/renderWithRouterAndContext';
 
 describe('Testes referentes ao componente Footer.js', () => {
+  beforeEach(() => {
+    localStorage.setItem('user', JSON.stringify({
+      email: 'teste@teste.com',
+    }));
+  });
+
   it('O footer deve ser renderizado na página /meals', () => {
     const { history } = renderWithRouterAndContext(<App />);
 

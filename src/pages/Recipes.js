@@ -1,13 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import SearchResults from '../components/SearchResults';
+import Context from '../context/Context';
+import RecipeCard from '../components/RecipeCards';
 import Loading from '../components/Loading';
 import { fetchDrinksApi, fetchMealsApi } from '../services';
-import RecipeCard from '../components/RecipeCards';
 
 function Recipes() {
-  const location = useLocation();
+  const { pathname } = useLocation();
+
+  const {
+    searchResults: {
+      meals: {
+        data: mealsSearchResults,
+      },
+      drinks: {
+        data: drinksSearchResults,
+      },
+    },
+  } = useContext(Context);
 
   const [title, setTitle] = useState('');
   const [data, setData] = useState('');
@@ -17,13 +30,13 @@ function Recipes() {
   const fetchApiData = async (type) => {
     const recipesLimit = 12;
     if (type === 'Meals') {
-      const meals = await fetchMealsApi();
+      const meals = await fetchMealsApi() ?? [];
       const mealsResult = meals.slice(0, recipesLimit);// Define apenas as 12 primeiras receitas
       setData(mealsResult);
       setRecipe('Meals');
       setIsLoading(false); // Necessário para não chamar o componente enquanto o estado não tiver com as receitas
     } else if (type === 'Drinks') {
-      const drinks = await fetchDrinksApi();
+      const drinks = await fetchDrinksApi() ?? [];
       const drinksResult = drinks.slice(0, recipesLimit);
 
       setData(drinksResult);
@@ -35,7 +48,7 @@ function Recipes() {
   };
 
   useEffect(() => {
-    switch (location.pathname) {
+    switch (pathname) {
     case '/meals':
       setTitle('Meals');
       fetchApiData('Meals');
@@ -47,14 +60,28 @@ function Recipes() {
     default:
       setTitle('');
     }
-  }, [location.pathname]);
+  }, [pathname]);
 
   return (
     <>
       <Header title={ title } />
       <main>
-        {isLoading ? <Loading />
-          : <RecipeCard data={ data } recipe={ recipe } />}
+        {/* resultados da pesquisa */}
+        { pathname === '/meals' && mealsSearchResults.length > 0 && <SearchResults /> }
+        { pathname === '/drinks' && drinksSearchResults.length > 0 && <SearchResults /> }
+        {
+          // renderizar apenas se o usuário estiver na rota /meals ou /drinks
+          // e não tiver feito nenhuma pesquisa
+          ['/meals', '/drinks'].includes(pathname)
+          && mealsSearchResults.length === 0
+          && drinksSearchResults.length === 0
+          && (
+            <div className="search-results">
+              <h1>Recipes</h1>
+              { isLoading ? <Loading /> : <RecipeCard data={ data } recipe={ recipe } /> }
+            </div>
+          )
+        }
       </main>
       <Footer />
     </>

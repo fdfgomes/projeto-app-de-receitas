@@ -18,6 +18,8 @@
 
 .search-bar {
   display: flex;
+  flex-direction: column;
+  gap: 12px;
   grid-column: 1 / span 2;
   justify-content: center;
 }
@@ -26,7 +28,71 @@
   padding: 4px 8px;
 }
 
-.meals {
+.search-bar .radio-buttons {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.search-bar .radio-buttons label {
+  display: flex;
+  gap: 4px;
+}
+
+.search-results:last-of-type {
+  margin-bottom: 60px;
+}
+
+.search-results .wrapper {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(2, 1fr);
+  width: 100%;
+}
+
+.search-results .wrapper .recipe-card, .search-results .wrapper .recipe-card img {
+  border: none;
+  border-radius: 24px;
+}
+
+.search-results .wrapper .recipe-card img {
+  width: 100%;
+}
+
+.search-results .wrapper .recipe-card .card-name {
+  padding: 4px 0;
+}
+
+@media only screen and ( min-width : 450px ) {
+
+  .search-results .wrapper {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media only screen and ( min-width : 450px ) {
+
+  .search-results .wrapper {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media only screen and ( min-width : 600px ) {
+
+  .search-results .wrapper {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media only screen and ( min-width : 800px ) {
+
+  .search-results .wrapper {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+/* .meals {
   align-items: center;
   background: #0fa36b;
   color: #464646;
@@ -41,7 +107,7 @@
 .rocksGlass {
   animation: shake 1s infinite ease;
   max-height: 80vh;
-}
+} */
 
 /*
 #iceLeft {
@@ -57,7 +123,7 @@
 }
 */
 
-.meals > .logo {
+/* .meals > .logo {
   animation: shake 1.5s infinite ease;
   color: aliceblue;
   font-family: Montserrat , sans-serif;
@@ -93,4 +159,4 @@
   100% {
     transform: rotate(-10deg);
   }
-}
+} */

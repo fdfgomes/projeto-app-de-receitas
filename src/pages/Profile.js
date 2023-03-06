@@ -25,7 +25,8 @@ function Profile() {
             deve ter todas suas chaves limpas */}
           <Link
             data-testid="profile-logout-btn"
-            to="/" onClick={ () => localStorage.clear() }
+            to="/"
+            onClick={ () => localStorage.clear() }
           >
             Logout
           </Link>

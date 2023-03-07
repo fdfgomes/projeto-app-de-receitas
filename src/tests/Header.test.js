@@ -1,7 +1,7 @@
 import React from 'react';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import renderWithRouter from '../utility/renderWithRouter';
+import renderWithRouterAndContext from './helpers/renderWithRouterAndContext';
 import App from '../App';
 
 const PROFILE_TOP_BTN = 'profile-top-btn';
@@ -9,8 +9,14 @@ const SEARCH_TOP_BTN = 'search-top-btn';
 const SEARCH_INPUT = 'search-input';
 
 describe('Testando o componente Header', () => {
+  beforeEach(() => {
+    localStorage.setItem('user', JSON.stringify({
+      email: 'teste@teste.com',
+    }));
+  });
+
   it('Não é renderizado nas rotas /, /meals/:id-da-receita, /drinks/:id-da-receita, /meals/:id-da-receita/in-progress e /drinks/:id-da-receita/in-progress', () => {
-    const { container, history } = renderWithRouter(<App />);
+    const { container, history } = renderWithRouterAndContext(<App />);
 
     const routes = [
       '/',
@@ -30,7 +36,7 @@ describe('Testando o componente Header', () => {
   });
 
   it('É renderizado com título e ícones de perfil e pesquisa nas rotas /meals e /drinks', () => {
-    const { history } = renderWithRouter(<App />);
+    const { history } = renderWithRouterAndContext(<App />);
 
     const routes = [
       {
@@ -57,7 +63,7 @@ describe('Testando o componente Header', () => {
   });
 
   it('É renderizado com título, ícone de perfil e sem o ícone de pesquisa nas rotas /profile, /done-recipes e /favorite-recipes', async () => {
-    const { history } = renderWithRouter(<App />);
+    const { history } = renderWithRouterAndContext(<App />);
 
     const routes = [
       {
@@ -88,7 +94,7 @@ describe('Testando o componente Header', () => {
   });
 
   it('É possível alternar a visibilidade do componente SearchBar ao clicar no ícone de pesquisa', () => {
-    const { history } = renderWithRouter(<App />);
+    const { history } = renderWithRouterAndContext(<App />);
 
     act(() => history.push('/meals'));
 
@@ -106,7 +112,7 @@ describe('Testando o componente Header', () => {
   });
 
   it('Ao clicar no ícone de perfil o usuário é redirecionado à rota /profile', () => {
-    const { history } = renderWithRouter(<App />);
+    const { history } = renderWithRouterAndContext(<App />);
 
     act(() => history.push('/meals'));
 
@@ -117,3 +123,6 @@ describe('Testando o componente Header', () => {
     expect(history.location.pathname).toBe('/profile');
   });
 });
+
+// Para mais informações sobre o uso do localStorage no jest:
+// https://jogilvyt.medium.com/storing-and-testing-state-in-localstorage-with-react-fdf8b8b211a4

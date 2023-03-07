@@ -1,7 +1,7 @@
 import React from 'react';
 import { act, screen, waitFor } from '@testing-library/react';
 // import userEvent from '@testing-library/user-event';
-import renderWithRouter from '../utility/renderWithRouter';
+import renderWithRouter from './helpers/RenderWithRouter';
 import Recipes from '../pages/Recipes';
 
 // Meals Category

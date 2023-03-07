@@ -6,7 +6,7 @@ import SearchResults from '../components/SearchResults';
 import Context from '../context/Context';
 import RecipeCard from '../components/RecipeCards';
 import Loading from '../components/Loading';
-import RecipeCard from '../components/RecipeCards';
+
 import {
   fetchDrinksApi,
   fetchDrinksCategories,
@@ -14,7 +14,7 @@ import {
   fetchMealsCategories,
 } from '../services';
 
-function Recipes() {
+export default function Recipes() {
   const { pathname } = useLocation();
 
   const {
@@ -95,7 +95,10 @@ function Recipes() {
           && (
             <div className="search-results">
               <h1>Recipes</h1>
-              { isLoading ? <Loading /> : <RecipeCard data={ data } recipe={ recipe } category={ category } />}
+              {
+                isLoading ? <Loading />
+                  : <RecipeCard data={ data } recipe={ recipe } category={ category } />
+              }
             </div>
           )
         }
@@ -104,5 +107,3 @@ function Recipes() {
     </>
   );
 }
-
-export default Recipes;

@@ -21,17 +21,25 @@ export async function fetchDrinksApi() {
 }
 
 export async function fetchMealsCategories() {
-  const data = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list')
-    .then((response) => response.json())
-    .catch((error) => console.log(error));
+  try {
+    const data = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list')
+      .then((response) => response.json())
+      .catch((error) => console.log(error));
 
-  return data.meals;
+    return data.meals;
+  } catch (err) {
+    // console.error(err);
+  }
 }
 
 export async function fetchDrinksCategories() {
-  const data = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list')
-    .then((response) => response.json())
-    .catch((error) => console.log(error));
+  try {
+    const data = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list')
+      .then((response) => response.json())
+      .catch((error) => console.log(error));
 
-  return data.drinks;
+    return data.drinks;
+  } catch (err) {
+    // console.error(err);
+  }
 }

@@ -1,8 +1,9 @@
 import React from 'react';
 import { act, screen, waitFor } from '@testing-library/react';
 // import userEvent from '@testing-library/user-event';
-import renderWithRouter from './helpers/RenderWithRouter';
-import Recipes from '../pages/Recipes';
+import renderWithRouterAndContext from './helpers/renderWithRouterAndContext';
+import App from '../App';
+import { drinkCategories, mealsCategories } from './mocks/mockData';
 
 // Meals Category
 const ALL_CATEGORY = 'All-category-filter';
@@ -20,39 +21,50 @@ const OTHER_UNKNOW_CATEGORY = 'Other / Unknown-category-filter';
 const COCOA_CATEGORY = 'Cocoa-category-filter';
 
 describe('Testa funcionamento da pagina de receitas', () => {
-//   beforeEach(() => {
-//     jest.spyOn(global, 'fetch');
-//     global.fetch = jest.fn().mockResolvedValue({
-//       json: () => Promise.resolve,
-//     });
-//   });
+  beforeEach(() => {
+  //
+  });
   test('Se as categorias da página são renderizada corretamente', async () => {
-    const { history } = renderWithRouter(<Recipes />);
+    const { history } = renderWithRouterAndContext(<App />);
+
+    jest.spyOn(global, 'fetch');
+    global.fetch = jest.fn().mockResolvedValue({
+      json: () => jest.jf().mockResolvedValue(mealsCategories),
+    });
 
     act(() => {
       history.push('/meals');
     });
 
+    waitFor(async () => {
+      const loading = await screen.findByText('Loading...');
+      expect(loading).toBeInTheDocument();
+    });
+
     expect(history.location.pathname).toBe('/meals');
 
-    const loading = await screen.findByText('Loading...');
-    expect(loading).toBeInTheDocument();
+    expect(global.fetch).toHaveBeenCalled();
 
-    await waitFor(() => screen.getByTestId(ALL_CATEGORY), { timeout: 4000 });
+    waitFor(async () => {
+      const all = await screen.getByTestId(ALL_CATEGORY);
+      const beef = await screen.getByTestId(BEEF_CATEGORY);
+      const breakfast = await screen.getByTestId(BREAKFEAST_CATEGORY);
+      const chicken = await screen.getByTestId(CHICKEN_CATEGORY);
+      const desert = await screen.getByTestId(DESERT_CATEGORY);
+      const goat = await screen.getByTestId(GOAT_CATEGORY);
 
-    const all = await screen.getByTestId(ALL_CATEGORY);
-    const beef = await screen.getByTestId(BEEF_CATEGORY);
-    const breakfast = await screen.getByTestId(BREAKFEAST_CATEGORY);
-    const chicken = await screen.getByTestId(CHICKEN_CATEGORY);
-    const desert = await screen.getByTestId(DESERT_CATEGORY);
-    const goat = await screen.getByTestId(GOAT_CATEGORY);
+      expect(all).toBeInTheDocument();
+      expect(beef).toBeInTheDocument();
+      expect(breakfast).toBeInTheDocument();
+      expect(chicken).toBeInTheDocument();
+      expect(desert).toBeInTheDocument();
+      expect(goat).toBeInTheDocument();
+    });
 
-    expect(all).toBeInTheDocument();
-    expect(beef).toBeInTheDocument();
-    expect(breakfast).toBeInTheDocument();
-    expect(chicken).toBeInTheDocument();
-    expect(desert).toBeInTheDocument();
-    expect(goat).toBeInTheDocument();
+    jest.spyOn(global, 'fetch');
+    global.fetch = jest.fn().mockResolvedValue({
+      json: () => jest.jf().mockResolvedValue(drinkCategories),
+    });
 
     act(() => {
       history.push('/drinks');
@@ -60,19 +72,22 @@ describe('Testa funcionamento da pagina de receitas', () => {
 
     expect(history.location.pathname).toBe('/drinks');
 
-    await waitFor(() => screen.getByTestId(ORDINARY_CATEGORY), { timeout: 4000 });
+    expect(global.fetch).toHaveBeenCalled();
 
-    const ordinary = await screen.getByTestId(ORDINARY_CATEGORY);
-    const cocktail = await screen.getByTestId(COCKTAIL_CATEGORY);
-    const shake = await screen.getByTestId(SHAKE_CATEGORY);
-    const other = await screen.getByTestId(OTHER_UNKNOW_CATEGORY);
-    const cocoa = await screen.getByTestId(COCOA_CATEGORY);
+    waitFor(async () => {
+      const all = await screen.getByTestId(ALL_CATEGORY);
+      const ordinary = await screen.getByTestId(ORDINARY_CATEGORY);
+      const cocktail = await screen.getByTestId(COCKTAIL_CATEGORY);
+      const shake = await screen.getByTestId(SHAKE_CATEGORY);
+      const other = await screen.getByTestId(OTHER_UNKNOW_CATEGORY);
+      const cocoa = await screen.getByTestId(COCOA_CATEGORY);
 
-    expect(all).toBeInTheDocument();
-    expect(ordinary).toBeInTheDocument();
-    expect(cocktail).toBeInTheDocument();
-    expect(shake).toBeInTheDocument();
-    expect(other).toBeInTheDocument();
-    expect(cocoa).toBeInTheDocument();
+      expect(all).toBeInTheDocument();
+      expect(ordinary).toBeInTheDocument();
+      expect(cocktail).toBeInTheDocument();
+      expect(shake).toBeInTheDocument();
+      expect(other).toBeInTheDocument();
+      expect(cocoa).toBeInTheDocument();
+    });
   });
 });

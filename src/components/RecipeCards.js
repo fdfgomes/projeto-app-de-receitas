@@ -1,58 +1,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function RecipeCard({ data, recipe, category }) {
+export default function RecipeCard({ data, recipe }) {
   const isDrink = recipe === 'Drinks';
+  const dataLength = data.length > 1;
   return (
-    <>
+    <main>
       {
-      /* Categorias */
-      }
-      <div className="category-group">
-        <button
-          type="button"
-          className="btn-category"
-          data-testid="All-category-filter"
-          key={ -0 }
-        >
-          All
-        </button>
-        { category.map((item, index) => (
-          <button
-            type="button"
-            className="btn-category"
-            data-testid={ `${item.strCategory}-category-filter` }
-            key={ index }
-          >
-            {item.strCategory}
-          </button>
-        ))}
-      </div>
-      {
-      /* Cards */
-      }
-      <div className="wrapper">
-        { data.map((item, index) => (
-          <div
-            className="recipe-card"
-            data-testid={ `${index}-recipe-card` }
-            key={ isDrink ? item.idDrink : item.idMeal }
-          >
-            <img
-              alt={ `${isDrink ? item.strDrink : item.strMeal} recipe` }
-              data-testid={ `${index}-card-img` }
-              src={ isDrink ? item.strDrinkThumb : item.strMealThumb }
-            />
-            <h2
-              className="card-name"
-              data-testid={ `${index}-card-name` }
-            >
-              { isDrink ? item.strDrink : item.strMeal }
-            </h2>
+        dataLength ? (
+          <div className="wrapper">
+            { data.map((item, index) => (
+              <div
+                className="recipe-card"
+                data-testid={ `${index}-recipe-card` }
+                key={ isDrink ? item.idDrink : item.idMeal }
+              >
+                <img
+                  alt={ `${isDrink ? item.strDrink : item.strMeal} recipe` }
+                  data-testid={ `${index}-card-img` }
+                  src={ isDrink ? item.strDrinkThumb : item.strMealThumb }
+                />
+                <h2
+                  className="card-name"
+                  data-testid={ `${index}-card-name` }
+                >
+                  { isDrink ? item.strDrink : item.strMeal }
+                </h2>
+              </div>
+            )) }
           </div>
-        )) }
-      </div>
-    </>
+        ) : (undefined)
+      }
+    </main>
   );
 }
 

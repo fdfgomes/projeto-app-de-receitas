@@ -31,7 +31,7 @@ export default function Recipes() {
   const [title, setTitle] = useState('');
   const [data, setData] = useState('');
   const [recipe, setRecipe] = useState('');
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchApiData = async (type) => {
@@ -40,7 +40,7 @@ export default function Recipes() {
 
     if (type === 'Meals') {
       const meals = await fetchMealsApi() ?? [];
-      const mealsCategory = await fetchMealsCategories();
+      const mealsCategory = await fetchMealsCategories() ?? [];
       const mealsResult = meals.slice(0, recipesLimit);// Define apenas as 12 primeiras receitas
       const mealsCategoryResult = mealsCategory.slice(0, categoryLimit);// Define 5 categorias para ser renderizadas na tela
 
@@ -50,7 +50,7 @@ export default function Recipes() {
       setIsLoading(false);// Necessário para não chamar o componente enquanto o estado não tiver com as receitas
     } else if (type === 'Drinks') {
       const drinks = await fetchDrinksApi() ?? [];
-      const drinksCategory = await fetchDrinksCategories();
+      const drinksCategory = await fetchDrinksCategories() ?? [];
 
       const drinksResult = drinks.slice(0, recipesLimit);
       const drinksCategoryResult = drinksCategory.slice(0, categoryLimit);
@@ -94,7 +94,26 @@ export default function Recipes() {
           && drinksSearchResults.length === 0
           && (
             <div className="search-results">
-              <h1>Recipes</h1>
+              <div className="category-group">
+                <button
+                  type="button"
+                  className="btn-category"
+                  data-testid="All-category-filter"
+                  key={ -0 }
+                >
+                  All
+                </button>
+                { category.map((item, index) => (
+                  <button
+                    type="button"
+                    className="btn-category"
+                    data-testid={ `${item.strCategory}-category-filter` }
+                    key={ index }
+                  >
+                    {item.strCategory}
+                  </button>
+                ))}
+              </div>
               {
                 isLoading ? <Loading />
                   : <RecipeCard data={ data } recipe={ recipe } category={ category } />

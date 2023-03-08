@@ -19,3 +19,27 @@ export async function fetchDrinksApi() {
     // console.error(err);
   }
 }
+
+export async function fetchMealsCategories() {
+  try {
+    const data = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list')
+      .then((response) => response.json())
+      .catch((error) => console.log(error));
+
+    return data.meals;
+  } catch (err) {
+    // console.error(err);
+  }
+}
+
+export async function fetchDrinksCategories() {
+  try {
+    const data = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list')
+      .then((response) => response.json())
+      .catch((error) => console.log(error));
+
+    return data.drinks;
+  } catch (err) {
+    // console.error(err);
+  }
+}

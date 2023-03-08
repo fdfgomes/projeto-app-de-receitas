@@ -5,27 +5,29 @@ export default function RecipeCard({ data, recipe }) {
   const isDrink = recipe === 'Drinks';
 
   return (
-    <div className="wrapper">
-      { data.map((item, index) => (
-        <div
-          className="recipe-card"
-          data-testid={ `${index}-recipe-card` }
-          key={ isDrink ? item.idDrink : item.idMeal }
-        >
-          <img
-            alt={ `${isDrink ? item.strDrink : item.strMeal} recipe` }
-            data-testid={ `${index}-card-img` }
-            src={ isDrink ? item.strDrinkThumb : item.strMealThumb }
-          />
-          <h2
-            className="card-name"
-            data-testid={ `${index}-card-name` }
+    <main>
+      <div className="wrapper">
+        { data.map((item, index) => (
+          <div
+            className="recipe-card"
+            data-testid={ `${index}-recipe-card` }
+            key={ isDrink ? item.idDrink : item.idMeal }
           >
-            { isDrink ? item.strDrink : item.strMeal }
-          </h2>
-        </div>
-      )) }
-    </div>
+            <img
+              alt={ `${isDrink ? item.strDrink : item.strMeal} recipe` }
+              data-testid={ `${index}-card-img` }
+              src={ isDrink ? item.strDrinkThumb : item.strMealThumb }
+            />
+            <h2
+              className="card-name"
+              data-testid={ `${index}-card-name` }
+            >
+              { isDrink ? item.strDrink : item.strMeal }
+            </h2>
+          </div>
+        )) }
+      </div>
+    </main>
   );
 }
 

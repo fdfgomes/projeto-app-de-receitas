@@ -1,8 +1,10 @@
 import propTypes from 'prop-types';
+import shareIcon from '../../images/shareIcon.svg';
+import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 
 function RecipeHeader({ src, alt, title, category }) {
   return (
-    <div>
+    <div className="recipe-header">
       <img
         src={ src }
         alt={ alt }
@@ -16,6 +18,22 @@ function RecipeHeader({ src, alt, title, category }) {
       <p data-testid="recipe-category">
         { category }
       </p>
+      {/* botão compartilhar receita */}
+      <button type="button">
+        <img
+          alt="Share recipe"
+          data-testid="share-btn"
+          src={ shareIcon }
+        />
+      </button>
+      {/* botão favoritar receita */}
+      <button type="button">
+        <img
+          alt="Favorite recipe"
+          data-testid="favorite-btn"
+          src={ whiteHeartIcon }
+        />
+      </button>
     </div>
   );
 }

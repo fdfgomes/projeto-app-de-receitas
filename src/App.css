@@ -64,6 +64,17 @@
   padding: 4px 0;
 }
 
+.recipe-details {
+  padding-bottom: 36px;
+}
+
+.recipe-details .recipe-action-button {
+  bottom: 0;
+  padding: 4px;
+  position: fixed;
+  width: calc(100% - 20px);
+}
+
 @media only screen and ( min-width : 450px ) {
 
   .search-results .wrapper {

@@ -33,6 +33,7 @@ function RecipeInProgress() {
       />
       <RecipeIngredients
         ingredients={ recipeInfo.ingredients }
+        isRecipeInProgress
       />
       <RecipeInstructions
         strInstructions={ recipeInfo.strInstructions }

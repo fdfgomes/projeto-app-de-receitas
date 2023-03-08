@@ -44,7 +44,7 @@ export const fetchSearchResults = async (searchTerm, searchType, route) => {
   try {
     const response = await fetch(endpoint);
     const data = await response.json();
-    // quando nenhum item é encontrado na busca a api returna null
+    // quando nenhum item é encontrado na busca a api retorna null
     // a lógica abaixo é para, ao invés de retornar null, retornar um array vazio
     const dataKeys = Object.keys(data);
     if (data[dataKeys[0]] === null) {

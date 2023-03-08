@@ -111,7 +111,7 @@ describe('Testando o componente Header', () => {
     expect(screen.queryByTestId(SEARCH_INPUT)).not.toBeInTheDocument();
   });
 
-  it('Ao clicar no ícone de perfil o usuário é redirecionado à rota /profile', () => {
+  it('Ao clicar no ícone de perfil o usuário é direcionado à rota /profile', () => {
     const { history } = renderWithRouterAndContext(<App />);
 
     act(() => history.push('/meals'));

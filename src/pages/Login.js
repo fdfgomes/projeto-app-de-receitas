@@ -23,7 +23,6 @@ function Login() {
 
   const handleClick = useCallback(() => {
     localStorage.setItem('user', JSON.stringify({ email }));
-    // Aqui talvez tenha uma lógica pra alterar pro /drinks? talvez não?
     history.push('/meals');
   }, [email, history]);
 

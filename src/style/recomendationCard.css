@@ -1,0 +1,35 @@
+/* .recomendationCard img {
+  max-width: 150px;
+  max-height: 150px;
+} */
+
+.outer {
+  padding: 10px;
+  overflow-y: hidden;
+  width: 240px;
+  max-height: 200px;
+  height: 90%;
+  border: 1px solid blue;
+  margin-bottom: 10px;
+}
+
+.flex-container {
+  overflow-x: auto;
+  height: calc(100% + 17px);
+  padding-bottom: 5px;
+  display: flex;
+  flex-wrap: nowrap;
+  margin-bottom: 10px;
+}
+
+.recomendationCard {
+  flex: 1 0 100px;
+  height: 150px;
+  display: inline-block;
+  margin: 5px;
+  border: 1px solid;
+}
+
+.recomendationCard img {
+  max-width: 80px;
+}

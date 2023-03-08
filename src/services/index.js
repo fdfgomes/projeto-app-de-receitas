@@ -56,3 +56,20 @@ export const fetchRecipeDetails = async (recipeId, route) => {
     console.error(err);
   }
 };
+
+export const fetchRecomendations = async (route) => {
+  let endpoint = '';
+  if (route.includes('/meals')) {
+    endpoint = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+  } else {
+    endpoint = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+  }
+  try {
+    const response = await fetch(endpoint);
+    const data = response.json();
+    // console.log(data.meals);
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};

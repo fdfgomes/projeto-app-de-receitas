@@ -115,8 +115,10 @@ export default function Recipes() {
                   </button>
                 ))}
               </div>
-              {/* cards com as receitas disponíveis */}
-              { isLoading && <Loading /> : <RecipeCard data={ data } recipe={ recipe } /> }
+              {
+                isLoading ? <Loading />
+                  : <RecipeCard data={ data } recipe={ recipe } category={ category } />
+              }
             </div>
           )
         }

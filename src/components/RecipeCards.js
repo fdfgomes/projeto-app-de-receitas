@@ -30,11 +30,11 @@ export default function RecipeCard({ data, recipe }) {
 }
 
 RecipeCard.propTypes = {
-  data: PropTypes.shape({
+  data: PropTypes.arrayOf(PropTypes.shape({
     strDrink: PropTypes.string,
     strDrinkThumb: PropTypes.string,
     strMeal: PropTypes.string,
     strMealThumb: PropTypes.string,
-  }),
+  })),
   recipe: PropTypes.string,
 }.isRequired;

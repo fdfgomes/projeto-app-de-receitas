@@ -114,10 +114,8 @@ export default function Recipes() {
                   </button>
                 ))}
               </div>
-              {
-                isLoading ? <Loading />
-                  : <RecipeCard data={ data } recipe={ recipe } category={ category } />
-              }
+              {/* cards com as receitas disponíveis */}
+              { isLoading && <Loading /> : <RecipeCard data={ data } recipe={ recipe } /> }
             </div>
           )
         }

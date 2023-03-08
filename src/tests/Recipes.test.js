@@ -39,7 +39,6 @@ describe('Testa funcionamento da pagina de receitas', () => {
     });
 
     expect(history.location.pathname).toBe('/meals');
-
     expect(global.fetch).toHaveBeenCalled();
 
     waitFor(async () => {
@@ -71,6 +70,11 @@ describe('Testa funcionamento da pagina de receitas', () => {
       history.push('/drinks');
     });
     
+    waitFor(async () => {
+      const loading = await screen.findByText('Loading...');
+      expect(loading).toBeInTheDocument();
+    });
+
     waitFor(async () => {
       const loading = await screen.findByText('Loading...');
       expect(loading).toBeInTheDocument();

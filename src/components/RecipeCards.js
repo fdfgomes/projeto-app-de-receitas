@@ -3,34 +3,30 @@ import PropTypes from 'prop-types';
 
 export default function RecipeCard({ data, recipe }) {
   const isDrink = recipe === 'Drinks';
-  const dataLength = data.length > 1;
+
   return (
     <main>
-      {
-        dataLength ? (
-          <div className="wrapper">
-            { data.map((item, index) => (
-              <div
-                className="recipe-card"
-                data-testid={ `${index}-recipe-card` }
-                key={ isDrink ? item.idDrink : item.idMeal }
-              >
-                <img
-                  alt={ `${isDrink ? item.strDrink : item.strMeal} recipe` }
-                  data-testid={ `${index}-card-img` }
-                  src={ isDrink ? item.strDrinkThumb : item.strMealThumb }
-                />
-                <h2
-                  className="card-name"
-                  data-testid={ `${index}-card-name` }
-                >
-                  { isDrink ? item.strDrink : item.strMeal }
-                </h2>
-              </div>
-            )) }
+      <div className="wrapper">
+        { data.map((item, index) => (
+          <div
+            className="recipe-card"
+            data-testid={ `${index}-recipe-card` }
+            key={ isDrink ? item.idDrink : item.idMeal }
+          >
+            <img
+              alt={ `${isDrink ? item.strDrink : item.strMeal} recipe` }
+              data-testid={ `${index}-card-img` }
+              src={ isDrink ? item.strDrinkThumb : item.strMealThumb }
+            />
+            <h2
+              className="card-name"
+              data-testid={ `${index}-card-name` }
+            >
+              { isDrink ? item.strDrink : item.strMeal }
+            </h2>
           </div>
-        ) : (undefined)
-      }
+        )) }
+      </div>
     </main>
   );
 }

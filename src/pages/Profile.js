@@ -4,7 +4,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 
 function Profile() {
-  const { email } = JSON.parse(localStorage.getItem('user'));
+  const { email } = JSON.parse(localStorage.getItem('user')) ?? '';
 
   return (
     <>

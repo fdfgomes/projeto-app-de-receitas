@@ -1,7 +1,7 @@
 import React from 'react';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import renderWithRouter from './helpers/RenderWithRouter';
+import renderWithRouterAndContext from './helpers/renderWithRouterAndContext';
 import App from '../App';
 
 const PROFILE_TOP_BTN = 'profile-top-btn';
@@ -9,8 +9,14 @@ const SEARCH_TOP_BTN = 'search-top-btn';
 const SEARCH_INPUT = 'search-input';
 
 describe('Testando o componente Header', () => {
+  beforeEach(() => {
+    localStorage.setItem('user', JSON.stringify({
+      email: 'teste@teste.com',
+    }));
+  });
+
   it('Não é renderizado nas rotas /, /meals/:id-da-receita, /drinks/:id-da-receita, /meals/:id-da-receita/in-progress e /drinks/:id-da-receita/in-progress', () => {
-    const { container, history } = renderWithRouter(<App />);
+    const { container, history } = renderWithRouterAndContext(<App />);
 
     const routes = [
       '/',
@@ -30,7 +36,7 @@ describe('Testando o componente Header', () => {
   });
 
   it('É renderizado com título e ícones de perfil e pesquisa nas rotas /meals e /drinks', () => {
-    const { history } = renderWithRouter(<App />);
+    const { history } = renderWithRouterAndContext(<App />);
 
     const routes = [
       {
@@ -57,8 +63,7 @@ describe('Testando o componente Header', () => {
   });
 
   it('É renderizado com título, ícone de perfil e sem o ícone de pesquisa nas rotas /profile, /done-recipes e /favorite-recipes', async () => {
-    localStorage.setItem('user', JSON.stringify('teste@email.com'));
-    const { history } = renderWithRouter(<App />);
+    const { history } = renderWithRouterAndContext(<App />);
 
     const routes = [
       {
@@ -89,7 +94,7 @@ describe('Testando o componente Header', () => {
   });
 
   it('É possível alternar a visibilidade do componente SearchBar ao clicar no ícone de pesquisa', () => {
-    const { history } = renderWithRouter(<App />);
+    const { history } = renderWithRouterAndContext(<App />);
 
     act(() => history.push('/meals'));
 
@@ -106,9 +111,8 @@ describe('Testando o componente Header', () => {
     expect(screen.queryByTestId(SEARCH_INPUT)).not.toBeInTheDocument();
   });
 
-  it('Ao clicar no ícone de perfil o usuário é redirecionado à rota /profile', () => {
-    localStorage.setItem('user', JSON.stringify('teste@email.com'));
-    const { history } = renderWithRouter(<App />);
+  it('Ao clicar no ícone de perfil o usuário é direcionado à rota /profile', () => {
+    const { history } = renderWithRouterAndContext(<App />);
 
     act(() => history.push('/meals'));
 

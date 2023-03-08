@@ -18,6 +18,8 @@
 
 .search-bar {
   display: flex;
+  flex-direction: column;
+  gap: 12px;
   grid-column: 1 / span 2;
   justify-content: center;
 }
@@ -26,71 +28,77 @@
   padding: 4px 8px;
 }
 
-.meals {
+.search-bar .radio-buttons {
   align-items: center;
-  background: #0fa36b;
-  color: #464646;
   display: flex;
-  flex-direction: column;
-  font-family: sans-serif;
-  height: 100vh;
+  gap: 12px;
   justify-content: center;
+}
+
+.search-bar .radio-buttons label {
+  display: flex;
+  gap: 4px;
+}
+
+.search-results:last-of-type {
+  margin-bottom: 60px;
+}
+
+.search-results .wrapper {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(2, 1fr);
   width: 100%;
 }
 
-.rocksGlass {
-  animation: shake 1s infinite ease;
-  max-height: 80vh;
+.search-results .wrapper .recipe-card, .search-results .wrapper .recipe-card img {
+  border: none;
+  border-radius: 24px;
 }
 
-/*
-#iceLeft {
-  animation: clink .8s infinite ease;
-  opacity: 0.6;
-  transform-origin: 36px 66px;
+.search-results .wrapper .recipe-card img {
+  width: 100%;
 }
 
-#iceRight {
-  animation: clink .8s .2s infinite ease;
-  opacity: 0.6;
-  transform-origin: 60px 78px;
-}
-*/
-
-.meals > .logo {
-  animation: shake 1.5s infinite ease;
-  color: aliceblue;
-  font-family: Montserrat , sans-serif;
-  font-size: 3em;
-  font-weight: 900;
+.search-results .wrapper .recipe-card .card-name {
+  padding: 4px 0;
 }
 
-@keyframes shake {
+.recipe-details {
+  padding-bottom: 36px;
+}
 
-  0% {
-    transform: rotate(5deg);
-  }
+.recipe-details .recipe-action-button {
+  bottom: 0;
+  padding: 4px;
+  position: fixed;
+  width: calc(100% - 20px);
+}
 
-  50% {
-    transform: rotate(-5deg);
-  }
+@media only screen and ( min-width : 450px ) {
 
-  100% {
-    transform: rotate(5deg);
+  .search-results .wrapper {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@keyframes clink {
+@media only screen and ( min-width : 450px ) {
 
-  0% {
-    transform: rotate(-10deg);
+  .search-results .wrapper {
+    grid-template-columns: repeat(3, 1fr);
   }
+}
 
-  50% {
-    transform: rotate(20deg);
+@media only screen and ( min-width : 600px ) {
+
+  .search-results .wrapper {
+    grid-template-columns: repeat(4, 1fr);
   }
+}
 
-  100% {
-    transform: rotate(-10deg);
+@media only screen and ( min-width : 800px ) {
+
+  .search-results .wrapper {
+    grid-template-columns: repeat(6, 1fr);
   }
 }

@@ -1,21 +1,30 @@
 import propTypes from 'prop-types';
 
-function RecipeIngredients({ ingredients }) {
+function RecipeIngredients({ ingredients, isRecipeInProgress }) {
   return (
     <div>
       <ul>
-        { ingredients?.map((elem, i) => (
-          <li
-            key={ `${elem.name} ${i}` }
-          >
-            <span data-testid={ `${i}-ingredient-name-and-measure` }>
-              {`${elem.measure}` }
-            </span>
-            <span data-testid={ `${i}-ingredient-name-and-measure` }>
-              {`${elem.name}`}
-            </span>
-          </li>
-        ))}
+        { ingredients?.map(({ name, measure }, index) => {
+          // renderização do ingrediente na tela de detalhes da receita
+          if (!isRecipeInProgress) {
+            return (
+              <li key={ `${name} ${index}` }>
+                <span data-testid={ `${index}-ingredient-name-and-measure` }>
+                  { `${measure} ${name}` }
+                </span>
+              </li>
+            );
+          }
+          // renderização do ingrediente na tela de receita em progresso
+          return (
+            <li key={ `${name} ${index}` }>
+              <label data-testid={ `${index}-ingredient-step` }>
+                <input type="checkbox" />
+                { `${measure} ${name}` }
+              </label>
+            </li>
+          );
+        }) }
       </ul>
     </div>
   );
@@ -26,6 +35,7 @@ RecipeIngredients.propTypes = {
     name: propTypes.string,
     measure: propTypes.string,
   })),
+  isRecipeInProgress: propTypes.bool,
 }.isRequired;
 
 export default RecipeIngredients;

@@ -94,6 +94,7 @@ export default function Recipes() {
           && drinksSearchResults.length === 0
           && (
             <div className="search-results">
+              {/* botões com as categorias disponíveis */}
               <div className="category-group">
                 <button
                   type="button"

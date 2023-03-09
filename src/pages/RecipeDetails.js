@@ -9,7 +9,6 @@ import RecipeRecomendations
   from '../components/recipeDetailsInProgress/RecipeRecomendations';
 import RecipeYoutube from '../components/recipeDetailsInProgress/RecipeYoutube';
 import { fetchRecipeDetails } from '../services';
-import '../style/recipeDetails.css';
 
 function RecipeDetails() {
   const { id } = useParams();

@@ -68,6 +68,10 @@
   padding-bottom: 36px;
 }
 
+.recipe-details .recipe-header img {
+  max-width: 100%;
+}
+
 /* https://horadecodar.com.br/2020/01/08/como-riscar-uma-palavra-com-css/ */
 .recipe-details .done {
   text-decoration: line-through solid black;

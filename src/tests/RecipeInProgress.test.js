@@ -6,6 +6,7 @@ import App from '../App';
 
 const RECIPE_INGREDIENTS = '[data-testid*=ingredient-step]';
 const RECIPE_INGREDIENTS_CHECKBOXES = '[data-testid*=ingredient-step] input';
+const FINISH_RECIPE_BUTTON = 'finish-recipe-btn';
 
 describe('Testando o componente RecipeInProgress', () => {
   describe('Na rota /meals/:id-da-receita', () => {
@@ -15,6 +16,7 @@ describe('Testando o componente RecipeInProgress', () => {
       jest.spyOn(global, 'fetch').mockResolvedValue({
         json: jest.fn().mockResolvedValue(RECIPE_IN_PROGRESS_MOCKS.MEALS),
       });
+      localStorage.clear();
     });
 
     it('Os detalhes da receita são renderizados corretamente', async () => {
@@ -43,6 +45,17 @@ describe('Testando o componente RecipeInProgress', () => {
       expect(recipeYouTubePreview).toBeInTheDocument();
     });
 
+    it('O botão Finish recipe é renderizado corretamente', async () => {
+      const { history } = renderWithRouterAndContext(<App />);
+
+      act(() => history.push(ROUTE));
+
+      const finishRecipeButton = await screen.findByTestId(FINISH_RECIPE_BUTTON);
+
+      expect(finishRecipeButton).toBeInTheDocument();
+      expect(finishRecipeButton).toBeDisabled();
+    });
+
     it('É possível marcar os ingredientes como concluídos', async () => {
       const { container, history } = renderWithRouterAndContext(<App />);
 
@@ -61,6 +74,31 @@ describe('Testando o componente RecipeInProgress', () => {
 
       expect(recipeIngredientsCheckboxes[0]).toBeChecked();
     });
+
+    it('Quando todos os ingredientes estiverem marcados como concluídos é possível adicionar a receita à lista de receitas concluídas', async () => {
+      const { container, history } = renderWithRouterAndContext(<App />);
+
+      await act(() => history.push(ROUTE));
+
+      const recipeIngredientsCheckboxes = await container
+        .querySelectorAll(RECIPE_INGREDIENTS_CHECKBOXES);
+
+      recipeIngredientsCheckboxes.forEach(async (ingredientCheckbox) => {
+        act(() => {
+          userEvent.click(ingredientCheckbox);
+        });
+      });
+
+      const finishRecipeButton = await screen.findByTestId(FINISH_RECIPE_BUTTON);
+
+      expect(finishRecipeButton).not.toBeDisabled();
+
+      act(() => {
+        userEvent.click(finishRecipeButton);
+      });
+
+      expect(history.location.pathname).toBe('/done-recipes');
+    });
   });
 
   describe('Na rota /drinks/:id-da-receita', () => {
@@ -70,6 +108,7 @@ describe('Testando o componente RecipeInProgress', () => {
       jest.spyOn(global, 'fetch').mockResolvedValue({
         json: jest.fn().mockResolvedValue(RECIPE_IN_PROGRESS_MOCKS.DRINKS),
       });
+      localStorage.clear();
     });
 
     it('Os detalhes da receita são renderizados corretamente', async () => {
@@ -96,6 +135,17 @@ describe('Testando o componente RecipeInProgress', () => {
       expect(recipeInstructions).toBeInTheDocument();
     });
 
+    it('O botão Finish recipe é renderizado corretamente', async () => {
+      const { history } = renderWithRouterAndContext(<App />);
+
+      act(() => history.push(ROUTE));
+
+      const finishRecipeButton = await screen.findByTestId(FINISH_RECIPE_BUTTON);
+
+      expect(finishRecipeButton).toBeInTheDocument();
+      expect(finishRecipeButton).toBeDisabled();
+    });
+
     it('É possível marcar os ingredientes como concluídos', async () => {
       const { container, history } = renderWithRouterAndContext(<App />);
 
@@ -113,6 +163,31 @@ describe('Testando o componente RecipeInProgress', () => {
         .querySelectorAll(RECIPE_INGREDIENTS_CHECKBOXES);
 
       expect(recipeIngredientsCheckboxes[0]).toBeChecked();
+    });
+
+    it('Quando todos os ingredientes estiverem marcados como concluídos é possível adicionar a receita à lista de receitas concluídas', async () => {
+      const { container, history } = renderWithRouterAndContext(<App />);
+
+      await act(() => history.push(ROUTE));
+
+      const recipeIngredientsCheckboxes = await container
+        .querySelectorAll(RECIPE_INGREDIENTS_CHECKBOXES);
+
+      recipeIngredientsCheckboxes.forEach(async (ingredientCheckbox) => {
+        act(() => {
+          userEvent.click(ingredientCheckbox);
+        });
+      });
+
+      const finishRecipeButton = await screen.findByTestId(FINISH_RECIPE_BUTTON);
+
+      expect(finishRecipeButton).not.toBeDisabled();
+
+      act(() => {
+        userEvent.click(finishRecipeButton);
+      });
+
+      expect(history.location.pathname).toBe('/done-recipes');
     });
   });
 });

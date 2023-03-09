@@ -83,7 +83,7 @@
 
 .recipe-details .recipe-action-button {
   background-color: #efefef;
-  bottom: 0px;
+  bottom: 0;
   padding: 4px;
   position: fixed;
   width: calc(100% - 20px);

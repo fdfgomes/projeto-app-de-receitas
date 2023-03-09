@@ -44,6 +44,10 @@
   max-width: 100%;
 }
 
+.favorite-button img {
+  height: 26px;
+}
+
 .search-results:last-of-type {
   margin-bottom: 60px;
 }

@@ -13,6 +13,15 @@ export const fetchDoneRecipes = () => {
   return JSON.parse(doneRecipes);
 };
 
+export const fetchFavoriteRecipes = () => {
+  const favoriteRecipes = localStorage.getItem('favoriteRecipes');
+  if (!favoriteRecipes) {
+    localStorage.setItem('favoriteRecipes', JSON.stringify([]));
+    return [];
+  }
+  return JSON.parse(favoriteRecipes);
+};
+
 export const fetchInProgressRecipes = () => {
   const inProgressRecipes = localStorage.getItem('inProgressRecipes');
   if (!inProgressRecipes) {

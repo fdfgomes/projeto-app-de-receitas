@@ -27,17 +27,13 @@ function RecipeDetails() {
   }, [fetchDetails]);
 
   const isDrink = pathname.includes('/drinks');
+
   return (
     <main>
       { recipeIsLoading && <Loading /> }
       { !recipeIsLoading && (
         <>
-          <RecipeHeader
-            src={ isDrink ? recipeInfo.strDrinkThumb : recipeInfo.strMealThumb }
-            alt={ isDrink ? recipeInfo.strDrink : recipeInfo.strMeal }
-            title={ isDrink ? recipeInfo.strDrink : recipeInfo.strMeal }
-            category={ isDrink ? recipeInfo.strAlcoholic : recipeInfo.strCategory }
-          />
+          <RecipeHeader data={ recipeInfo } />
           <RecipeIngredients
             ingredients={ recipeInfo.ingredients }
           />

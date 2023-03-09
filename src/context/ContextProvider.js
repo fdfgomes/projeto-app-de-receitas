@@ -1,6 +1,10 @@
 import propTypes from 'prop-types';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { fetchDoneRecipes, fetchInProgressRecipes } from '../services/api';
+import {
+  fetchDoneRecipes,
+  fetchFavoriteRecipes,
+  fetchInProgressRecipes,
+} from '../services/api';
 import Context from './Context';
 
 function ContextProvider({ children }) {
@@ -20,6 +24,8 @@ function ContextProvider({ children }) {
   });
 
   const [doneRecipes, setDoneRecipes] = useState(fetchDoneRecipes());
+
+  const [favoriteRecipes, setFavoriteRecipes] = useState(fetchFavoriteRecipes());
 
   const [inProgressRecipes, setInProgressRecipes] = useState(fetchInProgressRecipes());
 
@@ -88,12 +94,19 @@ function ContextProvider({ children }) {
     localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
   }, [doneRecipes]);
 
+  // atualizar o localStorage sempre que houver alteração nas receitas favoritadas
+  useEffect(() => {
+    localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+  }, [favoriteRecipes]);
+
   // useMemo = Serve para não renderizar novamente os valores quando houver alguma alteração
   // nesse componente. Só renderiza na inicialização / Ou quando algum elemento que estiver
   // no array de dependencias atualizar.
   const values = useMemo(
     () => ({
       doneRecipes,
+      favoriteRecipes,
+      setFavoriteRecipes,
       inProgressRecipes,
       setInProgressRecipes,
       addInProgressRecipe,
@@ -103,6 +116,8 @@ function ContextProvider({ children }) {
     }),
     [
       doneRecipes,
+      favoriteRecipes,
+      setFavoriteRecipes,
       inProgressRecipes,
       setInProgressRecipes,
       addInProgressRecipe,

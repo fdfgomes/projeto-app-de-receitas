@@ -23,7 +23,6 @@ function RecipeRecomendations() {
     fetchRecomendationsAPI();
   }, [fetchRecomendationsAPI]);
 
-  console.log('recipes:', recipes);
   const isDrink = pathname.includes('/drinks');
   return (
     <div>

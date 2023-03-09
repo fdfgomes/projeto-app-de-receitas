@@ -1,12 +1,17 @@
 import propTypes from 'prop-types';
-import { useCallback, useContext, useMemo } from 'react';
+import { useCallback, useContext, useMemo, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import Context from '../../context/Context';
 import shareIcon from '../../images/shareIcon.svg';
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
 
+const copy = require('clipboard-copy');
+
 function RecipeHeader({ data }) {
   const { favoriteRecipes, setFavoriteRecipes } = useContext(Context);
+  const { pathname } = useLocation();
+  const [copyMessage, setCopyMessage] = useState(false);
 
   const isDrink = useMemo(() => !!data.idDrink, [data]);
 
@@ -43,6 +48,11 @@ function RecipeHeader({ data }) {
     });
   }, [isFavorited, recipe, setFavoriteRecipes]);
 
+  const handleShareClick = useCallback(() => {
+    copy(`http://localhost:3000${pathname}`);
+    setCopyMessage(true);
+  }, [pathname]);
+
   return (
     <div className="recipe-header">
       <img
@@ -56,8 +66,12 @@ function RecipeHeader({ data }) {
       <p data-testid="recipe-category">
         { isDrink ? recipe.alcoholicOrNot : recipe.category }
       </p>
-      {/* botão compartilhar receita */}
-      <button type="button">
+      {/* botão compartilhar receita - handleclick */}
+      {copyMessage && <p>Link copied!</p>}
+      <button
+        type="button"
+        onClick={ handleShareClick }
+      >
         <img
           alt="Share recipe"
           data-testid="share-btn"

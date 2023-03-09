@@ -44,7 +44,7 @@
   max-width: 100%;
 }
 
-.favorite-button img {
+.recipe-details .recipe-header .favorite-button img {
   height: 26px;
 }
 

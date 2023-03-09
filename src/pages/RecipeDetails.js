@@ -29,7 +29,7 @@ function RecipeDetails() {
   const isDrink = pathname.includes('/drinks');
 
   return (
-    <main>
+    <main className="recipe-details">
       { recipeIsLoading && <Loading /> }
       { !recipeIsLoading && (
         <>

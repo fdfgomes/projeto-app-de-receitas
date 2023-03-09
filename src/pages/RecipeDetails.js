@@ -3,6 +3,7 @@ import { useLocation, useParams } from 'react-router-dom';
 import RecipeHeader from '../components/recipeDetailsInProgress/RecipeHeader';
 import RecipeIngredients from '../components/recipeDetailsInProgress/RecipeIngredients';
 import RecipeInstructions from '../components/recipeDetailsInProgress/RecipeInstructions';
+import RecipeButton from '../components/recipeDetailsInProgress/RecipeButton';
 import RecipeRecomendations
   from '../components/recipeDetailsInProgress/RecipeRecomendations';
 import RecipeYoutube from '../components/recipeDetailsInProgress/RecipeYoutube';
@@ -43,6 +44,10 @@ function RecipeDetails() {
         isDrink={ isDrink }
       />
       <RecipeRecomendations />
+      <RecipeButton
+        id="start-recipe-btn"
+        label="Start Recipe"
+      />
     </main>
   );
 }

@@ -20,7 +20,10 @@ const SHAKE_CATEGORY = 'Shake-category-filter';
 const OTHER_UNKNOW_CATEGORY = 'Other / Unknown-category-filter';
 const COCOA_CATEGORY = 'Cocoa-category-filter';
 
+const LOADING = 'Loading...';
+
 describe('Testa funcionamento da pagina de receitas', () => {
+  it('As categorias na rota /meals são renderizadas corretamente', async () => {
   it('As categorias na rota /meals são renderizadas corretamente', async () => {
     const { history } = renderWithRouterAndContext(<App />);
 
@@ -32,7 +35,7 @@ describe('Testa funcionamento da pagina de receitas', () => {
       history.push('/meals');
     });
     waitFor(async () => {
-      const loading = await screen.findByText('Loading...');
+      const loading = await screen.findByText(LOADING);
       expect(loading).toBeInTheDocument();
     });
     expect(history.location.pathname).toBe('/meals');
@@ -55,6 +58,10 @@ describe('Testa funcionamento da pagina de receitas', () => {
 
   it('As categorias na rota /drinks são renderizadas corretamente', async () => {
     const { history } = renderWithRouterAndContext(<App />);
+  });
+
+  it('As categorias na rota /drinks são renderizadas corretamente', async () => {
+    const { history } = renderWithRouterAndContext(<App />);
 
     jest.spyOn(global, 'fetch');
     global.fetch = jest.fn().mockResolvedValue({
@@ -62,6 +69,16 @@ describe('Testa funcionamento da pagina de receitas', () => {
     });
     act(() => {
       history.push('/drinks');
+    });
+
+    waitFor(async () => {
+      const loading = await screen.findByText(LOADING);
+      expect(loading).toBeInTheDocument();
+    });
+
+    waitFor(async () => {
+      const loading = await screen.findByText(LOADING);
+      expect(loading).toBeInTheDocument();
     });
 
     waitFor(async () => {

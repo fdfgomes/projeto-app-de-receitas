@@ -3,7 +3,7 @@ import propTypes from 'prop-types';
 function RecipeIngredients({
   ingredients,
   isRecipeInProgress,
-  toggleCheckbox,
+  handleClickIngredient,
 }) {
   return (
     <div>
@@ -28,7 +28,7 @@ function RecipeIngredients({
               >
                 <input
                   checked={ ingredient.done }
-                  onChange={ () => toggleCheckbox(index) }
+                  onChange={ () => handleClickIngredient(index) }
                   type="checkbox"
                 />
                 { `${ingredient.measure} ${ingredient.name}` }
@@ -48,7 +48,7 @@ RecipeIngredients.propTypes = {
     done: propTypes.bool,
   })),
   isRecipeInProgress: propTypes.bool,
-  toggleCheckbox: propTypes.func,
+  handleClickIngredient: propTypes.func,
 }.isRequired;
 
 export default RecipeIngredients;

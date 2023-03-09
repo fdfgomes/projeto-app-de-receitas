@@ -4,6 +4,15 @@ export const SEARCH_TYPES = {
   NAME: 'name-search-radio',
 };
 
+export const fetchDoneRecipes = () => {
+  const doneRecipes = localStorage.getItem('doneRecipes');
+  if (!doneRecipes) {
+    localStorage.setItem('doneRecipes', JSON.stringify([]));
+    return [];
+  }
+  return JSON.parse(doneRecipes);
+};
+
 export const fetchInProgressRecipes = () => {
   const inProgressRecipes = localStorage.getItem('inProgressRecipes');
   if (!inProgressRecipes) {

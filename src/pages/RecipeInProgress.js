@@ -1,5 +1,5 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import Loading from '../components/Loading';
 import RecipeButton from '../components/recipeDetailsInProgress/RecipeButton';
 import RecipeHeader from '../components/recipeDetailsInProgress/RecipeHeader';
@@ -13,11 +13,20 @@ function RecipeInProgress() {
   const { id } = useParams();
   const { pathname } = useLocation();
 
-  const [recipeInfo, setRecipeInfo] = useState({});
+  const history = useHistory();
+
+  const [recipeInfo, setRecipeInfo] = useState(null);
 
   const [recipeIsLoading, setRecipeIsLoading] = useState(true);
 
-  const { addInProgressRecipe, setInProgressRecipes } = useContext(Context);
+  const {
+    addInProgressRecipe,
+    addDoneRecipe,
+    inProgressRecipes,
+    setInProgressRecipes,
+  } = useContext(Context);
+
+  const isDrink = useMemo(() => pathname.includes('/drinks'), [pathname]);
 
   const fetchDetails = useCallback(async (recipeId) => {
     setRecipeIsLoading(true);
@@ -28,7 +37,22 @@ function RecipeInProgress() {
     addInProgressRecipe(info);
   }, [addInProgressRecipe, pathname]);
 
-  const isDrink = pathname.includes('/drinks');
+  const allCheckboxesAreChecked = useMemo(
+    () => {
+      if (recipeInfo && inProgressRecipes) {
+        const recipeIngredientsLength = recipeInfo.ingredients.length;
+        let recipeCheckedIngredientsCount = 0;
+        recipeInfo.ingredients.forEach((ingredient) => {
+          if (ingredient.done) {
+            recipeCheckedIngredientsCount += 1;
+          }
+        });
+        return recipeIngredientsLength === recipeCheckedIngredientsCount;
+      }
+      return false;
+    },
+    [recipeInfo, inProgressRecipes],
+  );
 
   const toggleCheckbox = useCallback((ingredientIndex) => {
     const newRecipeState = recipeInfo;
@@ -52,6 +76,11 @@ function RecipeInProgress() {
     ]));
   }, [id, recipeInfo, setInProgressRecipes]);
 
+  const handleClickFinishRecipe = useCallback((recipe) => {
+    addDoneRecipe(recipe);
+    history.push('/done-recipes');
+  }, [addDoneRecipe, history]);
+
   useEffect(() => {
     fetchDetails(id);
   }, [fetchDetails, id]);
@@ -70,7 +99,7 @@ function RecipeInProgress() {
           <RecipeIngredients
             ingredients={ recipeInfo.ingredients }
             isRecipeInProgress
-            toggleCheckbox={ toggleCheckbox }
+            handleClickIngredient={ toggleCheckbox }
           />
           <RecipeInstructions
             strInstructions={ recipeInfo.strInstructions }
@@ -80,8 +109,10 @@ function RecipeInProgress() {
             isDrink={ isDrink }
           />
           <RecipeButton
+            disabled={ !allCheckboxesAreChecked }
             id="finish-recipe-btn"
             label="Finish recipe"
+            onClick={ () => handleClickFinishRecipe(recipeInfo) }
           />
         </>
       ) }

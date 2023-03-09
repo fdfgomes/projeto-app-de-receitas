@@ -6,9 +6,15 @@ import SearchResults from '../components/SearchResults';
 import Context from '../context/Context';
 import RecipeCard from '../components/RecipeCards';
 import Loading from '../components/Loading';
-import { fetchDrinksApi, fetchMealsApi } from '../services';
 
-function Recipes() {
+import {
+  fetchDrinksApi,
+  fetchDrinksCategories,
+  fetchMealsApi,
+  fetchMealsCategories,
+} from '../services';
+
+export default function Recipes() {
   const { pathname } = useLocation();
 
   const {
@@ -25,20 +31,31 @@ function Recipes() {
   const [title, setTitle] = useState('');
   const [data, setData] = useState('');
   const [recipe, setRecipe] = useState('');
+  const [category, setCategory] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchApiData = async (type) => {
     const recipesLimit = 12;
+    const categoryLimit = 5;
+
     if (type === 'Meals') {
       const meals = await fetchMealsApi() ?? [];
+      const mealsCategory = await fetchMealsCategories() ?? [];
       const mealsResult = meals.slice(0, recipesLimit);// Define apenas as 12 primeiras receitas
+      const mealsCategoryResult = mealsCategory.slice(0, categoryLimit);// Define 5 categorias para ser renderizadas na tela
+
       setData(mealsResult);
+      setCategory(mealsCategoryResult);
       setRecipe('Meals');
-      setIsLoading(false); // Necessário para não chamar o componente enquanto o estado não tiver com as receitas
+      setIsLoading(false);// Necessário para não chamar o componente enquanto o estado não tiver com as receitas
     } else if (type === 'Drinks') {
       const drinks = await fetchDrinksApi() ?? [];
-      const drinksResult = drinks.slice(0, recipesLimit);
+      const drinksCategory = await fetchDrinksCategories() ?? [];
 
+      const drinksResult = drinks.slice(0, recipesLimit);
+      const drinksCategoryResult = drinksCategory.slice(0, categoryLimit);
+
+      setCategory(drinksCategoryResult);
       setData(drinksResult);
       setRecipe('Drinks');
       setIsLoading(false);
@@ -77,8 +94,31 @@ function Recipes() {
           && drinksSearchResults.length === 0
           && (
             <div className="search-results">
-              <h1>Recipes</h1>
-              { isLoading ? <Loading /> : <RecipeCard data={ data } recipe={ recipe } /> }
+              {/* botões com as categorias disponíveis */}
+              <div className="category-group">
+                <button
+                  type="button"
+                  className="btn-category"
+                  data-testid="All-category-filter"
+                  key={ -0 }
+                >
+                  All
+                </button>
+                { category.map((item, index) => (
+                  <button
+                    type="button"
+                    className="btn-category"
+                    data-testid={ `${item.strCategory}-category-filter` }
+                    key={ index }
+                  >
+                    {item.strCategory}
+                  </button>
+                ))}
+              </div>
+              {
+                isLoading ? <Loading />
+                  : <RecipeCard data={ data } recipe={ recipe } category={ category } />
+              }
             </div>
           )
         }
@@ -87,5 +127,3 @@ function Recipes() {
     </>
   );
 }
-
-export default Recipes;

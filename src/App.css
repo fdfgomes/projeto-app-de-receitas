@@ -40,6 +40,10 @@
   gap: 4px;
 }
 
+.recipe-details .recipe-header img {
+  max-width: 100%;
+}
+
 .search-results:last-of-type {
   margin-bottom: 60px;
 }
@@ -65,11 +69,7 @@
 }
 
 .recipe-details {
-  padding-bottom: 36px;
-}
-
-.recipe-details .recipe-header img {
-  max-width: 100%;
+  padding-bottom: 38px;
 }
 
 /* https://horadecodar.com.br/2020/01/08/como-riscar-uma-palavra-com-css/ */
@@ -78,7 +78,8 @@
 }
 
 .recipe-details .recipe-action-button {
-  bottom: 0;
+  background-color: #efefef;
+  bottom: 5px;
   padding: 4px;
   position: fixed;
   width: calc(100% - 20px);

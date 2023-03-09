@@ -62,8 +62,6 @@ export default function Recipes() {
       setData(drinksResult);
       setRecipe('Drinks');
       setIsLoading(false);
-    } else {
-      console.log('Parametro não definido.');
     }
   };
 

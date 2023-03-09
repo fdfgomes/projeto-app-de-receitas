@@ -110,7 +110,7 @@ describe('Testa funcionamento da pagina de receitas', () => {
 
     waitFor(async () => {
       const bigMacImg = await screen.getByTestId('11-card-img');
-      const goat = await screen.getByTestId(GOAT_CATEGORY);
+      const goat = await screen.findByTestId(GOAT_CATEGORY);
       const category = 'Goat';
 
       expect(bigMacImg).toBeInTheDocument();
@@ -136,7 +136,7 @@ describe('Testa funcionamento da pagina de receitas', () => {
       waitFor(async () => {
         expect(roastedGoat).not.toBeInTheDocument();
         expect(bigMacImg).toBeInTheDocument();
-        await expect(screen.getAllByTestId(/-recipe-card$/i)).toHaveLength(12);
+        expect(await (screen.getAllByTestId(/-recipe-card$/i)).toHaveLength(12));
       });
     });
   });

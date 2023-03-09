@@ -2,6 +2,10 @@ import propTypes from 'prop-types';
 import YouTube from 'react-youtube';
 
 function RecipeYoutube({ strYoutube, isDrink }) {
+  const opts = {
+    width: '100%',
+  };
+
   return (
     <div>
       {
@@ -9,6 +13,7 @@ function RecipeYoutube({ strYoutube, isDrink }) {
           <div data-testid="video">
             <YouTube
               videoId={ strYoutube }
+              opts={ opts }
             />
           </div>
         )

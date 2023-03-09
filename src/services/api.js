@@ -4,6 +4,33 @@ export const SEARCH_TYPES = {
   NAME: 'name-search-radio',
 };
 
+export const fetchDoneRecipes = () => {
+  const doneRecipes = localStorage.getItem('doneRecipes');
+  if (!doneRecipes) {
+    localStorage.setItem('doneRecipes', JSON.stringify([]));
+    return [];
+  }
+  return JSON.parse(doneRecipes);
+};
+
+export const fetchFavoriteRecipes = () => {
+  const favoriteRecipes = localStorage.getItem('favoriteRecipes');
+  if (!favoriteRecipes) {
+    localStorage.setItem('favoriteRecipes', JSON.stringify([]));
+    return [];
+  }
+  return JSON.parse(favoriteRecipes);
+};
+
+export const fetchInProgressRecipes = () => {
+  const inProgressRecipes = localStorage.getItem('inProgressRecipes');
+  if (!inProgressRecipes) {
+    localStorage.setItem('inProgressRecipes', JSON.stringify([]));
+    return [];
+  }
+  return JSON.parse(inProgressRecipes);
+};
+
 export const fetchSearchResults = async (searchTerm, searchType, route) => {
   // searchTerm --> termo de pesquisa digitado pelo usuário
   // searchType --> tipo de pesquisa selecionado pelo usuário (nome, ingrediente ou primeira letra)

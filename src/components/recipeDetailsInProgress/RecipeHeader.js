@@ -1,22 +1,60 @@
 import propTypes from 'prop-types';
+import { useCallback, useContext, useMemo } from 'react';
+import Context from '../../context/Context';
 import shareIcon from '../../images/shareIcon.svg';
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../../images/blackHeartIcon.svg';
 
-function RecipeHeader({ src, alt, title, category }) {
+function RecipeHeader({ data }) {
+  const { favoriteRecipes, setFavoriteRecipes } = useContext(Context);
+
+  const isDrink = useMemo(() => !!data.idDrink, [data]);
+
+  // receita no formato exigido pelo requisito 34
+  const recipe = useMemo(() => ({
+    id: isDrink ? data.idDrink : data.idMeal,
+    type: isDrink ? 'drink' : 'meal',
+    nationality: data.strArea ?? '',
+    category: data.strCategory,
+    alcoholicOrNot: isDrink ? data.strAlcoholic : '',
+    name: isDrink ? data.strDrink : data.strMeal,
+    image: isDrink ? data.strDrinkThumb : data.strMealThumb,
+  }), [data, isDrink]);
+
+  // constante que armazena o estado atual da receita (favoritada ou não)
+  const isFavorited = useMemo(() => !!favoriteRecipes
+    .find(
+      (alreadyFavoritedRecipe) => alreadyFavoritedRecipe.id === recipe.id,
+    ), [favoriteRecipes, recipe]);
+
+  // adicionar/remover receita dos favoritos
+  const toggleFavorite = useCallback(() => {
+    setFavoriteRecipes((currentState) => {
+      // remover dos favoritos caso a receita já tenha sido favoritada
+      if (isFavorited) {
+        return [
+          ...currentState.filter((favoritedRecipe) => favoritedRecipe.id !== recipe.id),
+        ];
+      }
+      return [
+        ...currentState,
+        recipe,
+      ];
+    });
+  }, [isFavorited, recipe, setFavoriteRecipes]);
+
   return (
     <div className="recipe-header">
       <img
-        src={ src }
-        alt={ alt }
+        alt={ recipe.name }
         data-testid="recipe-photo"
+        src={ recipe.image }
       />
-      <p
-        data-testid="recipe-title"
-      >
-        { title }
-      </p>
+      <h1 data-testid="recipe-title">
+        { recipe.name }
+      </h1>
       <p data-testid="recipe-category">
-        { category }
+        { isDrink ? recipe.alcoholicOrNot : recipe.category }
       </p>
       {/* botão compartilhar receita */}
       <button type="button">
@@ -27,11 +65,15 @@ function RecipeHeader({ src, alt, title, category }) {
         />
       </button>
       {/* botão favoritar receita */}
-      <button type="button">
+      <button
+        className="favorite-button"
+        onClick={ toggleFavorite }
+        type="button"
+      >
         <img
           alt="Favorite recipe"
           data-testid="favorite-btn"
-          src={ whiteHeartIcon }
+          src={ isFavorited ? blackHeartIcon : whiteHeartIcon }
         />
       </button>
     </div>
@@ -39,10 +81,17 @@ function RecipeHeader({ src, alt, title, category }) {
 }
 
 RecipeHeader.propTypes = {
-  src: propTypes.string,
-  alt: propTypes.string,
-  title: propTypes.string,
-  category: propTypes.string,
+  data: propTypes.shape({
+    idDrink: propTypes.string,
+    idMeal: propTypes.string,
+    strAlcoholic: propTypes.string,
+    strArea: propTypes.string,
+    strCategory: propTypes.string,
+    strDrink: propTypes.string,
+    strDrinkThumb: propTypes.string,
+    strMeal: propTypes.string,
+    strMealThumb: propTypes.string,
+  }),
 }.isRequired;
 
 export default RecipeHeader;

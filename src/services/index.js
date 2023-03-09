@@ -1,3 +1,5 @@
+import { fetchInProgressRecipes } from './api';
+
 export async function fetchMealsApi() {
   try {
     const data = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=')
@@ -20,6 +22,29 @@ export async function fetchDrinksApi() {
   }
 }
 
+// função para verificar se a receita esta na lista de receitas em progresso
+// e criar propriedade done que indica se o ingrediente já foi marcado como concluído
+const fullfillIngredientsDoneProperty = (recipeId, recipeIngredients) => {
+  // recuperar receitas em progresso salvas no localStorage
+  const inProgressRecipes = fetchInProgressRecipes();
+  // verificar se a receita esta na lista de receitas em progresso do localStorage
+  const currentRecipe = inProgressRecipes
+    .find(
+      (recipeInProgress) => (recipeInProgress.idDrink
+        ? recipeInProgress.idDrink === recipeId
+        : recipeInProgress.idMeal === recipeId),
+    );
+  // se estiver, retornar os estados dos ingredientes (propriedade done) do localStorage
+  if (currentRecipe) {
+    return currentRecipe.ingredients;
+  }
+  // se não estiver, definir todos os estados dos ingredientes (propriedade done) como false
+  return recipeIngredients.map((ingredient) => ({
+    ...ingredient,
+    done: false,
+  }));
+};
+
 export const fetchRecipeDetails = async (recipeId, route) => {
   // recipeId --> id da receita
   // route --> de qual página a chamada à função foi feita (página /meals ou /drinks)
@@ -30,6 +55,7 @@ export const fetchRecipeDetails = async (recipeId, route) => {
     endpoint = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${recipeId}`;
   }
   try {
+    // fazer requisição à api
     const response = await fetch(endpoint);
     const data = await response.json();
     // quando nenhum item é encontrado na busca a api retorna null
@@ -39,9 +65,9 @@ export const fetchRecipeDetails = async (recipeId, route) => {
       data[dataKeys[0]] = [];
     }
     // criar propriedade ingredients
-    // array com os ingredientes da receita
     const recipe = data[dataKeys[0]][0];
     const recipeKeys = Object.keys(recipe);
+    // array com os ingredientes da receita
     const recipeIngredients = [];
     recipeKeys.forEach((key) => {
       if (key.includes('strIngredient')) {
@@ -55,7 +81,10 @@ export const fetchRecipeDetails = async (recipeId, route) => {
         }
       }
     });
-    recipe.ingredients = recipeIngredients;
+    recipe.ingredients = fullfillIngredientsDoneProperty(
+      recipeId,
+      recipeIngredients,
+    );
     const videoId = recipe.strYoutube?.split('https://www.youtube.com/watch?v=')[1];
     recipe.strYoutube = videoId;
     return recipe;

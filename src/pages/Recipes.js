@@ -12,6 +12,8 @@ import {
   fetchDrinksCategories,
   fetchMealsApi,
   fetchMealsCategories,
+  fetchMealsByCategory,
+  fetchDrinksByCategory,
 } from '../services';
 
 export default function Recipes() {
@@ -67,23 +69,53 @@ export default function Recipes() {
 
   const recipesByCategory = async (itemCategory) => {
     const recipesLimit = 12;
-    if (title === 'Meals') {
+
+    switch (title) {
+    case 'Meals':
       if (lastCategory === itemCategory) {
         setIsLoading(true);
-        const meals = await fetchMealsCategories('All') ?? [];
+        const meals = await fetchMealsApi() ?? [];
         const mealsResult = meals.slice(0, recipesLimit);// Define apenas as 12 primeiras receitas
 
         setData(mealsResult);
+        setRecipe('Meals');
         setLastCategory('All');
         setIsLoading(false);
-      }
-      setIsLoading(true);
-      const meals = await fetchMealsCategories(itemCategory) ?? [];
-      const mealsResult = meals.slice(0, recipesLimit);
+      } else {
+        setIsLoading(true);
+        const meals = await fetchMealsByCategory(itemCategory) ?? [];
+        const mealsResult = meals.slice(0, recipesLimit);
 
-      setData(mealsResult);
-      setLastCategory(itemCategory);
-      setIsLoading(false);
+        setData(mealsResult);
+        setRecipe('Meals');
+        setLastCategory(itemCategory);
+        setIsLoading(false);
+      }
+      break;
+    case 'Drinks':
+      if (lastCategory === itemCategory) {
+        setIsLoading(true);
+        const drinks = await fetchDrinksApi() ?? [];
+        const drinksResult = drinks.slice(0, recipesLimit);
+
+        setData(drinksResult);
+        setRecipe('Drinks');
+        setLastCategory('All');
+        setIsLoading(false);
+      } else {
+        setIsLoading(true);
+        const drinks = await fetchDrinksByCategory(itemCategory) ?? [];
+
+        const drinksResult = drinks.slice(0, recipesLimit);
+
+        setData(drinksResult);
+        setRecipe('Drinks');
+        setLastCategory(itemCategory);
+        setIsLoading(false);
+      }
+      break;
+    default:
+          //
     }
   };
 
@@ -123,7 +155,7 @@ export default function Recipes() {
                   className="btn-category"
                   data-testid="All-category-filter"
                   key={ -0 }
-                  onClick={ () => recipesByCategory('All') }
+                  onClick={ () => fetchApiData(title) }
                 >
                   All
                 </button>
@@ -141,7 +173,7 @@ export default function Recipes() {
               </div>
               {
                 isLoading ? <Loading />
-                  : <RecipeCard data={ data } recipe={ recipe } category={ category } />
+                  : <RecipeCard data={ data } recipe={ recipe } />
               }
             </div>
           )

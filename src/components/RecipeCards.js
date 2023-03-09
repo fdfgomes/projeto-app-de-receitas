@@ -22,7 +22,6 @@ export default function RecipeCard({ data, recipe }) {
               data-testid={ `${index}-card-name` }
             >
               { isDrink ? item.strDrink : item.strMeal }
-              {console.log(item.idMeal)}
             </h2>
           </div>
         )) }

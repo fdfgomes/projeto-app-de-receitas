@@ -5,7 +5,7 @@ export async function fetchMealsApi() {
       .catch((error) => console.log(error));
     return data.meals;
   } catch (err) {
-    console.error(err);
+    // console.error(err);
   }
 }
 
@@ -16,7 +16,7 @@ export async function fetchDrinksApi() {
       .catch((error) => console.log(error));
     return data.drinks;
   } catch (err) {
-    console.error(err);
+    // console.error(err);
   }
 }
 
@@ -28,7 +28,7 @@ export async function fetchMealsCategories() {
 
     return data.meals;
   } catch (err) {
-    console.error(err);
+    // console.error(err);
   }
 }
 
@@ -40,7 +40,7 @@ export async function fetchDrinksCategories() {
 
     return data.drinks;
   } catch (err) {
-    console.error(err);
+    // console.error(err);
   }
 }
 export async function fetchMealsByCategory(category) {
@@ -51,7 +51,7 @@ export async function fetchMealsByCategory(category) {
 
     return data.meals;
   } catch (err) {
-    console.error(err);
+    // console.error(err);
   }
 }
 
@@ -63,6 +63,6 @@ export async function fetchDrinksByCategory(category) {
 
     return data.drinks;
   } catch (err) {
-    console.error(err);
+    // console.error(err);
   }
 }

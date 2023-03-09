@@ -132,10 +132,6 @@ export const meals = { meals: [
     strMealThumb: 'https://www.themealdb.com/images/media/meals/urzj1d1587670726.jpg',
     strMeal: 'Big Mac',
   },
-  {
-    strMealThumb: 'https://www.themealdb.com/images/media/meals/58oia61564916529.jpg',
-    strMeal: 'Corba',
-  },
 ],
 };
 
@@ -188,10 +184,6 @@ export const drinks = {
     {
       strDrinkThumb: 'https://www.thecocktaildb.com/images/media/drink/5a3vg61504372070.jpg',
       strDrink: 'B-52',
-    },
-    {
-      strDrinkThumb: 'https://www.thecocktaildb.com/images/media/drink/xuxpxt1479209317.jpg',
-      strDrink: 'ACID',
     },
   ],
 };

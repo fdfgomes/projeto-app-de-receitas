@@ -1,26 +1,37 @@
 import propTypes from 'prop-types';
 
-function RecipeIngredients({ ingredients, isRecipeInProgress }) {
+function RecipeIngredients({
+  ingredients,
+  isRecipeInProgress,
+  toggleCheckbox,
+}) {
   return (
     <div>
       <ul>
-        { ingredients?.map(({ name, measure }, index) => {
+        { ingredients.map((ingredient, index) => {
           // renderização do ingrediente na tela de detalhes da receita
           if (!isRecipeInProgress) {
             return (
-              <li key={ `${name} ${index}` }>
+              <li key={ `${ingredient.name} ${index}` }>
                 <span data-testid={ `${index}-ingredient-name-and-measure` }>
-                  { `${measure} ${name}` }
+                  { `${ingredient.measure} ${ingredient.name}` }
                 </span>
               </li>
             );
           }
           // renderização do ingrediente na tela de receita em progresso
           return (
-            <li key={ `${name} ${index}` }>
-              <label data-testid={ `${index}-ingredient-step` }>
-                <input type="checkbox" />
-                { `${measure} ${name}` }
+            <li key={ `${ingredient.name} ${index}` }>
+              <label
+                className={ ingredient.done ? 'done' : '' }
+                data-testid={ `${index}-ingredient-step` }
+              >
+                <input
+                  checked={ ingredient.done }
+                  onChange={ () => toggleCheckbox(index) }
+                  type="checkbox"
+                />
+                { `${ingredient.measure} ${ingredient.name}` }
               </label>
             </li>
           );
@@ -34,8 +45,10 @@ RecipeIngredients.propTypes = {
   ingredients: propTypes.arrayOf(propTypes.shape({
     name: propTypes.string,
     measure: propTypes.string,
+    done: propTypes.bool,
   })),
   isRecipeInProgress: propTypes.bool,
+  toggleCheckbox: propTypes.func,
 }.isRequired;
 
 export default RecipeIngredients;

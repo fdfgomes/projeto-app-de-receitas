@@ -23,7 +23,6 @@ function RecipeInProgress() {
     addInProgressRecipe,
     addDoneRecipe,
     inProgressRecipes,
-    setInProgressRecipes,
   } = useContext(Context);
 
   const isDrink = useMemo(() => pathname.includes('/drinks'), [pathname]);
@@ -39,10 +38,11 @@ function RecipeInProgress() {
 
   const allCheckboxesAreChecked = useMemo(
     () => {
-      if (recipeInfo && inProgressRecipes) {
+      if (recipeInfo) {
+        const recipeType = isDrink ? 'drinks' : 'meals';
         const recipeIngredientsLength = recipeInfo.ingredients.length;
         let recipeCheckedIngredientsCount = 0;
-        recipeInfo.ingredients.forEach((ingredient) => {
+        inProgressRecipes[recipeType][id].forEach((ingredient) => {
           if (ingredient.done) {
             recipeCheckedIngredientsCount += 1;
           }
@@ -51,30 +51,8 @@ function RecipeInProgress() {
       }
       return false;
     },
-    [recipeInfo, inProgressRecipes],
+    [recipeInfo, isDrink, inProgressRecipes, id],
   );
-
-  const toggleCheckbox = useCallback((ingredientIndex) => {
-    const newRecipeState = recipeInfo;
-    // alterar o estado do ingrediente clicado
-    newRecipeState.ingredients[ingredientIndex].done = !newRecipeState
-      .ingredients[ingredientIndex].done;
-    // atualizar o estado global
-    setInProgressRecipes((currentState) => ([
-      ...currentState.map(
-        (recipeInProgress) => {
-          const isDrinkRecipe = !!recipeInProgress.idDrink;
-          if (isDrinkRecipe && recipeInProgress.idDrink === id) {
-            return newRecipeState;
-          }
-          if (!isDrinkRecipe && recipeInProgress.idMeal === id) {
-            return newRecipeState;
-          }
-          return recipeInProgress;
-        },
-      ),
-    ]));
-  }, [id, recipeInfo, setInProgressRecipes]);
 
   const handleClickFinishRecipe = useCallback((recipe) => {
     addDoneRecipe(recipe);
@@ -93,8 +71,9 @@ function RecipeInProgress() {
           <RecipeHeader data={ recipeInfo } />
           <RecipeIngredients
             ingredients={ recipeInfo.ingredients }
+            isDrink={ isDrink }
             isRecipeInProgress
-            handleClickIngredient={ toggleCheckbox }
+            recipeId={ id }
           />
           <RecipeInstructions
             strInstructions={ recipeInfo.strInstructions }

@@ -1,5 +1,6 @@
 import propTypes from 'prop-types';
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { recipeIsInProgress } from '../services';
 import {
   fetchDoneRecipes,
   fetchFavoriteRecipes,
@@ -32,24 +33,23 @@ function ContextProvider({ children }) {
   // adicionar nova receita à lista de receitas em progresso
   const addInProgressRecipe = useCallback((newRecipe) => {
     setInProgressRecipes((currentState) => {
+      const isDrinkRecipe = !!newRecipe.idDrink;
+      // id da nova receita a ser adicionada
+      const newRecipeId = isDrinkRecipe ? newRecipe.idDrink : newRecipe.idMeal;
       // verificar se a receita já consta na lista de receitas em progresso
-      let alreadyInInProgressRecipesArray = false;
-      if (newRecipe.idMeal) {
-        alreadyInInProgressRecipesArray = !!currentState
-          .find((recipe) => recipe.idMeal && recipe.idMeal === newRecipe.idMeal);
+      const recipeAlreadyInProgress = recipeIsInProgress(newRecipeId);
+      // adicionar receita à lista de receitas em progreso caso ela não esteja na lista
+      if (!recipeAlreadyInProgress) {
+        return {
+          ...currentState,
+          [isDrinkRecipe ? 'drinks' : 'meals']: {
+            [newRecipeId]: [
+              ...newRecipe.ingredients,
+            ],
+          },
+        };
       }
-      if (newRecipe.idDrink) {
-        alreadyInInProgressRecipesArray = !!currentState
-          .find((recipe) => recipe.idDrink && recipe.idDrink === newRecipe.idDrink);
-      }
-      // não adicionar a receita caso ela já esteja na lista
-      if (alreadyInInProgressRecipesArray) {
-        return currentState;
-      }
-      return [
-        ...currentState,
-        newRecipe,
-      ];
+      return currentState;
     });
   }, []);
 

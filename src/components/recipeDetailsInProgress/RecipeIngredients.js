@@ -1,10 +1,31 @@
+import { useCallback, useContext, useMemo } from 'react';
 import propTypes from 'prop-types';
+import Context from '../../context/Context';
 
-function RecipeIngredients({
-  ingredients,
-  isRecipeInProgress,
-  handleClickIngredient,
-}) {
+function RecipeIngredients({ ingredients, isDrink, isRecipeInProgress, recipeId }) {
+  const { inProgressRecipes, setInProgressRecipes } = useContext(Context);
+
+  const recipeProgress = useMemo(() => {
+    if (isDrink) {
+      return inProgressRecipes.drinks[recipeId];
+    }
+    return inProgressRecipes.meals[recipeId];
+  }, [inProgressRecipes, isDrink, recipeId]);
+
+  const toggleCheckbox = useCallback((ingredientIndex) => {
+    setInProgressRecipes((currentState) => {
+      const updatedState = currentState;
+      const recipeType = isDrink ? 'drinks' : 'meals';
+      const currentCheckboxState = currentState[recipeType][recipeId][ingredientIndex]
+        .done;
+      const updatedCheckboxState = !currentCheckboxState;
+      updatedState[recipeType][recipeId][ingredientIndex].done = updatedCheckboxState;
+      return {
+        ...updatedState,
+      };
+    });
+  }, [isDrink, recipeId, setInProgressRecipes]);
+
   return (
     <div>
       <ul>
@@ -23,12 +44,12 @@ function RecipeIngredients({
           return (
             <li key={ `${ingredient.name} ${index}` }>
               <label
-                className={ ingredient.done ? 'done' : '' }
+                className={ recipeProgress[index].done ? 'done' : '' }
                 data-testid={ `${index}-ingredient-step` }
               >
                 <input
-                  checked={ ingredient.done }
-                  onChange={ () => handleClickIngredient(index) }
+                  checked={ recipeProgress[index].done }
+                  onChange={ () => toggleCheckbox(index) }
                   type="checkbox"
                 />
                 { `${ingredient.measure} ${ingredient.name}` }
@@ -47,8 +68,9 @@ RecipeIngredients.propTypes = {
     measure: propTypes.string,
     done: propTypes.bool,
   })),
+  isDrink: propTypes.bool,
   isRecipeInProgress: propTypes.bool,
-  handleClickIngredient: propTypes.func,
+  recipeId: propTypes.string,
 }.isRequired;
 
 export default RecipeIngredients;

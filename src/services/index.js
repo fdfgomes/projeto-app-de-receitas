@@ -1,4 +1,4 @@
-import { fetchInProgressRecipes } from './api';
+import { fetchDoneRecipes, fetchInProgressRecipes } from './api';
 
 export async function fetchMealsApi() {
   try {
@@ -22,7 +22,15 @@ export async function fetchDrinksApi() {
   }
 }
 
-// função para verificar se a receita esta na lista de receitas em progresso
+// função que retorna se a receita está na lista de receitas concluídas ou não
+export const recipeIsDone = (recipeId) => {
+  // recuperar receitas consluídas salvas no localStorage
+  const doneRecipes = fetchDoneRecipes();
+  // retornar se a receita recebida como parâmetro da função está na lista de receitas concluídas do localStorage
+  return !!doneRecipes.find(({ id: doneRecipeId }) => (doneRecipeId === recipeId));
+};
+
+// função que retorna se a receita está na lista de receitas em progresso ou não
 export const recipeIsInProgress = (recipeId) => {
   // recuperar receitas em progresso salvas no localStorage
   const inProgressRecipes = fetchInProgressRecipes();

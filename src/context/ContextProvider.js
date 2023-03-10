@@ -1,6 +1,6 @@
 import propTypes from 'prop-types';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { recipeIsInProgress } from '../services';
+import { recipeIsDone, recipeIsInProgress } from '../services';
 import {
   fetchDoneRecipes,
   fetchFavoriteRecipes,
@@ -33,6 +33,7 @@ function ContextProvider({ children }) {
   // adicionar nova receita à lista de receitas em progresso
   const addInProgressRecipe = useCallback((newRecipe) => {
     setInProgressRecipes((currentState) => {
+      // verificar se a receita a ser adicionado é uma receita de bebida
       const isDrinkRecipe = !!newRecipe.idDrink;
       // id da nova receita a ser adicionada
       const newRecipeId = isDrinkRecipe ? newRecipe.idDrink : newRecipe.idMeal;
@@ -40,9 +41,10 @@ function ContextProvider({ children }) {
       const recipeAlreadyInProgress = recipeIsInProgress(newRecipeId);
       // adicionar receita à lista de receitas em progreso caso ela não esteja na lista
       if (!recipeAlreadyInProgress) {
+        const recipeProp = isDrinkRecipe ? 'drinks' : 'meals';
         return {
           ...currentState,
-          [isDrinkRecipe ? 'drinks' : 'meals']: {
+          [recipeProp]: {
             [newRecipeId]: [
               ...newRecipe.ingredients,
             ],
@@ -55,6 +57,7 @@ function ContextProvider({ children }) {
 
   // adicionar receita à lista de receitas concluídas
   const addDoneRecipe = useCallback((doneRecipe) => {
+    // verificar se a receita a ser adicionado é uma receita de bebida
     const isDrinkRecipe = !!doneRecipe.idDrink;
     // formatar objeto receita antes de adicioná-lo à lista de receitas concluídas
     const recipe = {
@@ -71,16 +74,15 @@ function ContextProvider({ children }) {
     // adicionar objeto receita formatado à lista de receitas concluídas
     setDoneRecipes((currentState) => {
       // verificar se a receita já consta na lista de receitas concluídas
-      const alreadyInDoneRecipesArray = !!currentState
-        .find((alreadyDoneRecipe) => alreadyDoneRecipe.id === recipe.id);
-      // não adicionar a receita caso ela já esteja na lista
-      if (alreadyInDoneRecipesArray) {
-        return currentState;
+      const alreadyInDoneRecipesArray = recipeIsDone(recipe.id);
+      // adicionar a receita caso ela não esteja na lista de receitas concluídas
+      if (!alreadyInDoneRecipesArray) {
+        return [
+          ...currentState,
+          recipe,
+        ];
       }
-      return [
-        ...currentState,
-        recipe,
-      ];
+      return currentState;
     });
   }, []);
 

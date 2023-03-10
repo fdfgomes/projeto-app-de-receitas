@@ -1,4 +1,4 @@
-import { fetchInProgressRecipes } from '../services/api';
+import { fetchDoneRecipes, fetchInProgressRecipes } from '../services/api';
 
 // função que retorna se a receita está na lista de receitas concluídas ou não
 export const recipeIsDone = (recipeId) => {

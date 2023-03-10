@@ -24,7 +24,7 @@ describe('Testando o componente SearchBar', () => {
 
     const searchIcon = screen.getByTestId(SEARCH_TOP_BTN);
 
-    userEvent.click(searchIcon);
+    act(() => userEvent.click(searchIcon));
 
     const textInput = screen.getByTestId(SEARCH_INPUT);
     const radioButtons = container.querySelectorAll(
@@ -55,7 +55,7 @@ describe('Testando o componente SearchBar', () => {
 
       const searchIcon = screen.getByTestId(SEARCH_TOP_BTN);
 
-      userEvent.click(searchIcon);
+      act(() => userEvent.click(searchIcon));
 
       const textInput = screen.getByTestId(SEARCH_INPUT);
       const submitButton = screen.getByTestId(SEARCH_SUBMIT_BUTTON);
@@ -85,7 +85,7 @@ describe('Testando o componente SearchBar', () => {
 
       const searchIcon = screen.getByTestId(SEARCH_TOP_BTN);
 
-      userEvent.click(searchIcon);
+      act(() => userEvent.click(searchIcon));
 
       const textInput = screen.getByTestId(SEARCH_INPUT);
       const ingredientRadioButton = screen.getByLabelText(/ingredient/i);
@@ -119,7 +119,7 @@ describe('Testando o componente SearchBar', () => {
 
       const searchIcon = screen.getByTestId(SEARCH_TOP_BTN);
 
-      userEvent.click(searchIcon);
+      act(() => userEvent.click(searchIcon));
 
       const textInput = screen.getByTestId(SEARCH_INPUT);
       const letterRadioButton = screen.getByLabelText(/letter/i);
@@ -129,7 +129,8 @@ describe('Testando o componente SearchBar', () => {
 
       userEvent.type(textInput, TEXT_INPUT_VALUE);
       userEvent.click(letterRadioButton);
-      userEvent.click(submitButton);
+
+      act(() => userEvent.click(submitButton));
 
       expect(global.fetch).toHaveBeenCalledWith(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${TEXT_INPUT_VALUE}`);
 
@@ -144,11 +145,11 @@ describe('Testando o componente SearchBar', () => {
 
       jest.spyOn(global, 'alert');
 
-      act(() => history.push(ROUTE));
+      await act(() => history.push(ROUTE));
 
       const searchIcon = screen.getByTestId(SEARCH_TOP_BTN);
 
-      userEvent.click(searchIcon);
+      act(() => userEvent.click(searchIcon));
 
       const textInput = screen.getByTestId(SEARCH_INPUT);
       const letterRadioButton = screen.getByLabelText(/letter/i);
@@ -180,7 +181,7 @@ describe('Testando o componente SearchBar', () => {
 
       const searchIcon = screen.getByTestId(SEARCH_TOP_BTN);
 
-      userEvent.click(searchIcon);
+      act(() => userEvent.click(searchIcon));
 
       const textInput = screen.getByTestId(SEARCH_INPUT);
       const submitButton = screen.getByTestId(SEARCH_SUBMIT_BUTTON);
@@ -208,7 +209,7 @@ describe('Testando o componente SearchBar', () => {
 
       const searchIcon = screen.getByTestId(SEARCH_TOP_BTN);
 
-      userEvent.click(searchIcon);
+      act(() => userEvent.click(searchIcon));
 
       const textInput = screen.getByTestId(SEARCH_INPUT);
       const submitButton = screen.getByTestId(SEARCH_SUBMIT_BUTTON);
@@ -239,7 +240,7 @@ describe('Testando o componente SearchBar', () => {
 
       const searchIcon = screen.getByTestId(SEARCH_TOP_BTN);
 
-      userEvent.click(searchIcon);
+      act(() => userEvent.click(searchIcon));
 
       const textInput = screen.getByTestId(SEARCH_INPUT);
       const submitButton = screen.getByTestId(SEARCH_SUBMIT_BUTTON);
@@ -267,7 +268,7 @@ describe('Testando o componente SearchBar', () => {
 
       const searchIcon = screen.getByTestId(SEARCH_TOP_BTN);
 
-      userEvent.click(searchIcon);
+      act(() => userEvent.click(searchIcon));
 
       const textInput = screen.getByTestId(SEARCH_INPUT);
       const ingredientRadioButton = screen.getByLabelText(/ingredient/i);
@@ -299,7 +300,7 @@ describe('Testando o componente SearchBar', () => {
 
       const searchIcon = screen.getByTestId(SEARCH_TOP_BTN);
 
-      userEvent.click(searchIcon);
+      act(() => userEvent.click(searchIcon));
 
       const textInput = screen.getByTestId(SEARCH_INPUT);
       const letterRadioButton = screen.getByLabelText(/letter/i);
@@ -324,11 +325,11 @@ describe('Testando o componente SearchBar', () => {
 
       jest.spyOn(global, 'alert');
 
-      act(() => history.push(ROUTE));
+      await act(() => history.push(ROUTE));
 
       const searchIcon = screen.getByTestId(SEARCH_TOP_BTN);
 
-      userEvent.click(searchIcon);
+      act(() => userEvent.click(searchIcon));
 
       const textInput = screen.getByTestId(SEARCH_INPUT);
       const letterRadioButton = screen.getByLabelText(/letter/i);
@@ -358,7 +359,7 @@ describe('Testando o componente SearchBar', () => {
 
       const searchIcon = screen.getByTestId(SEARCH_TOP_BTN);
 
-      userEvent.click(searchIcon);
+      act(() => userEvent.click(searchIcon));
 
       const textInput = screen.getByTestId(SEARCH_INPUT);
       const submitButton = screen.getByTestId(SEARCH_SUBMIT_BUTTON);
@@ -384,7 +385,7 @@ describe('Testando o componente SearchBar', () => {
 
       const searchIcon = screen.getByTestId(SEARCH_TOP_BTN);
 
-      userEvent.click(searchIcon);
+      act(() => userEvent.click(searchIcon));
 
       const textInput = screen.getByTestId(SEARCH_INPUT);
       const submitButton = screen.getByTestId(SEARCH_SUBMIT_BUTTON);

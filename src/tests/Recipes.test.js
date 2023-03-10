@@ -28,12 +28,10 @@ describe('Testa funcionamento da pagina de receitas', () => {
 
     jest.spyOn(global, 'fetch');
     global.fetch = jest.fn().mockResolvedValue({
-      json: () => jest.jf().mockResolvedValue(mealsCategories),
+      json: () => jest.fn().mockResolvedValue(mealsCategories),
     });
 
-    act(() => {
-      history.push('/meals');
-    });
+    await act(() => history.push('/meals'));
 
     waitFor(async () => {
       const loading = await screen.findByText(LOADING);
@@ -65,12 +63,10 @@ describe('Testa funcionamento da pagina de receitas', () => {
 
     jest.spyOn(global, 'fetch');
     global.fetch = jest.fn().mockResolvedValue({
-      json: () => jest.jf().mockResolvedValue(drinkCategories),
+      json: () => jest.fn().mockResolvedValue(drinkCategories),
     });
 
-    act(() => {
-      history.push('/drinks');
-    });
+    await act(() => history.push('/drinks'));
 
     waitFor(async () => {
       const loading = await screen.findByText(LOADING);

@@ -7,10 +7,19 @@ function RecipeIngredients({ ingredients, isDrink, isRecipeInProgress, recipeId 
 
   const recipeProgress = useMemo(() => {
     if (isDrink) {
-      return inProgressRecipes.drinks[recipeId];
+      if (inProgressRecipes.drinks && inProgressRecipes.drinks[recipeId]) {
+        return inProgressRecipes.drinks[recipeId];
+      }
+      return ingredients;
     }
-    return inProgressRecipes.meals[recipeId];
-  }, [inProgressRecipes, isDrink, recipeId]);
+    if (!isDrink) {
+      if (inProgressRecipes.meals && inProgressRecipes.meals[recipeId]) {
+        return inProgressRecipes.meals[recipeId];
+      }
+      return ingredients;
+    }
+    return ingredients;
+  }, [inProgressRecipes, ingredients, isDrink, recipeId]);
 
   const toggleCheckbox = useCallback((ingredientIndex) => {
     setInProgressRecipes((currentState) => {

@@ -1,6 +1,6 @@
 import propTypes from 'prop-types';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { recipeIsDone, recipeIsInProgress } from '../services';
+import { recipeIsDone, recipeIsInProgress } from '../helpers/recipeHelpers';
 import {
   fetchDoneRecipes,
   fetchFavoriteRecipes,

@@ -1,4 +1,4 @@
-import { fetchDoneRecipes, fetchInProgressRecipes } from './api';
+import { fullfillRecipesIngredientsDoneProperty } from '../helpers/recipeHelpers';
 
 export async function fetchMealsApi() {
   try {
@@ -21,54 +21,6 @@ export async function fetchDrinksApi() {
     // console.error(err);
   }
 }
-
-// função que retorna se a receita está na lista de receitas concluídas ou não
-export const recipeIsDone = (recipeId) => {
-  // recuperar receitas consluídas salvas no localStorage
-  const doneRecipes = fetchDoneRecipes();
-  // retornar se a receita recebida como parâmetro da função está na lista de receitas concluídas do localStorage
-  return !!doneRecipes.find(({ id: doneRecipeId }) => (doneRecipeId === recipeId));
-};
-
-// função que retorna se a receita está na lista de receitas em progresso ou não
-export const recipeIsInProgress = (recipeId) => {
-  // recuperar receitas em progresso salvas no localStorage
-  const inProgressRecipes = fetchInProgressRecipes();
-  // pegar os ids das receitas em progresso
-  const inProgressMeals = Object.keys(inProgressRecipes.meals);
-  const inProgressDrinks = Object.keys(inProgressRecipes.drinks);
-  // criar array com todas as receitas em progresso
-  const inProgressRecipesIds = [
-    ...inProgressMeals,
-    ...inProgressDrinks,
-  ];
-  // verificar se a receita recebida como parâmetro da função está na lista de receitas em progresso do localStorage
-  const currentRecipe = !!inProgressRecipesIds
-    .find((inProgressRecipeId) => (inProgressRecipeId === recipeId));
-  return currentRecipe;
-};
-
-// função para verificar se a receita esta na lista de receitas em progresso
-// e criar propriedade done que indica se o ingrediente já foi marcado como concluído ou não
-const fullfillIngredientsDoneProperty = (recipeId, recipeIngredients) => {
-  // verificar se a receita esta na lista de receitas em progresso do localStorage
-  // se estiver, retornar os estados dos ingredientes (propriedade done) do localStorage
-  if (recipeIsInProgress(recipeId)) {
-    // recuperar receitas em progresso salvas no localStorage
-    const inProgressRecipes = fetchInProgressRecipes();
-    // pegar os ids das receitas de bebida em progresso
-    const inProgressDrinks = Object.keys(inProgressRecipes.drinks);
-    // verificar se é uma receita de bebida
-    const isDrinkRecipe = !!inProgressDrinks.find((id) => id === recipeId);
-    // retornar os estados dos ingredientes (propriedade done) do localStorage
-    return inProgressRecipes[isDrinkRecipe ? 'drinks' : 'meals'][recipeId];
-  }
-  // se não estiver, definir todos os estados dos ingredientes (propriedade done) como false
-  return recipeIngredients.map((ingredient) => ({
-    ...ingredient,
-    done: false,
-  }));
-};
 
 export const fetchRecipeDetails = async (recipeId, route) => {
   // recipeId --> id da receita
@@ -106,12 +58,10 @@ export const fetchRecipeDetails = async (recipeId, route) => {
         }
       }
     });
-    recipe.ingredients = fullfillIngredientsDoneProperty(
+    recipe.ingredients = fullfillRecipesIngredientsDoneProperty(
       recipeId,
       recipeIngredients,
     );
-    // propriedade inProgress que indica se a receita já está em progresso ou não
-    recipe.inProgress = recipeIsInProgress(recipeId);
     // extrair apenas o id do vídeo no youtube
     const videoId = recipe.strYoutube?.split('https://www.youtube.com/watch?v=')[1];
     recipe.strYoutube = videoId;

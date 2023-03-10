@@ -9,6 +9,7 @@ import RecipeRecomendations
   from '../components/recipeDetailsInProgress/RecipeRecomendations';
 import RecipeYoutube from '../components/recipeDetailsInProgress/RecipeYoutube';
 import { fetchRecipeDetails } from '../services';
+import { recipeIsInProgress } from '../helpers/recipeHelpers';
 
 function RecipeDetails() {
   const { id } = useParams();
@@ -56,7 +57,7 @@ function RecipeDetails() {
           <RecipeButton
             disabled={ false }
             id="start-recipe-btn"
-            label={ recipeInfo.inProgress ? 'Continue recipe' : 'Start recipe' }
+            label={ recipeIsInProgress(id) ? 'Continue Recipe' : 'Start recipe' }
             onClick={ handleClickStartRecipe }
           />
           <RecipeRecomendations />

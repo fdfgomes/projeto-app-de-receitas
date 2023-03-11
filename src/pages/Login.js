@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import logoImage from '../images/logo-image.png';
 
 function Login() {
   const history = useHistory();
@@ -27,33 +28,49 @@ function Login() {
   }, [email, history]);
 
   return (
-    <main>
-      <h1>Login</h1>
-      <label htmlFor="emailInput">
-        <input
-          type="email"
-          name="emailInput"
-          data-testid="email-input"
-          value={ email }
-          onChange={ ({ target }) => setEmail(target.value) }
-        />
-      </label>
-      <label htmlFor="passwordInput">
-        <input
-          type="password"
-          name="passwordInput"
-          data-testid="password-input"
-          value={ password }
-          onChange={ ({ target }) => setPassword(target.value) }
-        />
-      </label>
-      <button
-        data-testid="login-submit-btn"
-        disabled={ isDisabled }
-        onClick={ () => handleClick() }
-      >
-        Enter
-      </button>
+    <main className="login">
+      <div className="wrapper">
+        <div className="logo">
+          <img alt="Recipes App - Logo" className="image" src={ logoImage } />
+          <h1 className="title">Recipes App</h1>
+          <h2 className="subtitle">Meals & Drinks</h2>
+        </div>
+        <div className="separator" />
+        <div className="greetings">
+          <span className="message">
+            Please enter your credentials to access your account
+          </span>
+        </div>
+        <form>
+          <label htmlFor="emailInput">
+            <input
+              data-testid="email-input"
+              name="emailInput"
+              placeholder="email@example.com"
+              onChange={ ({ target }) => setEmail(target.value) }
+              type="email"
+              value={ email }
+            />
+          </label>
+          <label htmlFor="passwordInput">
+            <input
+              data-testid="password-input"
+              name="passwordInput"
+              onChange={ ({ target }) => setPassword(target.value) }
+              placeholder="Password"
+              type="password"
+              value={ password }
+            />
+          </label>
+          <button
+            data-testid="login-submit-btn"
+            disabled={ isDisabled }
+            onClick={ () => handleClick() }
+          >
+            Sign in
+          </button>
+        </form>
+      </div>
     </main>
   );
 }

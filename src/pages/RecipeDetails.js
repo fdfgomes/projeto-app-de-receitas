@@ -57,7 +57,7 @@ function RecipeDetails() {
           <RecipeButton
             disabled={ false }
             id="start-recipe-btn"
-            label={ recipeIsInProgress(id) ? 'Continue Recipe' : 'Start recipe' }
+            label={ recipeIsInProgress(id) ? 'Continue Recipe' : 'Start Recipe' }
             onClick={ handleClickStartRecipe }
           />
           <RecipeRecomendations />

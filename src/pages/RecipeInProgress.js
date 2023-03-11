@@ -42,7 +42,7 @@ function RecipeInProgress() {
         const recipeType = isDrink ? 'drinks' : 'meals';
         const recipeIngredientsLength = recipeInfo.ingredients.length;
         let recipeCheckedIngredientsCount = 0;
-        inProgressRecipes[recipeType][id].forEach((ingredient) => {
+        inProgressRecipes[recipeType][id]?.forEach((ingredient) => {
           if (ingredient.done) {
             recipeCheckedIngredientsCount += 1;
           }

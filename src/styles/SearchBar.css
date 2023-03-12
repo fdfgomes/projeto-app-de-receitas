@@ -1,0 +1,47 @@
+.search-bar {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  grid-column: 1 / span 2;
+  justify-content: center;
+  max-width: 100%;
+  padding: 18px 0 4px;
+  position: relative;
+  width: 100%;
+}
+
+.search-bar .search-input-wrapper {
+  position: relative;
+  width: 95%;
+}
+
+.search-bar .search-input-wrapper .search-icon {
+  position: absolute;
+  left: 18px;
+  top: 12px;
+}
+
+.search-bar input {
+  width: 100%;
+}
+
+.search-bar button {
+  width: 95%;
+}
+
+.search-bar input {
+  padding-left: 56px;
+}
+
+.search-bar .radio-buttons {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.search-bar .radio-buttons label {
+  display: flex;
+  gap: 4px;
+}

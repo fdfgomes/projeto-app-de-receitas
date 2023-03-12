@@ -1,11 +1,13 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import SearchResults from '../components/SearchResults';
 import Context from '../context/Context';
-import RecipeCard from '../components/RecipeCards';
+import RecipeCards from '../components/RecipeCards';
 import Loading from '../components/Loading';
+import '../styles/SearchResults.css';
+import '../styles/Recipe.css';
 
 import {
   fetchDrinksApi,
@@ -16,6 +18,8 @@ import {
 
 export default function Recipes() {
   const { pathname } = useLocation();
+
+  const isDrink = useMemo(() => pathname.includes('/drinks'), [pathname]);
 
   const {
     searchResults: {
@@ -82,7 +86,7 @@ export default function Recipes() {
   return (
     <>
       <Header title={ title } />
-      <main>
+      <main className="recipes">
         {/* resultados da pesquisa */}
         { pathname === '/meals' && mealsSearchResults.length > 0 && <SearchResults /> }
         { pathname === '/drinks' && drinksSearchResults.length > 0 && <SearchResults /> }
@@ -93,33 +97,46 @@ export default function Recipes() {
           && mealsSearchResults.length === 0
           && drinksSearchResults.length === 0
           && (
-            <div className="search-results">
+            <>
               {/* botões com as categorias disponíveis */}
-              <div className="category-group">
-                <button
-                  type="button"
-                  className="btn-category"
-                  data-testid="All-category-filter"
-                  key={ -0 }
-                >
-                  All
-                </button>
-                { category.map((item, index) => (
+              <div className="available-categories">
+                <h1 className="title">
+                  Categories
+                </h1>
+                <div className="category-group">
                   <button
                     type="button"
                     className="btn-category"
-                    data-testid={ `${item.strCategory}-category-filter` }
-                    key={ index }
+                    data-testid="All-category-filter"
+                    key={ -0 }
                   >
-                    {item.strCategory}
+                    All
                   </button>
-                ))}
+                  { category.map((item, index) => (
+                    <button
+                      type="button"
+                      className="btn-category"
+                      data-testid={ `${item.strCategory}-category-filter` }
+                      key={ index }
+                    >
+                      {item.strCategory}
+                    </button>
+                  ))}
+                </div>
               </div>
-              {
-                isLoading ? <Loading />
-                  : <RecipeCard data={ data } recipe={ recipe } category={ category } />
-              }
-            </div>
+              {/* cards exibidos nas rotas /drinks e /meals */}
+              <div className="search-results">
+                { isLoading && <Loading /> }
+                <div className="results-wrapper">
+                  <h1 className="title">
+                    Popular
+                    {' '}
+                    { isDrink ? 'drinks' : 'meals' }
+                  </h1>
+                  { !isLoading && <RecipeCards data={ data } type={ recipe } /> }
+                </div>
+              </div>
+            </>
           )
         }
       </main>

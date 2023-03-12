@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
+import '../../styles/RecipeDetails/RecipeButton.css';
 
 export default function RecipeButton({ disabled, id, label, onClick }) {
   return (
     <button
-      className="recipe-action-button"
+      className="recipe-button"
       data-testid={ id }
       disabled={ disabled }
       onClick={ onClick }

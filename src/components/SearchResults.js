@@ -1,25 +1,25 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import Context from '../context/Context';
-import RecipeCard from './RecipeCards';
+import RecipeCards from './RecipeCards';
 
 export default function SearchResults() {
   const { searchResults } = useContext(Context);
 
   const { pathname } = useLocation();
 
-  const isDrink = pathname === '/drinks';
+  const isDrink = useMemo(() => pathname === '/drinks', [pathname]);
 
   return (
     <div className="search-results">
-      <h1>
+      <h1 className="title primary">
         Results for
         <em>
           { !isDrink && searchResults.meals.term }
           { isDrink && searchResults.drinks.term }
         </em>
       </h1>
-      <RecipeCard
+      <RecipeCards
         data={ isDrink ? searchResults.drinks.data : searchResults.meals.data }
         recipe={ isDrink ? 'Drinks' : 'Meals' }
       />

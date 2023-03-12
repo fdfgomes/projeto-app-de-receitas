@@ -1,9 +1,7 @@
 @import url('https://fonts.cdnfonts.com/css/mulled-wine-season');
-@import url('https://fonts.cdnfonts.com/css/glacial-indifference-2');
 
 .login {
   align-items: center;
-  background-color: #f7f5ed;
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -67,7 +65,7 @@
   font-size: 18px;
 }
 
-.login form {
+form {
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -75,142 +73,23 @@
   width: 95%;
 }
 
-.login form label {
+form label {
   display: flex;
   justify-content: center;
 }
 
-.login form label input, .login form button {
+form input, form button {
   border-radius: 12px;
   padding: 12px;
   width: 90%;
 }
 
-.login form label input {
-  border: 1px solid rgba(0, 0, 0, 0.2);
+form input {
+  border: 1px solid #e1dabd;
 }
 
-.login form button {
+form button {
   align-self: center;
   border: none;
   background-color: #e1dabd;
-}
-
-.header {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  padding: 6px 0;
-}
-
-.header .icons {
-  display: flex;
-  gap: 4px;
-  height: fit-content;
-  justify-self: end;
-}
-
-.header .icons .icon-button {
-  background-color: transparent;
-  border: none;
-}
-
-.search-bar {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  grid-column: 1 / span 2;
-  justify-content: center;
-}
-
-.search-bar .search-input {
-  padding: 4px 8px;
-}
-
-.search-bar .radio-buttons {
-  align-items: center;
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-}
-
-.search-bar .radio-buttons label {
-  display: flex;
-  gap: 4px;
-}
-
-.recipe-details .recipe-header img {
-  max-width: 100%;
-}
-
-.recipe-details .recipe-header .favorite-button img {
-  height: 26px;
-}
-
-.search-results:last-of-type {
-  margin-bottom: 60px;
-}
-
-.search-results .wrapper {
-  display: grid;
-  gap: 12px;
-  grid-template-columns: repeat(2, 1fr);
-  width: 100%;
-}
-
-.search-results .wrapper .recipe-card, .search-results .wrapper .recipe-card img {
-  border: none;
-  border-radius: 24px;
-}
-
-.search-results .wrapper .recipe-card img {
-  width: 100%;
-}
-
-.search-results .wrapper .recipe-card .card-name {
-  padding: 4px 0;
-}
-
-.recipe-details {
-  padding-bottom: 38px;
-}
-
-/* https://horadecodar.com.br/2020/01/08/como-riscar-uma-palavra-com-css/ */
-.recipe-details .done {
-  text-decoration: line-through solid black;
-}
-
-.recipe-details .recipe-action-button {
-  background-color: #efefef;
-  bottom: 0;
-  padding: 4px;
-  position: fixed;
-  width: calc(100% - 20px);
-}
-
-@media only screen and ( min-width : 450px ) {
-
-  .search-results .wrapper {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media only screen and ( min-width : 450px ) {
-
-  .search-results .wrapper {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media only screen and ( min-width : 600px ) {
-
-  .search-results .wrapper {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-@media only screen and ( min-width : 800px ) {
-
-  .search-results .wrapper {
-    grid-template-columns: repeat(6, 1fr);
-  }
 }

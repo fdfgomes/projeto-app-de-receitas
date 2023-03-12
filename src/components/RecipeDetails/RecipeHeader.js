@@ -1,16 +1,22 @@
 import propTypes from 'prop-types';
 import { useCallback, useContext, useMemo, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
+import { BiChevronLeft } from 'react-icons/bi';
 import Context from '../../context/Context';
 import shareIcon from '../../images/shareIcon.svg';
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
+import '../../styles/RecipeDetails/RecipeHeader.css';
 
 const copy = require('clipboard-copy');
 
 function RecipeHeader({ data }) {
-  const { favoriteRecipes, setFavoriteRecipes } = useContext(Context);
   const { pathname } = useLocation();
+
+  const history = useHistory();
+
+  const { favoriteRecipes, setFavoriteRecipes } = useContext(Context);
+
   const [copyMessage, setCopyMessage] = useState(false);
 
   const isDrink = useMemo(() => !!data.idDrink, [data]);
@@ -59,39 +65,52 @@ function RecipeHeader({ data }) {
     <div className="recipe-header">
       <img
         alt={ recipe.name }
+        className="recipe-photo"
         data-testid="recipe-photo"
         src={ recipe.image }
       />
-      <h1 data-testid="recipe-title">
-        { recipe.name }
-      </h1>
-      <p data-testid="recipe-category">
-        { isDrink ? recipe.alcoholicOrNot : recipe.category }
-      </p>
-      {/* botão compartilhar receita - handleclick */}
-      {copyMessage && <p>Link copied!</p>}
-      <button
-        type="button"
-        onClick={ handleShareClick }
-      >
-        <img
-          alt="Share recipe"
-          data-testid="share-btn"
-          src={ shareIcon }
-        />
-      </button>
-      {/* botão favoritar receita */}
-      <button
-        className="favorite-button"
-        onClick={ toggleFavorite }
-        type="button"
-      >
-        <img
-          alt="Favorite recipe"
-          data-testid="favorite-btn"
-          src={ isFavorited ? blackHeartIcon : whiteHeartIcon }
-        />
-      </button>
+
+      {/* nome da receita */}
+      <div className="recipe-name">
+        <h1 data-testid="recipe-title">
+          { recipe.name }
+        </h1>
+        {/* categoria da receita */}
+        <p data-testid="recipe-category">
+          { isDrink ? recipe.alcoholicOrNot : recipe.category }
+        </p>
+      </div>
+
+      {/* botões de compartilhar e favoritar receita */}
+      <div className="top-buttons">
+        <button onClick={ () => history.goBack() } type="button">
+          <BiChevronLeft size={ 26 } />
+        </button>
+        {/* botão compartilhar receita - handleclick */}
+        {copyMessage && <p>Link copied!</p>}
+        <button
+          type="button"
+          onClick={ handleShareClick }
+        >
+          <img
+            alt="Share recipe"
+            data-testid="share-btn"
+            src={ shareIcon }
+          />
+        </button>
+        {/* botão favoritar receita */}
+        <button
+          className="favorite-button"
+          onClick={ toggleFavorite }
+          type="button"
+        >
+          <img
+            alt="Favorite recipe"
+            data-testid="favorite-btn"
+            src={ isFavorited ? blackHeartIcon : whiteHeartIcon }
+          />
+        </button>
+      </div>
     </div>
   );
 }

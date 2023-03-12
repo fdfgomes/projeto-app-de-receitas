@@ -1,7 +1,9 @@
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
+import { FiSearch } from 'react-icons/fi';
 import Context from '../context/Context';
 import { fetchSearchResults, SEARCH_TYPES } from '../services/api';
+import '../styles/SearchBar.css';
 
 export default function SearchBar() {
   const { searchResults, setSearchResults } = useContext(Context);
@@ -102,17 +104,22 @@ export default function SearchBar() {
     }
   }, [history, currentRoute, searchResults]);
 
+  const isDrink = pathname.includes('/drinks');
+
   return (
     <form className="search-bar" onSubmit={ handleSubmit }>
-      <input
-        className="search-input"
-        data-testid="search-input"
-        onChange={ handleChange }
-        placeholder="Search..."
-        required
-        type="text"
-        value={ pathname === '/meals' ? searchTerm.meals : searchTerm.drinks }
-      />
+      <label className="search-input-wrapper">
+        <FiSearch className="search-icon" color="#b7a761" size={ 24 } />
+        <input
+          className="search-input"
+          data-testid="search-input"
+          onChange={ handleChange }
+          placeholder={ `Search ${isDrink ? 'drinks' : 'meals'}...` }
+          required
+          type="text"
+          value={ pathname === '/meals' ? searchTerm.meals : searchTerm.drinks }
+        />
+      </label>
       <div className="radio-buttons">
         <label>
           <input

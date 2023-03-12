@@ -1,10 +1,12 @@
 import { useCallback, useContext, useMemo } from 'react';
 import propTypes from 'prop-types';
 import Context from '../../context/Context';
+import '../../styles/RecipeDetails/RecipeIngredients.css';
 
 function RecipeIngredients({ ingredients, isDrink, isRecipeInProgress, recipeId }) {
   const { inProgressRecipes, setInProgressRecipes } = useContext(Context);
 
+  // constante que armazena o progresso da receita
   const recipeProgress = useMemo(() => {
     if (isDrink) {
       if (inProgressRecipes.drinks && inProgressRecipes.drinks[recipeId]) {
@@ -21,6 +23,7 @@ function RecipeIngredients({ ingredients, isDrink, isRecipeInProgress, recipeId 
     return ingredients;
   }, [inProgressRecipes, ingredients, isDrink, recipeId]);
 
+  // alternar estado dos ingredientes (concluído/não concluído)
   const toggleCheckbox = useCallback((ingredientIndex) => {
     setInProgressRecipes((currentState) => {
       const updatedState = currentState;
@@ -36,24 +39,28 @@ function RecipeIngredients({ ingredients, isDrink, isRecipeInProgress, recipeId 
   }, [isDrink, recipeId, setInProgressRecipes]);
 
   return (
-    <div>
+    <div className="recipe-ingredients">
+      <h2>Ingredients</h2>
       <ul>
         { ingredients.map((ingredient, index) => {
           // renderização do ingrediente na tela de detalhes da receita
           if (!isRecipeInProgress) {
             return (
-              <li key={ `${ingredient.name} ${index}` }>
+              <li key={ `${index}-${ingredient.name}` }>
                 <span data-testid={ `${index}-ingredient-name-and-measure` }>
-                  { `${ingredient.measure} ${ingredient.name}` }
+                  { `${ingredient.measure ?? ''} ${ingredient.name}` }
                 </span>
               </li>
             );
           }
           // renderização do ingrediente na tela de receita em progresso
           return (
-            <li key={ `${ingredient.name} ${index}` }>
+            <li key={ `${index}-${ingredient.name}` }>
               <label
-                className={ recipeProgress[index].done ? 'done' : '' }
+                className={ `
+                  ingredient-in-progress
+                  ${recipeProgress[index].done ? 'done' : ''}
+                `.trim() }
                 data-testid={ `${index}-ingredient-step` }
               >
                 <input
@@ -61,7 +68,7 @@ function RecipeIngredients({ ingredients, isDrink, isRecipeInProgress, recipeId 
                   onChange={ () => toggleCheckbox(index) }
                   type="checkbox"
                 />
-                { `${ingredient.measure} ${ingredient.name}` }
+                { `${ingredient.measure ?? ''} ${ingredient.name}` }
               </label>
             </li>
           );

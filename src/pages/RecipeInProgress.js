@@ -1,11 +1,11 @@
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import Loading from '../components/Loading';
-import RecipeButton from '../components/recipeDetailsInProgress/RecipeButton';
-import RecipeHeader from '../components/recipeDetailsInProgress/RecipeHeader';
-import RecipeIngredients from '../components/recipeDetailsInProgress/RecipeIngredients';
-import RecipeInstructions from '../components/recipeDetailsInProgress/RecipeInstructions';
-import RecipeYoutube from '../components/recipeDetailsInProgress/RecipeYoutube';
+import RecipeButton from '../components/RecipeDetails/RecipeButton';
+import RecipeHeader from '../components/RecipeDetails/RecipeHeader';
+import RecipeIngredients from '../components/RecipeDetails/RecipeIngredients';
+import RecipeInstructions from '../components/RecipeDetails/RecipeInstructions';
+import RecipeYoutube from '../components/RecipeDetails/RecipeYoutube';
 import Context from '../context/Context';
 import { fetchRecipeDetails } from '../services';
 

@@ -9,6 +9,8 @@ import {
 import Context from './Context';
 
 function ContextProvider({ children }) {
+  const [searchBarIsVisible, setSearchBarIsVisible] = useState(false);
+
   // duas chaves: drinks e meals
   // uma para cada página da aplicação
   const [searchResults, setSearchResults] = useState({
@@ -115,6 +117,8 @@ function ContextProvider({ children }) {
       addDoneRecipe,
       searchResults,
       setSearchResults,
+      searchBarIsVisible,
+      setSearchBarIsVisible,
     }),
     [
       doneRecipes,
@@ -125,7 +129,10 @@ function ContextProvider({ children }) {
       addInProgressRecipe,
       addDoneRecipe,
       searchResults,
-      setSearchResults],
+      setSearchResults,
+      searchBarIsVisible,
+      setSearchBarIsVisible,
+    ],
   );
 
   return (

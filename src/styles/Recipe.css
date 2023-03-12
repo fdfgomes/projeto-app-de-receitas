@@ -1,0 +1,37 @@
+.recipes {
+  font-family: 'Glacial Indifference', sans-serif;
+  margin: auto;
+  width: 95%;
+}
+
+.recipes .available-categories {
+  width: calc(100% + 8px);
+}
+
+.recipes .available-categories .title {
+  color: #584e28;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 400;
+  margin: 13px 0 21px;
+}
+
+.recipes .available-categories .category-group {
+  display: flex;
+  gap: 12px;
+  margin: 12px 0 24px 0;
+  overflow-x: auto;
+}
+
+.recipes .available-categories .category-group .btn-category {
+  background-color: #e1dabd;
+  border: none;
+  border-radius: 14px;
+  padding: 8px 14px;
+  /* https://www.digitalocean.com/community/tutorials/css-prevent-line-break */
+  white-space: nowrap;
+  width: fit-content;
+}
+
+.recipes .available-categories .category-group .btn-category:last-of-type {
+  margin-right: 8px;
+}

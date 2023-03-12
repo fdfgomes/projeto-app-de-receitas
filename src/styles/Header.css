@@ -1,0 +1,40 @@
+.header {
+  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4px;
+  padding: 10px 10px;
+  width: 100%;
+}
+
+.header a {
+  color: #7b6e38;
+  text-decoration: none;
+}
+
+.header h2 {
+  color: #7b6e38;
+  margin-bottom: 0;
+}
+
+.header .icons {
+  display: flex;
+  gap: 4px;
+  height: fit-content;
+  justify-self: end;
+}
+
+.header .icons .icon {
+  align-items: center;
+  border-radius: 100%;
+  color: #7b6e38;
+  display: flex;
+  height: 36px;
+  justify-content: center;
+  width: 36px;
+}
+
+.header .icons .icon-button {
+  background-color: transparent;
+  border: none;
+}

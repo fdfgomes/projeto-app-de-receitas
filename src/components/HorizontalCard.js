@@ -46,68 +46,89 @@ export default function HorizontalCard() {
     }
     return copy(`http://localhost:3000/drinks/${recipe.id}`);
   };
+
   return (
-    <section>
+    <section className="favorited-recipes">
       {/* caso a lista de favoritos esteja vazia, exibe um texto, do contrário,
       popula a tela com cards */}
-      {favoriteRecipes.length === 0
+      { favoriteRecipes.length === 0
         ? <p>Você não possui receitas favoritadas</p>
         : favoriteRecipes.map((recipe, index) => (
-          <div key={ recipe.id }>
+          <div className="favorite-recipe-card" key={ recipe.id }>
             {/* ternário que renderiza os elementos especificos
             caso seja uma comida ou bebida */}
-            {recipe.type === 'meal'
+            { recipe.type === 'meal'
               ? (
                 <>
                   {/* links da imagem e nome da receita como pede o requisito 56.
                   Por algum motivo, o cypress n reconhece o link da imagem */}
-                  <Link to={ `/meals/${recipe.id}` }>
+                  <Link
+                    className="recipe-image"
+                    to={ `/meals/${recipe.id}` }
+                  >
                     <img
-                      src={ recipe.image }
                       alt={ recipe.name }
                       data-testid={ `${index}-horizontal-image` }
+                      src={ recipe.image }
                     />
                   </Link>
-                  <Link to={ `/meals/${recipe.id}` }>
+                  <Link
+                    className="recipe-name"
+                    to={ `/meals/${recipe.id}` }
+                  >
                     <h4 data-testid={ `${index}-horizontal-name` }>{ recipe.name }</h4>
                   </Link>
-                  <p data-testid={ `${index}-horizontal-top-text` }>
+                  <p
+                    className="recipe-category"
+                    data-testid={ `${index}-horizontal-top-text` }
+                  >
                     {`${recipe.nationality} - ${recipe.category}`}
                   </p>
                 </>
               ) : (
                 <>
-                  <Link to={ `/drinks/${recipe.id}` }>
+                  <Link
+                    className="recipe-image"
+                    to={ `/drinks/${recipe.id}` }
+                  >
                     <img
-                      src={ recipe.image }
                       alt={ recipe.name }
                       data-testid={ `${index}-horizontal-image` }
+                      src={ recipe.image }
                     />
                   </Link>
-                  <Link to={ `/drinks/${recipe.id}` }>
+                  <Link
+                    className="recipe-name"
+                    to={ `/drinks/${recipe.id}` }
+                  >
                     <h4 data-testid={ `${index}-horizontal-name` }>{ recipe.name }</h4>
                   </Link>
-                  <div data-testid={ `${index}-horizontal-top-text` }>
-                    <p>{ recipe.alcoholicOrNot }</p>
-                  </div>
+                  <p
+                    className="recipe-category"
+                    data-testid={ `${index}-horizontal-top-text` }
+                  >
+                    { recipe.alcoholicOrNot }
+                  </p>
                 </>
-              )}
-            <button onClick={ () => shareLink(recipe) }>
-              <img
-                data-testid={ `${index}-horizontal-share-btn` }
-                src={ shareIcon }
-                alt="Share button"
-              />
-            </button>
-            <button onClick={ () => toggleFavorite(recipe) }>
-              <img
-                data-testid={ `${index}-horizontal-favorite-btn` }
-                src={ isFavorited(recipe) ? blackHeartIcon : whiteHeartIcon }
-                alt="Favorite button"
-              />
-            </button>
+              ) }
+            <div className="buttons-share-and-favorite">
+              <button onClick={ () => shareLink(recipe) }>
+                <img
+                  alt="Share button"
+                  data-testid={ `${index}-horizontal-share-btn` }
+                  src={ shareIcon }
+                />
+              </button>
+              <button onClick={ () => toggleFavorite(recipe) }>
+                <img
+                  alt="Favorite button"
+                  data-testid={ `${index}-horizontal-favorite-btn` }
+                  src={ isFavorited(recipe) ? blackHeartIcon : whiteHeartIcon }
+                />
+              </button>
+            </div>
           </div>
-        ))}
+        )) }
     </section>
   );
 }

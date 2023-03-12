@@ -1,0 +1,18 @@
+.recipe-ingredients {
+  display: flex;
+  flex-direction: column;
+  font-family: 'Glacial Indifference', sans-serif;
+  gap: 10px;
+  margin-top: 18px;
+  padding: 4px 20px;
+}
+
+.recipe-ingredients .ingredient-in-progress {
+  align-items: center;
+  display: flex;
+  gap: 6px;
+}
+
+.recipe-ingredients p {
+  line-height: 10px;
+}

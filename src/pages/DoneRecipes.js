@@ -5,6 +5,15 @@ import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 import Footer from '../components/Footer';
 
+// chatGPT
+function formatDate(isoDate) {
+  const date = new Date(isoDate);
+  const day = date.getDate().toString().padStart(2, '0');
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const year = date.getFullYear().toString();
+  return `${day}/${month}/${year}`;
+}
+
 function DoneRecipes() {
   const [doneRecipes, setDoneRecipes] = useState([]);
   const [recipes, setRecipes] = useState([]);
@@ -38,50 +47,73 @@ function DoneRecipes() {
 
   return (
     <div>
-
       <Header
         title="Done Recipes"
       />
+      <main className="favorite-recipes">
+        <div className="categories">
+          <button
+            className="category-button"
+            data-testid="filter-by-all-btn"
+            name="all"
+            type="button"
+            onClick={ generalHandler }
+          >
+            All
+          </button>
 
-      <section>
-        <button
-          data-testid="filter-by-all-btn"
-          name="all"
-          type="button"
-          onClick={ generalHandler }
-        >
-          All
-        </button>
+          <button
+            className="category-button"
+            data-testid="filter-by-meal-btn"
+            name="meal"
+            type="button"
+            onClick={ (e) => handleFilterTypes(e) }
+          >
+            Meals
+          </button>
 
-        <button
-          data-testid="filter-by-meal-btn"
-          name="meal"
-          type="button"
-          onClick={ (e) => handleFilterTypes(e) }
-        >
-          Meals
-        </button>
+          <button
+            className="category-button"
+            data-testid="filter-by-drink-btn"
+            name="drink"
+            type="button"
+            onClick={ (e) => handleFilterTypes(e) }
+          >
+            Beverages
+          </button>
+        </div>
 
-        <button
-          data-testid="filter-by-drink-btn"
-          name="drink"
-          type="button"
-          onClick={ (e) => handleFilterTypes(e) }
-        >
-          Beverages
-        </button>
-      </section>
+        <section className="favorited-recipes">
+          { recipes.map((recipe, index) => (
+            <div
+              className="favorite-recipe-card"
+              key={ index }
+              style={ {
+                gridTemplateRows: '.75fr .5fr .5fr 1fr',
+              } }
+            >
+              <Link
+                className="recipe-image"
+                style={ {
+                  gridRow: '1 / span 4',
+                } }
+                to={ `${recipe.type}s/${recipe.id}` }
+              >
+                <img
+                  alt={ recipe.name }
+                  data-testid={ `${index}-horizontal-image` }
+                  src={ recipe.image }
+                />
+              </Link>
 
-      <main>
-        {recipes.map((recipe, index) => (
-          <div key={ index }>
-            <Link to={ `${recipe.type}s/${recipe.id}` }>
-              <img
-                data-testid={ `${index}-horizontal-image` }
-                src={ recipe.image }
-                alt={ recipe.name }
-                style={ { width: '80px' } }
-              />
+              {/* nome da receita */}
+              <h4
+                className="recipe-name"
+                data-testid={ `${index}-horizontal-name` }
+              >
+                { recipe.name }
+              </h4>
+
               {recipe.type === 'meal' ? (
                 <>
                   <p data-testid={ `${index}-horizontal-top-text` }>
@@ -95,31 +127,45 @@ function DoneRecipes() {
                   </p>
                 </>
               ) : (
-                <p data-testid={ `${index}-horizontal-top-text` }>
+                <p
+                  className="recipe-category"
+                  data-testid={ `${index}-horizontal-top-text` }
+                >
                   {recipe.alcoholicOrNot}
                 </p>
               )}
-              <p data-testid={ `${index}-horizontal-done-date` }>{ recipe.doneDate }</p>
-              <p data-testid={ `${index}-horizontal-name` }>{ recipe.name }</p>
-            </Link>
 
-            <button
-              type="button"
-              onClick={ () => {
-                clipboardCopy(`http://localhost:3000/${recipe.type}s/${recipe.id}`);
-                setCopyMsg(true);
-              } }
-            >
-              <img
-                src={ shareIcon }
-                alt="Share Icon"
-                data-testid={ `${index}-horizontal-share-btn` }
-              />
-              {copyMsg && <span>Link copied!</span>}
-            </button>
+              {/* data de conclusão da receita */}
+              <p
+                data-testid={ `${index}-horizontal-done-date` }
+                style={ {
+                  marginBottom: 0,
+                } }
+              >
+                Done in:
+                {' '}
+                { formatDate(recipe.doneDate) }
+              </p>
 
-          </div>
-        ))}
+              <div className="buttons-share-and-favorite">
+                <button
+                  type="button"
+                  onClick={ () => {
+                    clipboardCopy(`http://localhost:3000/${recipe.type}s/${recipe.id}`);
+                    setCopyMsg(true);
+                  } }
+                >
+                  <img
+                    src={ shareIcon }
+                    alt="Share Icon"
+                    data-testid={ `${index}-horizontal-share-btn` }
+                  />
+                  {/* {copyMsg && <span>Link copied!</span>} */}
+                </button>
+              </div>
+            </div>
+          )) }
+        </section>
       </main>
       <Footer />
     </div>

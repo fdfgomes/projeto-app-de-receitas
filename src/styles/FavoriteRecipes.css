@@ -9,6 +9,19 @@
   gap: 14px;
 }
 
+.favorite-recipes .message {
+  align-items: center;
+  display: flex;
+  height: calc(60vh);
+  justify-content: center;
+  padding: 10px;
+}
+
+.favorite-recipes .message h2 {
+  color: #7b6e38;
+  text-align: center;
+}
+
 .favorite-recipe-card {
   align-items: center;
   background-color: white;

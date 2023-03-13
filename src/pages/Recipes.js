@@ -43,6 +43,8 @@ export default function Recipes() {
     const categoryLimit = 5;
 
     if (type === 'Meals') {
+      setIsLoading(true);
+
       const meals = await fetchMealsApi() ?? [];
       const mealsCategory = await fetchMealsCategories() ?? [];
       const mealsResult = meals.slice(0, recipesLimit);// Define apenas as 12 primeiras receitas
@@ -53,6 +55,8 @@ export default function Recipes() {
       setRecipe('Meals');
       setIsLoading(false);// Necessário para não chamar o componente enquanto o estado não tiver com as receitas
     } else if (type === 'Drinks') {
+      setIsLoading(true);
+
       const drinks = await fetchDrinksApi() ?? [];
       const drinksCategory = await fetchDrinksCategories() ?? [];
 

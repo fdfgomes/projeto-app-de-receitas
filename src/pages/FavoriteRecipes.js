@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import FilterBtns from '../components/FilterBtns';
 import HorizontalCard from '../components/HorizontalCard';
 import '../styles/FavoriteRecipes.css';
+import Footer from '../components/Footer';
 
 function FavoriteRecipes() {
   return (
@@ -12,6 +13,7 @@ function FavoriteRecipes() {
         <FilterBtns />
         <HorizontalCard />
       </main>
+      <Footer />
     </>
   );
 }

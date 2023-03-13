@@ -52,7 +52,13 @@ export default function HorizontalCard() {
       {/* caso a lista de favoritos esteja vazia, exibe um texto, do contrário,
       popula a tela com cards */}
       { favoriteRecipes.length === 0
-        ? <p>Você não possui receitas favoritadas</p>
+        ? (
+          <div className="message">
+            <h2>
+              Você não possui receitas favoritadas
+            </h2>
+          </div>
+        )
         : favoriteRecipes.map((recipe, index) => (
           <div className="favorite-recipe-card" key={ recipe.id }>
             {/* ternário que renderiza os elementos especificos

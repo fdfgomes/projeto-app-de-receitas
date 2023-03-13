@@ -3,7 +3,7 @@
   border-top-right-radius: 38px;
   border-top-left-radius: 38px;
   margin: 0 -8px 50px;
-  min-height: 100vh;
+  min-height: calc(100vh - 56px - 50px);
   padding: 10px 14px 8px;
 }
 

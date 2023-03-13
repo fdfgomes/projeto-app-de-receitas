@@ -87,6 +87,7 @@ export default function Recipes() {
     <>
       <Header title={ title } />
       <main className="recipes">
+        { isLoading && <Loading /> }
         {/* resultados da pesquisa */}
         { pathname === '/meals' && mealsSearchResults.length > 0 && <SearchResults /> }
         { pathname === '/drinks' && drinksSearchResults.length > 0 && <SearchResults /> }
@@ -126,15 +127,16 @@ export default function Recipes() {
               </div>
               {/* cards exibidos nas rotas /drinks e /meals */}
               <div className="search-results">
-                { isLoading && <Loading /> }
-                <div className="results-wrapper">
-                  <h1 className="title">
-                    Popular
-                    {' '}
-                    { isDrink ? 'drinks' : 'meals' }
-                  </h1>
-                  { !isLoading && <RecipeCards data={ data } type={ recipe } /> }
-                </div>
+                { !isLoading && (
+                  <div className="results-wrapper">
+                    <h1 className="title">
+                      Popular
+                      {' '}
+                      { isDrink ? 'drinks' : 'meals' }
+                    </h1>
+                    <RecipeCards data={ data } type={ recipe } />
+                  </div>
+                ) }
               </div>
             </>
           )

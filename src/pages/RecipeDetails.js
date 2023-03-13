@@ -14,9 +14,12 @@ import '../styles/RecipeDetails.css';
 
 function RecipeDetails() {
   const { id } = useParams();
+
   const { pathname } = useLocation();
 
   const history = useHistory();
+
+  const isDrink = pathname.includes('/drinks');
 
   const [recipeInfo, setRecipeInfo] = useState({});
 
@@ -36,8 +39,6 @@ function RecipeDetails() {
   useEffect(() => {
     fetchDetails();
   }, [fetchDetails]);
-
-  const isDrink = pathname.includes('/drinks');
 
   return (
     <main className="recipe-details">

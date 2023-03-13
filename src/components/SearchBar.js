@@ -55,6 +55,7 @@ export default function SearchBar() {
     ) {
       return global.alert('Your search must have only 1 (one) character');
     }
+    // mudar estado para loading
     setSearchResults((currentState) => ({
       ...currentState,
       [currentRoute]: {

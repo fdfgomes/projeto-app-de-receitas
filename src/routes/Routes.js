@@ -12,14 +12,16 @@ function Routes() {
   return (
     <Switch>
       <Route exact path="/" component={ Login } />
-      <Route path={ ['/meals', '/drinks'] } component={ Recipes } />
+      <Route exact path={ ['/meals', '/drinks'] } component={ Recipes } />
       <Route
-        path={ ['/meals/:id-da-receita', '/drinks/:id-da-receita'] }
+        exact
+        path={ ['/meals/:id', '/drinks/:id'] }
         component={ RecipeDetails }
       />
       <Route
+        exact
         path={
-          ['/meals/:id-da-receita/in-progress', '/drinks/:id-da-receita/in-progress']
+          ['/meals/:id/in-progress', '/drinks/:id/in-progress']
         }
         component={ RecipeInProgress }
       />

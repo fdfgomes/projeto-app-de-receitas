@@ -28,9 +28,7 @@ describe('Testa funcionamento da pagina de receitas', () => {
     jest.spyOn(global, 'fetch');
     global.fetch = jest.fn(fetch);
 
-    act(() => {
-      history.push('/meals');
-    });
+    await act(() => history.push('/meals'));
 
     await waitFor(() => {
       const loading = screen.queryByText(LOADING);
@@ -61,9 +59,7 @@ describe('Testa funcionamento da pagina de receitas', () => {
     jest.spyOn(global, 'fetch');
     global.fetch = jest.fn(fetch);
 
-    act(() => {
-      history.push('/drinks');
-    });
+    await act(() => history.push('/drinks'));
 
     await waitFor(() => {
       const loading = screen.queryByText(LOADING);

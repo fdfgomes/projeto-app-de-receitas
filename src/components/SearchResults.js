@@ -21,7 +21,7 @@ export default function SearchResults() {
       </h1>
       <RecipeCards
         data={ isDrink ? searchResults.drinks.data : searchResults.meals.data }
-        recipe={ isDrink ? 'Drinks' : 'Meals' }
+        type={ isDrink ? 'Drinks' : 'Meals' }
       />
     </div>
   );

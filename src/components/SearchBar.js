@@ -86,7 +86,7 @@ export default function SearchBar() {
   useEffect(() => {
     const NO_RESULTS_FOUND = 'Sorry, we haven\'t found any recipes for these filters.';
 
-    const SEARCH_RESULTS_LENGTH = searchResults[currentRoute].data.length;
+    const SEARCH_RESULTS_LENGTH = searchResults[currentRoute].data?.length ?? 0;
     const SEARCH_TERM = searchResults[currentRoute].term;
 
     // exibir mensagem ao usuário caso a pesquisa não retorne resultados

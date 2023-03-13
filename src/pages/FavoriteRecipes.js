@@ -8,7 +8,7 @@ function FavoriteRecipes() {
   return (
     <>
       <Header title="Favorite Recipes" />
-      <main>
+      <main className="favorite-recipes">
         <FilterBtns />
         <HorizontalCard />
       </main>

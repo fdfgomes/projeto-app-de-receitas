@@ -18,13 +18,17 @@ export default function RecipeCards({ data, type }) {
               className="recipe-card"
               data-testid={ `${index}-recipe-card` }
             >
+              {/* label com a categoria da receita */}
               <div className="recipe-categories">
-                <button
-                  className="category"
-                  type="button"
-                >
-                  { isDrink ? item.strAlcoholic : item.strCategory }
-                </button>
+                {/* exibir apenas se houver valor nas propriedades strAlcoholic ou strCategory */}
+                {(isDrink ? item.strAlcoholic : item.strCategory) && (
+                  <button
+                    className="category"
+                    type="button"
+                  >
+                    { isDrink ? item.strAlcoholic : item.strCategory }
+                  </button>
+                )}
               </div>
               <img
                 alt={ `${isDrink ? item.strDrink : item.strMeal} recipe` }

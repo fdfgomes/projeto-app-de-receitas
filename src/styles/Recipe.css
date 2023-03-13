@@ -15,14 +15,14 @@
   margin: 13px 0 21px;
 }
 
-.recipes .available-categories .category-group {
+.recipes .available-categories .category-group, .favorite-recipes .categories {
   display: flex;
   gap: 12px;
   margin: 12px 0 24px 0;
   overflow-x: auto;
 }
 
-.recipes .available-categories .category-group .btn-category {
+.recipes .available-categories .category-group .btn-category, .favorite-recipes .categories .category-button {
   background-color: #e1dabd;
   border: none;
   border-radius: 14px;

@@ -9,7 +9,7 @@ const RECIPE_INGREDIENTS_CHECKBOXES = '[data-testid*=ingredient-step] input';
 const FINISH_RECIPE_BUTTON = 'finish-recipe-btn';
 
 describe('Testando o componente RecipeInProgress', () => {
-  describe('Na rota /meals/:id-da-receita', () => {
+  describe('Na rota /meals/:id-da-receita/in-progress', () => {
     const ROUTE = '/meals/53014/in-progress';
 
     beforeEach(() => {
@@ -101,7 +101,7 @@ describe('Testando o componente RecipeInProgress', () => {
     });
   });
 
-  describe('Na rota /drinks/:id-da-receita', () => {
+  describe('Na rota /drinks/:id-da-receita/in-progress', () => {
     const ROUTE = '/drinks/178332/in-progress';
 
     beforeEach(() => {

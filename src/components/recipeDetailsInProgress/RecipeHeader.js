@@ -49,7 +49,9 @@ function RecipeHeader({ data }) {
   }, [isFavorited, recipe, setFavoriteRecipes]);
 
   const handleShareClick = useCallback(() => {
-    copy(`http://localhost:3000${pathname}`);
+    // remover o /in-progress do pathname na página de receita em progresso
+    const url = `http://localhost:3000${pathname.split('/in-progress')[0]}`;
+    copy(url);
     setCopyMessage(true);
   }, [pathname]);
 

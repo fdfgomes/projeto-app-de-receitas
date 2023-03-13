@@ -11,10 +11,10 @@ function RecipeRecomendations() {
     const recipesLimit = 6;
     const recomendations = await fetchRecomendations(pathname);
     if (pathname.includes('/meals')) {
-      const slicedRecomendation = recomendations.drinks.slice(0, recipesLimit);
+      const slicedRecomendation = recomendations.drinks?.slice(0, recipesLimit);
       setRecipes(slicedRecomendation);
     } else {
-      const slicedRecomendation = recomendations.meals.slice(0, recipesLimit);
+      const slicedRecomendation = recomendations.meals?.slice(0, recipesLimit);
       setRecipes(slicedRecomendation);
     }
   }, [pathname]);

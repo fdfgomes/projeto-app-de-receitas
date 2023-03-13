@@ -1,4 +1,4 @@
-import { fetchInProgressRecipes } from './api';
+import { fullfillRecipesIngredientsDoneProperty } from '../helpers/recipeHelpers';
 
 export async function fetchMealsApi() {
   try {
@@ -21,29 +21,6 @@ export async function fetchDrinksApi() {
     // console.error(err);
   }
 }
-
-// função para verificar se a receita esta na lista de receitas em progresso
-// e criar propriedade done que indica se o ingrediente já foi marcado como concluído
-const fullfillIngredientsDoneProperty = (recipeId, recipeIngredients) => {
-  // recuperar receitas em progresso salvas no localStorage
-  const inProgressRecipes = fetchInProgressRecipes();
-  // verificar se a receita esta na lista de receitas em progresso do localStorage
-  const currentRecipe = inProgressRecipes
-    .find(
-      (recipeInProgress) => (recipeInProgress.idDrink
-        ? recipeInProgress.idDrink === recipeId
-        : recipeInProgress.idMeal === recipeId),
-    );
-  // se estiver, retornar os estados dos ingredientes (propriedade done) do localStorage
-  if (currentRecipe) {
-    return currentRecipe.ingredients;
-  }
-  // se não estiver, definir todos os estados dos ingredientes (propriedade done) como false
-  return recipeIngredients.map((ingredient) => ({
-    ...ingredient,
-    done: false,
-  }));
-};
 
 export const fetchRecipeDetails = async (recipeId, route) => {
   // recipeId --> id da receita
@@ -81,12 +58,14 @@ export const fetchRecipeDetails = async (recipeId, route) => {
         }
       }
     });
-    recipe.ingredients = fullfillIngredientsDoneProperty(
+    recipe.ingredients = fullfillRecipesIngredientsDoneProperty(
       recipeId,
       recipeIngredients,
     );
+    // extrair apenas o id do vídeo no youtube
     const videoId = recipe.strYoutube?.split('https://www.youtube.com/watch?v=')[1];
     recipe.strYoutube = videoId;
+    // retornar receita
     return recipe;
   } catch (err) {
     console.error(err);

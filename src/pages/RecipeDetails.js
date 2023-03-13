@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import Loading from '../components/Loading';
 import RecipeHeader from '../components/recipeDetailsInProgress/RecipeHeader';
 import RecipeIngredients from '../components/recipeDetailsInProgress/RecipeIngredients';
@@ -9,10 +9,14 @@ import RecipeRecomendations
   from '../components/recipeDetailsInProgress/RecipeRecomendations';
 import RecipeYoutube from '../components/recipeDetailsInProgress/RecipeYoutube';
 import { fetchRecipeDetails } from '../services';
+import { recipeIsInProgress } from '../helpers/recipeHelpers';
 
 function RecipeDetails() {
   const { id } = useParams();
   const { pathname } = useLocation();
+
+  const history = useHistory();
+
   const [recipeInfo, setRecipeInfo] = useState({});
 
   const [recipeIsLoading, setRecipeIsLoading] = useState(true);
@@ -23,6 +27,10 @@ function RecipeDetails() {
     setRecipeInfo(info);
     setRecipeIsLoading(false);
   }, [id, pathname]);
+
+  const handleClickStartRecipe = useCallback(() => {
+    history.push(`${pathname}/in-progress`);
+  }, [history, pathname]);
 
   useEffect(() => {
     fetchDetails();
@@ -47,8 +55,10 @@ function RecipeDetails() {
             isDrink={ isDrink }
           />
           <RecipeButton
+            disabled={ false }
             id="start-recipe-btn"
-            label="Start Recipe"
+            label={ recipeIsInProgress(id) ? 'Continue Recipe' : 'Start Recipe' }
+            onClick={ handleClickStartRecipe }
           />
           <RecipeRecomendations />
         </>

@@ -79,7 +79,7 @@ function DoneRecipes() {
             type="button"
             onClick={ (e) => handleFilterTypes(e) }
           >
-            Beverages
+            Drinks
           </button>
         </div>
 

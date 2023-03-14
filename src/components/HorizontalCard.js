@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import Context from '../context/Context';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
@@ -42,9 +43,11 @@ export default function HorizontalCard() {
 
   const shareLink = (recipe) => {
     if (recipe.type === 'meal') {
-      return copy(`http://localhost:3000/meals/${recipe.id}`);
+      copy(`http://localhost:3000/meals/${recipe.id}`);
+    } else {
+      copy(`http://localhost:3000/drinks/${recipe.id}`);
     }
-    return copy(`http://localhost:3000/drinks/${recipe.id}`);
+    toast.success('Link copied!');
   };
 
   return (

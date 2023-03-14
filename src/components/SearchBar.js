@@ -1,6 +1,7 @@
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { FiSearch } from 'react-icons/fi';
+import toast from 'react-hot-toast';
 import Context from '../context/Context';
 import { fetchSearchResults, SEARCH_TYPES } from '../services/api';
 import '../styles/SearchBar.css';
@@ -55,7 +56,7 @@ export default function SearchBar() {
       searchType[currentRoute] === SEARCH_TYPES.FIRST_LETTER
       && searchTerm[currentRoute].length > 1
     ) {
-      return global.alert('Your search must have only 1 (one) character');
+      return toast.error('Your search must have only 1 (one) character');
     }
     // mudar estado para loading
     setSearchResults((currentState) => ({
@@ -86,17 +87,19 @@ export default function SearchBar() {
   useEffect(() => {
     const NO_RESULTS_FOUND = 'Sorry, we haven\'t found any recipes for these filters.';
 
-    const SEARCH_RESULTS_LENGTH = searchResults[currentRoute].data?.length ?? 0;
-    const SEARCH_TERM = searchResults[currentRoute].term;
+    const SEARCH_RESULTS_LENGTH = searchResults[currentRoute]?.data?.length ?? 0;
+    const SEARCH_TERM = searchResults[currentRoute]?.term;
+
+    const SEARCH_IS_LOADING = searchResults[currentRoute]?.isLoading;
 
     // exibir mensagem ao usuário caso a pesquisa não retorne resultados
-    if (SEARCH_RESULTS_LENGTH === 0 && SEARCH_TERM !== '') {
-      global.alert(NO_RESULTS_FOUND);
+    if (SEARCH_RESULTS_LENGTH === 0 && SEARCH_TERM !== '' && !SEARCH_IS_LOADING) {
+      toast.error(NO_RESULTS_FOUND);
     }
 
     // direcionar o usuário à página com os detalhes da receita
     // caso a pesquisa retorne apenas 1 resultado
-    if (SEARCH_RESULTS_LENGTH === 1) {
+    if (SEARCH_RESULTS_LENGTH === 1 && !SEARCH_IS_LOADING) {
       const id = currentRoute === 'meals'
         ? searchResults[currentRoute].data[0].idMeal
         : searchResults[currentRoute].data[0].idDrink;

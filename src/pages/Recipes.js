@@ -21,7 +21,7 @@ import {
 export default function Recipes() {
   const { pathname } = useLocation();
 
-  const isDrink = useMemo(() => pathname.includes('/drinks'), [pathname]);
+  const isDrinksPage = useMemo(() => pathname.includes('/drinks'), [pathname]);
 
   const {
     searchResults: {
@@ -32,6 +32,8 @@ export default function Recipes() {
         data: drinksSearchResults,
       },
     },
+    selectedCategory,
+    setSelectedCategory,
   } = useContext(Context);
 
   const [title, setTitle] = useState('');
@@ -39,7 +41,6 @@ export default function Recipes() {
   const [recipe, setRecipe] = useState('');
   const [category, setCategory] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [lastCategory, setLastCategory] = useState(undefined);
 
   const fetchApiData = async (type) => {
     const recipesLimit = 12;
@@ -73,50 +74,50 @@ export default function Recipes() {
     }
   };
 
-  const recipesByCategory = async (itemCategory) => {
+  const filterRecipesByCategory = async (clickedCategory) => {
     const recipesLimit = 12;
 
     switch (title) {
     case 'Meals':
-      if (lastCategory === itemCategory) {
+      if (selectedCategory === clickedCategory) {
         setIsLoading(true);
         const meals = await fetchMealsApi() ?? [];
         const mealsResult = meals.slice(0, recipesLimit);// Define apenas as 12 primeiras receitas
 
         setData(mealsResult);
         setRecipe('Meals');
-        setLastCategory('All');
+        setSelectedCategory('All');
         setIsLoading(false);
       } else {
         setIsLoading(true);
-        const meals = await fetchMealsByCategory(itemCategory) ?? [];
+        const meals = await fetchMealsByCategory(clickedCategory) ?? [];
         const mealsResult = meals.slice(0, recipesLimit);
 
         setData(mealsResult);
         setRecipe('Meals');
-        setLastCategory(itemCategory);
+        setSelectedCategory(clickedCategory);
         setIsLoading(false);
       }
       break;
     case 'Drinks':
-      if (lastCategory === itemCategory) {
+      if (selectedCategory === clickedCategory) {
         setIsLoading(true);
         const drinks = await fetchDrinksApi() ?? [];
         const drinksResult = drinks.slice(0, recipesLimit);
 
         setData(drinksResult);
         setRecipe('Drinks');
-        setLastCategory('All');
+        setSelectedCategory('All');
         setIsLoading(false);
       } else {
         setIsLoading(true);
-        const drinks = await fetchDrinksByCategory(itemCategory) ?? [];
+        const drinks = await fetchDrinksByCategory(clickedCategory) ?? [];
 
         const drinksResult = drinks.slice(0, recipesLimit);
 
         setData(drinksResult);
         setRecipe('Drinks');
-        setLastCategory(itemCategory);
+        setSelectedCategory(clickedCategory);
         setIsLoading(false);
       }
       break;
@@ -144,17 +145,17 @@ export default function Recipes() {
     <>
       <Header title={ title } />
       <main className="recipes">
-        { isLoading && <Loading /> }
         {/* resultados da pesquisa */}
-        { pathname === '/meals' && mealsSearchResults.length > 0 && <SearchResults /> }
-        { pathname === '/drinks' && drinksSearchResults.length > 0 && <SearchResults /> }
+        { !isDrinksPage && mealsSearchResults.length > 0 && <SearchResults /> }
+        { isDrinksPage && drinksSearchResults.length > 0 && <SearchResults /> }
+
+        { isLoading && <Loading /> }
+
         {
-          // renderizar apenas se o usuário estiver na rota /meals ou /drinks
-          // e não tiver feito nenhuma pesquisa
-          ['/meals', '/drinks'].includes(pathname)
-          && mealsSearchResults.length === 0
-          && drinksSearchResults.length === 0
-          && (
+          (
+            (isDrinksPage && drinksSearchResults.length === 0)
+            || (!isDrinksPage && mealsSearchResults.length === 0)
+          ) && (
             <>
               {/* botões com as categorias disponíveis */}
               <div className="available-categories">
@@ -167,7 +168,10 @@ export default function Recipes() {
                     className="btn-category"
                     data-testid="All-category-filter"
                     key={ -0 }
-                    onClick={ () => fetchApiData(title) }
+                    onClick={ () => {
+                      setSelectedCategory('All');
+                      fetchApiData(title);
+                    } }
                   >
                     All
                   </button>
@@ -177,21 +181,27 @@ export default function Recipes() {
                       className="btn-category"
                       data-testid={ `${item.strCategory}-category-filter` }
                       key={ index }
-                      onClick={ async () => recipesByCategory(item.strCategory) }
+                      onClick={ async () => filterRecipesByCategory(item.strCategory) }
                     >
                       {item.strCategory}
                     </button>
                   ))}
                 </div>
               </div>
+
               {/* cards exibidos nas rotas /drinks e /meals */}
               <div className="search-results">
                 { !isLoading && (
                   <div className="results-wrapper">
                     <h1 className="title">
-                      Popular
-                      {' '}
-                      { isDrink ? 'drinks' : 'meals' }
+                      { selectedCategory === 'All' && (
+                        <>
+                          Popular
+                          {' '}
+                          { isDrinksPage ? 'drinks' : 'meals' }
+                        </>
+                      ) }
+                      { selectedCategory !== 'All' && `${selectedCategory}s` }
                     </h1>
                     <RecipeCards data={ data } type={ recipe } />
                   </div>

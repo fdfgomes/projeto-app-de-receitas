@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import clipboardCopy from 'clipboard-copy';
+import toast from 'react-hot-toast';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 import Footer from '../components/Footer';
@@ -17,7 +18,6 @@ function formatDate(isoDate) {
 function DoneRecipes() {
   const [doneRecipes, setDoneRecipes] = useState([]);
   const [recipes, setRecipes] = useState([]);
-  const [copyMsg, setCopyMsg] = useState([]);
 
   useEffect(() => {
     const storedDoneRecipes = JSON.parse(localStorage
@@ -152,7 +152,7 @@ function DoneRecipes() {
                   type="button"
                   onClick={ () => {
                     clipboardCopy(`http://localhost:3000/${recipe.type}s/${recipe.id}`);
-                    setCopyMsg(true);
+                    toast.success('Link copied!');
                   } }
                 >
                   <img
@@ -160,7 +160,6 @@ function DoneRecipes() {
                     alt="Share Icon"
                     data-testid={ `${index}-horizontal-share-btn` }
                   />
-                  {/* {copyMsg && <span>Link copied!</span>} */}
                 </button>
               </div>
             </div>

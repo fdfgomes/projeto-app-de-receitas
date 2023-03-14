@@ -1,7 +1,8 @@
 import propTypes from 'prop-types';
-import { useCallback, useContext, useMemo, useState } from 'react';
+import { useCallback, useContext, useMemo } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { BiChevronLeft } from 'react-icons/bi';
+import toast from 'react-hot-toast';
 import Context from '../../context/Context';
 import shareIcon from '../../images/shareIcon.svg';
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
@@ -15,9 +16,7 @@ function RecipeHeader({ data }) {
 
   const history = useHistory();
 
-  const { favoriteRecipes, setFavoriteRecipes } = useContext(Context);
-
-  const [copyMessage, setCopyMessage] = useState(false);
+  const { favoriteRecipes, setFavoriteRecipes, setSearchResults } = useContext(Context);
 
   const isDrink = useMemo(() => !!data.idDrink, [data]);
 
@@ -54,11 +53,11 @@ function RecipeHeader({ data }) {
     });
   }, [isFavorited, recipe, setFavoriteRecipes]);
 
-  const handleShareClick = useCallback(() => {
+  const handleClickShare = useCallback(() => {
     // remover o /in-progress do pathname na página de receita em progresso
     const url = `http://localhost:3000${pathname.split('/in-progress')[0]}`;
     copy(url);
-    setCopyMessage(true);
+    toast.success('Link copied!');
   }, [pathname]);
 
   return (
@@ -83,14 +82,26 @@ function RecipeHeader({ data }) {
 
       {/* botões de compartilhar e favoritar receita */}
       <div className="top-buttons">
-        <button onClick={ () => history.goBack() } type="button">
+        <button
+          onClick={ () => {
+            setSearchResults((currentState) => ({
+              ...currentState,
+              [isDrink ? 'drinks' : 'meals']: {
+                data: [],
+                term: '',
+              },
+            }));
+            history.goBack();
+          } }
+          type="button"
+        >
           <BiChevronLeft size={ 26 } />
         </button>
         {/* botão compartilhar receita - handleclick */}
-        {copyMessage && <p>Link copied!</p>}
+        {/* {copyMessage && <p>Link copied!</p>} */}
         <button
           type="button"
-          onClick={ handleShareClick }
+          onClick={ handleClickShare }
         >
           <img
             alt="Share recipe"

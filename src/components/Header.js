@@ -52,7 +52,11 @@ function Header({ title }) {
             )
           }
         </div>
-        {searchBarIsVisible && <SearchBar />}
+        {
+          searchBarIsVisible
+          && ['/drinks', '/meals'].includes(pathname)
+          && <SearchBar />
+        }
       </header>
     );
 }

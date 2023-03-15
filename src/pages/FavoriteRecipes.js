@@ -9,6 +9,8 @@ import Context from '../context/Context';
 function FavoriteRecipes() {
   const { favoriteRecipes } = useContext(Context);
 
+  const [selectedCategory, setSelectedCategory] = useState('all');
+
   const [filteredFavoriteRecipes, setFilteredFavoriteRecipes] = useState([]);
 
   const handleClickFilter = useCallback((category) => {
@@ -21,6 +23,7 @@ function FavoriteRecipes() {
       filteredFavorites = favoriteRecipes
         .filter((favoriteRecipe) => favoriteRecipe.type === 'drink');
     }
+    setSelectedCategory(category);
     setFilteredFavoriteRecipes(filteredFavorites);
   }, [favoriteRecipes]);
 
@@ -32,7 +35,10 @@ function FavoriteRecipes() {
     <>
       <Header title="Favorite Recipes" />
       <main className="favorite-recipes">
-        <FilterBtns handleClickFilter={ handleClickFilter } />
+        <FilterBtns
+          handleClickFilter={ handleClickFilter }
+          selectedCategory={ selectedCategory }
+        />
         { filteredFavoriteRecipes.length === 0 && (
           <div className="message">
             <h2>

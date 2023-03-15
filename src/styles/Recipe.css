@@ -22,7 +22,7 @@
   overflow-x: auto;
 }
 
-.recipes .available-categories .category-group .btn-category, .favorite-recipes .categories .category-button {
+.recipes .available-categories .category-group .btn-category, .favorite-recipes .categories .btn-category {
   background-color: #e1dabd;
   border: none;
   border-radius: 14px;
@@ -30,6 +30,11 @@
   /* https://www.digitalocean.com/community/tutorials/css-prevent-line-break */
   white-space: nowrap;
   width: fit-content;
+}
+
+.recipes .available-categories .category-group .btn-category.selected, .favorite-recipes .categories .btn-category.selected {
+  background-color: rgba(123, 110, 56, 0.4);
+  color: #121008;
 }
 
 .recipes .available-categories .category-group .btn-category:last-of-type {

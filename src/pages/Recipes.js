@@ -165,7 +165,9 @@ export default function Recipes() {
                 <div className="category-group">
                   <button
                     type="button"
-                    className="btn-category"
+                    className={ `
+                      btn-category ${selectedCategory === 'All' ? 'selected' : ''}
+                    `.trim() }
                     data-testid="All-category-filter"
                     key={ -0 }
                     onClick={ () => {
@@ -178,7 +180,10 @@ export default function Recipes() {
                   { category.map((item, index) => (
                     <button
                       type="button"
-                      className="btn-category"
+                      className={ `
+                        btn-category
+                        ${selectedCategory === item.strCategory ? 'selected' : ''}
+                      `.trim() }
                       data-testid={ `${item.strCategory}-category-filter` }
                       key={ index }
                       onClick={ async () => filterRecipesByCategory(item.strCategory) }

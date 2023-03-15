@@ -1,25 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function FilterBtns({ handleClickFilter }) {
+function FilterBtns({
+  handleClickFilter,
+  selectedCategory,
+}) {
   return (
     <div className="categories">
       <button
-        className="category-button"
+        className={ `
+          btn-category ${selectedCategory === 'all' ? 'selected' : ''}
+        `.trim() }
         data-testid="filter-by-all-btn"
         onClick={ () => handleClickFilter('all') }
       >
         All
       </button>
       <button
-        className="category-button"
+        className={ `
+          btn-category ${selectedCategory === 'meal' ? 'selected' : ''}
+        `.trim() }
         data-testid="filter-by-meal-btn"
         onClick={ () => handleClickFilter('meal') }
       >
         Meals
       </button>
       <button
-        className="category-button"
+        className={ `
+          btn-category ${selectedCategory === 'drink' ? 'selected' : ''}
+        `.trim() }
         data-testid="filter-by-drink-btn"
         onClick={ () => handleClickFilter('drink') }
       >

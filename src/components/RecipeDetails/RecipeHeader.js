@@ -62,18 +62,29 @@ function RecipeHeader({ data }) {
 
   return (
     <div className="recipe-header">
+      {/* imagem da receita (mobile) */}
       <img
         alt={ recipe.name }
-        className="recipe-photo"
+        className="recipe-photo mobile"
         data-testid="recipe-photo"
         src={ recipe.image }
       />
 
       {/* nome da receita */}
       <div className="recipe-name">
+
         <h1 data-testid="recipe-title">
           { recipe.name }
         </h1>
+
+        {/* imagem da receita (desktop) */}
+        <img
+          alt={ recipe.name }
+          className="recipe-photo desktop"
+          data-testid="recipe-photo"
+          src={ recipe.image }
+        />
+
         {/* categoria da receita */}
         <p data-testid="recipe-category">
           { isDrink ? recipe.alcoholicOrNot : recipe.category }

@@ -18,6 +18,8 @@ function DoneRecipes() {
   const [doneRecipes, setDoneRecipes] = useState([]);
   const [recipes, setRecipes] = useState([]);
 
+  const [selectedCategory, setSelectedCategory] = useState('all');
+
   useEffect(() => {
     const storedDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
     setDoneRecipes(storedDoneRecipes);
@@ -37,10 +39,12 @@ function DoneRecipes() {
 
   const handleFilterTypes = ({ target }) => {
     const clickedTarget = target.name;
+    setSelectedCategory(clickedTarget);
     filterTypes[clickedTarget]();
   };
 
   const generalHandler = () => {
+    setSelectedCategory('all');
     setRecipes(doneRecipes);
   };
 
@@ -52,7 +56,9 @@ function DoneRecipes() {
       <main className="favorite-recipes">
         <div className="categories">
           <button
-            className="category-button"
+            className={ `
+              btn-category ${selectedCategory === 'all' ? 'selected' : ''}
+            `.trim() }
             data-testid="filter-by-all-btn"
             name="all"
             type="button"
@@ -62,7 +68,9 @@ function DoneRecipes() {
           </button>
 
           <button
-            className="category-button"
+            className={ `
+              btn-category ${selectedCategory === 'meal' ? 'selected' : ''}
+            `.trim() }
             data-testid="filter-by-meal-btn"
             name="meal"
             type="button"
@@ -72,7 +80,9 @@ function DoneRecipes() {
           </button>
 
           <button
-            className="category-button"
+            className={ `
+              btn-category ${selectedCategory === 'drink' ? 'selected' : ''}
+            `.trim() }
             data-testid="filter-by-drink-btn"
             name="drink"
             type="button"

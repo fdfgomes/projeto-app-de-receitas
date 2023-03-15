@@ -7,7 +7,7 @@ import Context from '../context/Context';
 import RecipeCards from '../components/RecipeCards';
 import Loading from '../components/Loading';
 import '../styles/SearchResults.css';
-import '../styles/Recipe.css';
+import '../styles/Recipes.css';
 
 import {
   fetchDrinksApi,

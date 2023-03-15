@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 import Footer from '../components/Footer';
+import '../styles/DoneRecipes.css';
 
 function formatDate(isoDate) {
   const date = new Date(isoDate);
@@ -100,20 +101,14 @@ function DoneRecipes() {
           </div>
         )}
 
-        <section className="favorited-recipes">
+        <section className="done-recipes">
           { recipes.map((recipe, index) => (
             <div
-              className="favorite-recipe-card"
+              className="done-recipe-card"
               key={ index }
-              style={ {
-                gridTemplateRows: '.75fr .5fr .5fr 1fr',
-              } }
             >
               <Link
                 className="recipe-image"
-                style={ {
-                  gridRow: '1 / span 4',
-                } }
                 to={ `${recipe.type}s/${recipe.id}` }
               >
                 <img
@@ -133,36 +128,43 @@ function DoneRecipes() {
 
               {recipe.type === 'meal' ? (
                 <>
-                  <p data-testid={ `${index}-horizontal-top-text` }>
+                  <span
+                    className="recipe-category"
+                    data-testid={ `${index}-horizontal-top-text` }
+                  >
                     {`${recipe.nationality} - ${recipe.category}`}
-                  </p>
-                  <p data-testid={ `${index}-${recipe.tags[0]}-horizontal-tag` }>
+                  </span>
+                  <span
+                    className="recipe-tag-0"
+                    data-testid={ `${index}-${recipe.tags[0]}-horizontal-tag` }
+                  >
                     { recipe.tags[0] }
-                  </p>
-                  <p data-testid={ `${index}-${recipe.tags[1]}-horizontal-tag` }>
+                  </span>
+                  <span
+                    className="recipe-tag-1"
+                    data-testid={ `${index}-${recipe.tags[1]}-horizontal-tag` }
+                  >
                     { recipe.tags[1] }
-                  </p>
+                  </span>
                 </>
               ) : (
-                <p
+                <span
                   className="recipe-category"
                   data-testid={ `${index}-horizontal-top-text` }
                 >
                   {recipe.alcoholicOrNot}
-                </p>
+                </span>
               )}
 
               {/* data de conclusão da receita */}
-              <p
+              <span
+                className="recipe-done-date"
                 data-testid={ `${index}-horizontal-done-date` }
-                style={ {
-                  marginBottom: 0,
-                } }
               >
                 Done in:
                 {' '}
                 { formatDate(recipe.doneDate) }
-              </p>
+              </span>
 
               <div className="buttons-share-and-favorite">
                 <button

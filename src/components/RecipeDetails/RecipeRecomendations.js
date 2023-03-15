@@ -34,6 +34,7 @@ function RecipeRecomendations() {
       </h1>
       <RecipeCards
         data={ recommendations }
+        horizontal
         type={ isDrink ? 'Meals' : 'Drinks' }
       />
     </div>

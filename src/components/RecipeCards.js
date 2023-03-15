@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import '../styles/RecipeCards.css';
 
-export default function RecipeCards({ data, type }) {
+export default function RecipeCards({ data, horizontal, type }) {
   const isDrink = type === 'Drinks';
 
   return (
     <main>
-      <div className="recipe-cards">
+      <div className={ `recipe-cards ${horizontal ? 'horizontal' : ''}` }>
         { data.map((item, index) => (
           <Link
             key={ isDrink ? `${index}-${item.idDrink}` : `${index}-${item.idMeal}` }
@@ -56,5 +56,6 @@ RecipeCards.propTypes = {
     strMeal: PropTypes.string,
     strMealThumb: PropTypes.string,
   })),
+  horizontal: PropTypes.bool,
   type: PropTypes.string,
 }.isRequired;

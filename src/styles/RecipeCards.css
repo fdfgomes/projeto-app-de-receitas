@@ -5,6 +5,11 @@
   width: 100%;
 }
 
+.recipe-cards.horizontal {
+  grid-template-columns: repeat(6, 180px);
+  overflow-x: auto;
+}
+
 .recipe-cards a {
   text-decoration: none;
 }
@@ -74,5 +79,13 @@
 
   .recipe-cards {
     grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+@media only screen and ( min-width : 1200px ) {
+
+  .recipe-cards.horizontal {
+    grid-template-columns: repeat(6, 1fr);
+    overflow-x: hidden;
   }
 }

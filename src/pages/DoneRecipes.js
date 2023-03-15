@@ -6,7 +6,6 @@ import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 import Footer from '../components/Footer';
 
-// chatGPT
 function formatDate(isoDate) {
   const date = new Date(isoDate);
   const day = date.getDate().toString().padStart(2, '0');
@@ -20,8 +19,8 @@ function DoneRecipes() {
   const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
-    const storedDoneRecipes = JSON.parse(localStorage
-      .getItem('doneRecipes')) || []; setDoneRecipes(storedDoneRecipes);
+    const storedDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+    setDoneRecipes(storedDoneRecipes);
   }, []);
 
   useEffect(() => {
@@ -82,6 +81,14 @@ function DoneRecipes() {
             Drinks
           </button>
         </div>
+
+        {recipes.length === 0 && (
+          <div className="message">
+            <h2>
+              No recipes found
+            </h2>
+          </div>
+        )}
 
         <section className="favorited-recipes">
           { recipes.map((recipe, index) => (

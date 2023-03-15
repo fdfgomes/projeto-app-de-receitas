@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import PropTypes from 'prop-types';
 import Context from '../context/Context';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
@@ -8,7 +9,7 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 const copy = require('clipboard-copy');
 
-export default function HorizontalCard() {
+export default function HorizontalCard({ filteredFavoriteRecipes }) {
   // pegando a lista de receitas do estado global
   const { favoriteRecipes, setFavoriteRecipes } = useContext(Context);
 
@@ -41,7 +42,7 @@ export default function HorizontalCard() {
   // adicionar o elemento com o texto no clique sem acionar o elemento de texto em todos os
   // cards da lista
 
-  const shareLink = (recipe) => {
+  const handleClickShare = (recipe) => {
     if (recipe.type === 'meal') {
       copy(`http://localhost:3000/meals/${recipe.id}`);
     } else {
@@ -54,7 +55,7 @@ export default function HorizontalCard() {
     <section className="favorited-recipes">
       {/* caso a lista de favoritos esteja vazia, exibe um texto, do contrário,
       popula a tela com cards */}
-      { favoriteRecipes.length > 0 && favoriteRecipes.map((recipe, index) => (
+      { filteredFavoriteRecipes.map((recipe, index) => (
         <div className="favorite-recipe-card" key={ recipe.id }>
           {/* ternário que renderiza os elementos especificos
             caso seja uma comida ou bebida */}
@@ -112,8 +113,9 @@ export default function HorizontalCard() {
                 </p>
               </>
             ) }
+
           <div className="buttons-share-and-favorite">
-            <button onClick={ () => shareLink(recipe) }>
+            <button onClick={ () => handleClickShare(recipe) }>
               <img
                 alt="Share button"
                 data-testid={ `${index}-horizontal-share-btn` }
@@ -133,6 +135,18 @@ export default function HorizontalCard() {
     </section>
   );
 }
+
+HorizontalCard.propTypes = {
+  filteredFavoriteRecipes: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string,
+    type: PropTypes.string,
+    nationality: PropTypes.string,
+    category: PropTypes.string,
+    alcoholicOrNot: PropTypes.string,
+    name: PropTypes.string,
+    image: PropTypes.string,
+  })),
+}.isRequired;
 
 // estrutura do objeto recebido:
 //  {

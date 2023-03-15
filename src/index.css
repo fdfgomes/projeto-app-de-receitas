@@ -10,3 +10,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+form input[type=text]:focus, form input[type=email]:focus, form input[type=password] {
+  outline-color: #7b6e38;
+}
+
+form button {
+  align-self: center;
+  background-color: #e1dabd;
+  border: none;
+}

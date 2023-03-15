@@ -1,4 +1,4 @@
-@import url('https://fonts.cdnfonts.com/css/mulled-wine-season');
+@import url('https://fonts.cdnfonts.com/css/mulled-wine-season') ;
 
 .login {
   align-items: center;
@@ -29,13 +29,13 @@
 
 .login .logo .title {
   color: #9e8d48;
-  font-family: 'Mulled Wine Season', sans-serif;
+  font-family: Mulled Wine Season , sans-serif;
   font-size: 40px;
 }
 
 .login .logo .subtitle {
   color: rgba(0, 0, 0, 0.7);
-  font-family: 'Glacial Indifference', sans-serif;
+  font-family: Glacial Indifference , sans-serif;
   font-size: 18px;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -60,9 +60,9 @@
 
 .login .greetings .message {
   color: rgba(0, 0, 0, 0.7);
-  text-align: center;
-  font-family: 'Glacial Indifference', sans-serif;
+  font-family: Glacial Indifference , sans-serif;
   font-size: 18px;
+  text-align: center;
 }
 
 form {
@@ -86,14 +86,4 @@ form input, form button {
 
 form input {
   border: 1px solid #e1dabd;
-}
-
-form input[type=text]:focus, form input[type=email]:focus, form input[type=password] {
-  outline-color: #7b6e38;
-}
-
-form button {
-  align-self: center;
-  border: none;
-  background-color: #e1dabd;
 }

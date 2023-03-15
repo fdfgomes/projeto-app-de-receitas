@@ -9,13 +9,12 @@
   align-items: center;
   background-color: white;
   border-radius: 24px;
-  display: grid;
   column-gap: 10px;
-  row-gap: 6px;
+  display: grid;
   grid-template-columns: 0.6fr auto 1fr;
-  grid-template-rows: .5fr auto auto auto .75fr;
-  /* margin: 0 20px; */
+  grid-template-rows: 0.5fr auto auto auto 0.75fr;
   padding: 10px;
+  row-gap: 6px;
 }
 
 .done-recipes .done-recipe-card a {

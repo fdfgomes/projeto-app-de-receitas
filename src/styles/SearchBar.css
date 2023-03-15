@@ -17,21 +17,18 @@
 }
 
 .search-bar .search-input-wrapper .search-icon {
-  position: absolute;
   left: 18px;
+  position: absolute;
   top: 12px;
 }
 
 .search-bar input {
+  padding-left: 56px;
   width: 100%;
 }
 
 .search-bar button {
   width: 95%;
-}
-
-.search-bar input {
-  padding-left: 56px;
 }
 
 .search-bar .radio-buttons {

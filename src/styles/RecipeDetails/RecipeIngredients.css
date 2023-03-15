@@ -1,7 +1,7 @@
 .recipe-ingredients {
   display: flex;
   flex-direction: column;
-  font-family: 'Glacial Indifference', sans-serif;
+  font-family: Glacial Indifference , sans-serif;
   gap: 10px;
   margin-top: 18px;
   padding: 4px 20px;

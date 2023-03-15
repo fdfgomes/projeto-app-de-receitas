@@ -7,6 +7,22 @@
   width: calc(100% - 20px);
 }
 
+.favorite-recipes .categories .btn-category {
+  background-color: #e1dabd;
+  border: none;
+  border-radius: 14px;
+  padding: 8px 14px;
+
+  /* https://www.digitalocean.com/community/tutorials/css-prevent-line-break */
+  white-space: nowrap;
+  width: fit-content;
+}
+
+.favorite-recipes .categories .btn-category.selected {
+  background-color: rgba(123, 110, 56, 0.4);
+  color: #121008;
+}
+
 .favorited-recipes {
   display: flex;
   flex-direction: column;
@@ -30,17 +46,16 @@
   align-items: center;
   background-color: white;
   border-radius: 24px;
-  display: grid;
   column-gap: 10px;
-  row-gap: 6px;
+  display: grid;
   grid-template-columns: 0.6fr 1fr;
-  grid-template-rows: .75fr .5fr 1fr;
-  /* margin: 0 20px; */
+  grid-template-rows: 0.75fr 0.5fr 1fr;
   padding: 10px;
+  row-gap: 6px;
 }
 
 .favorite-recipe-card a {
- text-decoration: none;
+  text-decoration: none;
 }
 
 .favorite-recipe-card .recipe-image {

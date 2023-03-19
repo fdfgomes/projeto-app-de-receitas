@@ -1,22 +1,18 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import SearchResults from '../components/SearchResults';
 import Context from '../context/Context';
 import RecipeCards from '../components/RecipeCards';
 import Loading from '../components/Loading';
+import {
+  fetchAvailableCategories,
+  fetchRecipesByCategory,
+  fetchSearchResults,
+  SEARCH_TYPES,
+} from '../services/api';
 import '../styles/SearchResults.css';
 import '../styles/Recipes.css';
-
-import {
-  fetchDrinksApi,
-  fetchDrinksCategories,
-  fetchMealsApi,
-  fetchMealsCategories,
-  fetchMealsByCategory,
-  fetchDrinksByCategory,
-} from '../services';
 
 export default function Recipes() {
   const { pathname } = useLocation();
@@ -24,197 +20,163 @@ export default function Recipes() {
   const isDrinksPage = useMemo(() => pathname.includes('/drinks'), [pathname]);
 
   const {
-    searchResults: {
-      meals: {
-        data: mealsSearchResults,
-      },
-      drinks: {
-        data: drinksSearchResults,
-      },
-    },
+    searchResults,
+    setSearchResults,
     selectedCategory,
     setSelectedCategory,
   } = useContext(Context);
 
-  const [title, setTitle] = useState('');
-  const [data, setData] = useState('');
-  const [recipe, setRecipe] = useState('');
-  const [category, setCategory] = useState([]);
+  const [recipes, setRecipes] = useState('');
+  const [category, setAvailableCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const fetchApiData = async (type) => {
-    const recipesLimit = 12;
-    const categoryLimit = 5;
+  const fetchPopularRecipes = useCallback(async () => {
+    setIsLoading(true);
 
-    if (type === 'Meals') {
-      setIsLoading(true);
+    const availableCategories = await fetchAvailableCategories(pathname);
+    setAvailableCategories(availableCategories);
 
-      const meals = await fetchMealsApi() ?? [];
-      const mealsCategory = await fetchMealsCategories() ?? [];
-      const mealsResult = meals.slice(0, recipesLimit);// Define apenas as 12 primeiras receitas
-      const mealsCategoryResult = mealsCategory.slice(0, categoryLimit);// Define 5 categorias para ser renderizadas na tela
+    const popularRecipes = await fetchSearchResults(
+      '',
+      SEARCH_TYPES.NAME,
+      pathname,
+    ) ?? [];
+    setRecipes(popularRecipes);
 
-      setData(mealsResult);
-      setCategory(mealsCategoryResult);
-      setRecipe('Meals');
-      setIsLoading(false);// Necessário para não chamar o componente enquanto o estado não tiver com as receitas
-    } else if (type === 'Drinks') {
-      setIsLoading(true);
+    setIsLoading(false); // Necessário para não chamar o componente enquanto o estado não tiver com as receitas
+  }, [pathname]);
 
-      const drinks = await fetchDrinksApi() ?? [];
-      const drinksCategory = await fetchDrinksCategories() ?? [];
-
-      const drinksResult = drinks.slice(0, recipesLimit);
-      const drinksCategoryResult = drinksCategory.slice(0, categoryLimit);
-
-      setCategory(drinksCategoryResult);
-      setData(drinksResult);
-      setRecipe('Drinks');
-      setIsLoading(false);
+  const filterRecipesByCategory = useCallback(async (clickedCategory) => {
+    setIsLoading(true);
+    // resetar pesquisa
+    await setSearchResults((currentState) => ({
+      ...currentState,
+      [isDrinksPage ? 'drinks' : 'meals']: {
+        data: [],
+        term: '',
+      },
+    }));
+    let filteredRecipes = [];
+    if (selectedCategory === clickedCategory || clickedCategory === 'All') {
+      setSelectedCategory('All');
+      filteredRecipes = await fetchSearchResults('', SEARCH_TYPES.NAME, pathname);
+    } else {
+      setSelectedCategory(clickedCategory);
+      filteredRecipes = await fetchRecipesByCategory(clickedCategory, pathname);
     }
-  };
-
-  const filterRecipesByCategory = async (clickedCategory) => {
-    const recipesLimit = 12;
-
-    switch (title) {
-    case 'Meals':
-      if (selectedCategory === clickedCategory) {
-        setIsLoading(true);
-        const meals = await fetchMealsApi() ?? [];
-        const mealsResult = meals.slice(0, recipesLimit);// Define apenas as 12 primeiras receitas
-
-        setData(mealsResult);
-        setRecipe('Meals');
-        setSelectedCategory('All');
-        setIsLoading(false);
-      } else {
-        setIsLoading(true);
-        const meals = await fetchMealsByCategory(clickedCategory) ?? [];
-        const mealsResult = meals.slice(0, recipesLimit);
-
-        setData(mealsResult);
-        setRecipe('Meals');
-        setSelectedCategory(clickedCategory);
-        setIsLoading(false);
-      }
-      break;
-    case 'Drinks':
-      if (selectedCategory === clickedCategory) {
-        setIsLoading(true);
-        const drinks = await fetchDrinksApi() ?? [];
-        const drinksResult = drinks.slice(0, recipesLimit);
-
-        setData(drinksResult);
-        setRecipe('Drinks');
-        setSelectedCategory('All');
-        setIsLoading(false);
-      } else {
-        setIsLoading(true);
-        const drinks = await fetchDrinksByCategory(clickedCategory) ?? [];
-
-        const drinksResult = drinks.slice(0, recipesLimit);
-
-        setData(drinksResult);
-        setRecipe('Drinks');
-        setSelectedCategory(clickedCategory);
-        setIsLoading(false);
-      }
-      break;
-    default:
-          //
-    }
-  };
+    setRecipes(filteredRecipes);
+    setIsLoading(false);
+  }, [isDrinksPage, pathname, selectedCategory, setSearchResults, setSelectedCategory]);
 
   useEffect(() => {
-    switch (pathname) {
-    case '/meals':
-      setTitle('Meals');
-      fetchApiData('Meals');
-      break;
-    case '/drinks':
-      setTitle('Drinks');
-      fetchApiData('Drinks');
-      break;
-    default:
-      setTitle('');
-    }
-  }, [pathname]);
+    fetchPopularRecipes();
+  }, [fetchPopularRecipes, pathname]);
 
   return (
     <>
-      <Header title={ title } />
+      <Header title={ isDrinksPage ? 'Drinks' : 'Meals' } />
       <main className="recipes">
-        {/* resultados da pesquisa */}
-        { !isDrinksPage && mealsSearchResults.length > 0 && <SearchResults /> }
-        { isDrinksPage && drinksSearchResults.length > 0 && <SearchResults /> }
-
         { isLoading && <Loading /> }
-
-        {
-          (
-            (isDrinksPage && drinksSearchResults.length === 0)
-            || (!isDrinksPage && mealsSearchResults.length === 0)
-          ) && (
-            <>
-              {/* botões com as categorias disponíveis */}
-              <div className="available-categories">
-                <h1 className="title">
-                  Categories
-                </h1>
-                <div className="category-group">
-                  <button
-                    type="button"
-                    className={ `
-                      btn-category ${selectedCategory === 'All' ? 'selected' : ''}
-                    `.trim() }
-                    data-testid="All-category-filter"
-                    key={ -0 }
-                    onClick={ () => {
-                      setSelectedCategory('All');
-                      fetchApiData(title);
-                    } }
-                  >
-                    All
-                  </button>
-                  { category.map((item, index) => (
-                    <button
-                      type="button"
-                      className={ `
+        {/* botões com as categorias disponíveis */}
+        <div className="available-categories">
+          <h1 className="title">
+            Categories
+          </h1>
+          <div className="category-group">
+            { category.map((item, index) => (
+              <button
+                type="button"
+                className={ `
                         btn-category
                         ${selectedCategory === item.strCategory ? 'selected' : ''}
                       `.trim() }
-                      data-testid={ `${item.strCategory}-category-filter` }
-                      key={ index }
-                      onClick={ async () => filterRecipesByCategory(item.strCategory) }
-                    >
-                      {item.strCategory}
-                    </button>
-                  ))}
-                </div>
-              </div>
+                data-testid={ `${item.strCategory}-category-filter` }
+                key={ index }
+                onClick={ () => filterRecipesByCategory(item.strCategory) }
+              >
+                {item.strCategory}
+              </button>
+            ))}
+          </div>
+        </div>
 
-              {/* cards exibidos nas rotas /drinks e /meals */}
-              <div className="search-results">
-                { !isLoading && (
-                  <div className="results-wrapper">
-                    <h1 className="title">
-                      { selectedCategory === 'All' && (
-                        <>
-                          Popular
-                          {' '}
-                          { isDrinksPage ? 'drinks' : 'meals' }
-                        </>
-                      ) }
-                      { selectedCategory !== 'All' && `${selectedCategory}s` }
-                    </h1>
-                    <RecipeCards data={ data } type={ recipe } />
-                  </div>
-                ) }
-              </div>
-            </>
-          )
-        }
+        {/* cards exibidos nas rotas /drinks e /meals */}
+        <div className="search-results">
+          { !isLoading && (
+            <div className="results-wrapper">
+
+              {/* /meals */}
+              {!isDrinksPage && (
+                <>
+                  {/* popular meals */}
+                  { searchResults.meals.data.length === 0 && (
+                    <>
+                      <h1 className="title">
+                        { selectedCategory === 'All' && 'Popular meals' }
+                        { selectedCategory !== 'All' && `${selectedCategory}s` }
+                      </h1>
+                      <RecipeCards
+                        data={ recipes }
+                        type="Meals"
+                      />
+                    </>
+                  ) }
+                  {/* resultados da pesquisa */}
+                  { searchResults.meals.data.length > 0 && (
+                    <>
+                      <h1 className="title primary">
+                        Results for
+                        <em>
+                          { searchResults.meals.term }
+                        </em>
+                      </h1>
+                      <RecipeCards
+                        data={ searchResults.meals.data }
+                        type="Meals"
+                      />
+                    </>
+                  ) }
+
+                </>
+              )}
+
+              {/* drinks */}
+              {isDrinksPage && (
+                <>
+                  {/* popular drinks */}
+                  { searchResults.drinks.data.length === 0 && (
+                    <>
+                      <h1 className="title">
+                        { selectedCategory === 'All' && 'Popular drinks' }
+                        { selectedCategory !== 'All' && `${selectedCategory}s` }
+                      </h1>
+                      <RecipeCards
+                        data={ recipes }
+                        type="Drinks"
+                      />
+                    </>
+                  ) }
+                  {/* resultados da pesquisa */}
+                  { searchResults.drinks.data.length > 0 && (
+                    <>
+                      <h1 className="title primary">
+                        Results for
+                        <em>
+                          { searchResults.drinks.term }
+                        </em>
+                      </h1>
+                      <RecipeCards
+                        data={ searchResults.drinks.data }
+                        type="Drinks"
+                      />
+                    </>
+                  ) }
+
+                </>
+              )}
+            </div>
+          ) }
+        </div>
       </main>
       <Footer />
     </>

@@ -16,7 +16,7 @@ function RecipeHeader({ data }) {
 
   const history = useHistory();
 
-  const { favoriteRecipes, setFavoriteRecipes, setSearchResults } = useContext(Context);
+  const { favoriteRecipes, setFavoriteRecipes } = useContext(Context);
 
   const isDrink = useMemo(() => !!data.idDrink, [data]);
 
@@ -94,16 +94,7 @@ function RecipeHeader({ data }) {
       {/* botões de compartilhar e favoritar receita */}
       <div className="top-buttons">
         <button
-          onClick={ () => {
-            setSearchResults((currentState) => ({
-              ...currentState,
-              [isDrink ? 'drinks' : 'meals']: {
-                data: [],
-                term: '',
-              },
-            }));
-            history.goBack();
-          } }
+          onClick={ () => history.goBack() }
           type="button"
         >
           <BiChevronLeft size={ 26 } />

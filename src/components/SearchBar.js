@@ -7,7 +7,7 @@ import { fetchSearchResults, SEARCH_TYPES } from '../services/api';
 import '../styles/SearchBar.css';
 
 export default function SearchBar() {
-  const { searchResults, setSearchResults } = useContext(Context);
+  const { setSelectedCategory, searchResults, setSearchResults } = useContext(Context);
 
   const { pathname } = useLocation();
 
@@ -48,40 +48,52 @@ export default function SearchBar() {
     }
   }, [currentRoute, setSearchTerm]);
 
-  const handleSubmit = useCallback(async (e) => {
-    e.preventDefault();
-    // se o usuário tiver escolhido filtrar pela primeira letra
-    // e digitar mais de 1 caractere exibir mensagem de alerta
-    if (
-      searchType[currentRoute] === SEARCH_TYPES.FIRST_LETTER
+  const handleSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
+      // se o usuário tiver escolhido filtrar pela primeira letra
+      // e digitar mais de 1 caractere exibir mensagem de alerta
+      if (
+        searchType[currentRoute] === SEARCH_TYPES.FIRST_LETTER
       && searchTerm[currentRoute].length > 1
-    ) {
-      return toast.error('Your search must have only 1 (one) character');
-    }
-    // mudar estado para loading
-    setSearchResults((currentState) => ({
-      ...currentState,
-      [currentRoute]: {
-        ...currentState[currentRoute],
-        isLoading: true,
-      },
-    }));
-    // requisição à api
-    const data = await fetchSearchResults(
-      searchTerm[currentRoute],
-      searchType[currentRoute],
+      ) {
+        return toast.error('Your search must have only 1 (one) character');
+      }
+      // mudar estado para loading
+      setSearchResults((currentState) => ({
+        ...currentState,
+        [currentRoute]: {
+          ...currentState[currentRoute],
+          isLoading: true,
+        },
+      }));
+      // requisição à api
+      const data = await fetchSearchResults(
+        searchTerm[currentRoute],
+        searchType[currentRoute],
+        pathname,
+      );
+      // atualizar estado no ContextProvider com o retorno da api
+      setSearchResults((currentState) => ({
+        ...currentState,
+        [currentRoute]: {
+          data,
+          isLoading: false,
+          term: searchTerm[currentRoute],
+        },
+      }));
+      // alterar categoria selecionada no ContextProvider
+      setSelectedCategory(`${currentRoute} search results`);
+    },
+    [
+      currentRoute,
       pathname,
-    );
-    // atualizar estado no ContextProvider com o retorno da api
-    setSearchResults((currentState) => ({
-      ...currentState,
-      [currentRoute]: {
-        data,
-        isLoading: false,
-        term: searchTerm[currentRoute],
-      },
-    }));
-  }, [currentRoute, pathname, searchTerm, searchType, setSearchResults]);
+      searchTerm,
+      searchType,
+      setSearchResults,
+      setSelectedCategory,
+    ],
+  );
 
   // lógica executada sempre que uma nova busca é feita
   useEffect(() => {

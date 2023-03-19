@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { FaUserAlt } from 'react-icons/fa';
@@ -13,10 +13,6 @@ function Header({ title }) {
   const { isExact, path: pathname } = useRouteMatch();
 
   const { searchBarIsVisible, setSearchBarIsVisible } = useContext(Context);
-
-  useEffect(() => {
-    setSearchBarIsVisible(false);
-  }, [pathname, setSearchBarIsVisible]);
 
   return isExact
     && (

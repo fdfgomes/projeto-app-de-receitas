@@ -35,7 +35,33 @@ export const fetchInProgressRecipes = () => {
   return JSON.parse(inProgressRecipes);
 };
 
-export const fetchSearchResults = async (searchTerm, searchType, route) => {
+export const fetchAvailableCategories = async (route) => {
+  try {
+    const AVAILABLE_CATEGORIES_LIMIT = 5;
+    let availableCategories = [{ strCategory: 'All' }];
+    if (route === '/meals') {
+      const data = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list')
+        .then((response) => response.json())
+        .catch((error) => console.log(error));
+
+      availableCategories = [...availableCategories, ...data.meals];
+    }
+    if (route === '/drinks') {
+      const data = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list')
+        .then((response) => response.json())
+        .catch((error) => console.log(error));
+
+      availableCategories = [...availableCategories, ...data.drinks];
+    }
+    return availableCategories
+      .filter((_category, index) => index <= AVAILABLE_CATEGORIES_LIMIT);
+  } catch (err) {
+    console.error(err);
+    return [];
+  }
+};
+
+export const fetchSearchResults = async (searchTerm = '', searchType, route) => {
   // searchTerm --> termo de pesquisa digitado pelo usuário
   // searchType --> tipo de pesquisa selecionado pelo usuário (nome, ingrediente ou primeira letra)
   // route --> de qual página a chamada à função foi feita (página /meals ou /drinks)
@@ -87,3 +113,28 @@ export const fetchSearchResults = async (searchTerm, searchType, route) => {
     console.error(err);
   }
 };
+
+export async function fetchRecipesByCategory(category, route) {
+  try {
+    const CATEGORY_RESULTS_LIMIT = 12;
+    let categoryRecipes = [];
+    if (route === '/meals') {
+      const data = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`)
+        .then((response) => response.json())
+        .catch((error) => console.log(error));
+
+      categoryRecipes = data.meals;
+    }
+    if (route === '/drinks') {
+      const data = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`)
+        .then((response) => response.json())
+        .catch((error) => console.log(error));
+
+      categoryRecipes = data.drinks;
+    }
+    return categoryRecipes.filter((_recipe, index) => index < CATEGORY_RESULTS_LIMIT);
+  } catch (err) {
+    console.error(err);
+    return [];
+  }
+}

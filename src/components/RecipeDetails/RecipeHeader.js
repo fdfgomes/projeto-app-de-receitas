@@ -134,6 +134,7 @@ function RecipeHeader({ data }) {
       {/* botões de compartilhar e favoritar receita */}
       <div className="top-buttons">
         <button
+          data-testid="go-back-btn"
           onClick={ handleClickGoBack }
           type="button"
         >
@@ -154,12 +155,12 @@ function RecipeHeader({ data }) {
         {/* botão favoritar receita */}
         <button
           className="favorite-button"
+          data-testid="favorite-btn"
           onClick={ toggleFavorite }
           type="button"
         >
           <img
             alt="Favorite recipe"
-            data-testid="favorite-btn"
             src={ isFavorited ? blackHeartIcon : whiteHeartIcon }
           />
         </button>

@@ -5,6 +5,7 @@ import RECIPE_IN_PROGRESS_MOCKS from './mocks/RecipeInProgress.mock';
 import App from '../App';
 
 const START_RECIPE_BTN = 'start-recipe-btn';
+const FAVORITE_BTN = 'favorite-btn';
 
 describe('Testando o componente RecipeDetails', () => {
   beforeEach(() => {
@@ -28,7 +29,7 @@ describe('Testando o componente RecipeDetails', () => {
       const recipeTitle = screen.queryByTestId('recipe-title');
       const recipeCategory = screen.queryByTestId('recipe-category');
       const recipeShareButton = screen.queryByTestId('share-btn');
-      const recipeFavoriteButton = screen.queryByTestId('favorite-btn');
+      const recipeFavoriteButton = screen.queryByTestId(FAVORITE_BTN);
       const recipeIngredients = container.querySelectorAll('[data-testid*=ingredient-name-and-measure]');
       const recipeInstructions = screen.queryByTestId('instructions');
       const recipeYouTubePreview = screen.queryByTestId('video');
@@ -94,6 +95,44 @@ describe('Testando o componente RecipeDetails', () => {
       expect(recipeStartButton).not.toHaveTextContent(/start recipe/i);
       expect(recipeStartButton).toHaveTextContent(/continue recipe/i);
     });
+
+    it('É possível favoritar/desfavoritar a receita', async () => {
+      const { history } = renderWithRouterAndContext(<App />);
+
+      await act(() => history.push(ROUTE));
+
+      expect(JSON.parse(localStorage.getItem('favoriteRecipes'))).toHaveLength(0);
+
+      const recipeFavoriteButton = screen.queryByTestId(FAVORITE_BTN);
+
+      act(() => userEvent.click(recipeFavoriteButton));
+
+      expect(JSON.parse(localStorage.getItem('favoriteRecipes'))).toHaveLength(1);
+
+      act(() => userEvent.click(recipeFavoriteButton));
+
+      expect(JSON.parse(localStorage.getItem('favoriteRecipes'))).toHaveLength(0);
+    });
+
+    it('É possível voltar à rota anterior ao clicar no botão "voltar"', async () => {
+      const { history } = renderWithRouterAndContext(<App />);
+
+      await act(() => history.push('/meals'));
+
+      const firstRecipe = screen.queryByTestId('0-recipe-card');
+
+      expect(firstRecipe).toBeInTheDocument();
+
+      await act(() => userEvent.click(firstRecipe));
+
+      const recipeGoBackButton = screen.queryByTestId('go-back-btn');
+
+      expect(recipeGoBackButton).toBeInTheDocument();
+
+      await act(() => userEvent.click(recipeGoBackButton));
+
+      expect(history.location.pathname).toBe('/meals');
+    });
   });
 
   describe('Na rota /drinks/:id-da-receita', () => {
@@ -110,7 +149,7 @@ describe('Testando o componente RecipeDetails', () => {
       const recipeTitle = screen.queryByTestId('recipe-title');
       const recipeCategory = screen.queryByTestId('recipe-category');
       const recipeShareButton = screen.queryByTestId('share-btn');
-      const recipeFavoriteButton = screen.queryByTestId('favorite-btn');
+      const recipeFavoriteButton = screen.queryByTestId(FAVORITE_BTN);
       const recipeIngredients = container.querySelectorAll('[data-testid*=ingredient-name-and-measure]');
       const recipeInstructions = screen.queryByTestId('instructions');
 
@@ -170,6 +209,44 @@ describe('Testando o componente RecipeDetails', () => {
 
       expect(recipeStartButton).not.toHaveTextContent(/start recipe/i);
       expect(recipeStartButton).toHaveTextContent(/continue recipe/i);
+    });
+
+    it('É possível favoritar/desfavoritar a receita', async () => {
+      const { history } = renderWithRouterAndContext(<App />);
+
+      await act(() => history.push(ROUTE));
+
+      expect(JSON.parse(localStorage.getItem('favoriteRecipes'))).toHaveLength(0);
+
+      const recipeFavoriteButton = screen.queryByTestId(FAVORITE_BTN);
+
+      act(() => userEvent.click(recipeFavoriteButton));
+
+      expect(JSON.parse(localStorage.getItem('favoriteRecipes'))).toHaveLength(1);
+
+      act(() => userEvent.click(recipeFavoriteButton));
+
+      expect(JSON.parse(localStorage.getItem('favoriteRecipes'))).toHaveLength(0);
+    });
+
+    it('É possível voltar à rota anterior ao clicar no botão "voltar"', async () => {
+      const { history } = renderWithRouterAndContext(<App />);
+
+      await act(() => history.push('/meals'));
+
+      const firstRecipe = screen.queryByTestId('0-recipe-card');
+
+      expect(firstRecipe).toBeInTheDocument();
+
+      await act(() => userEvent.click(firstRecipe));
+
+      const recipeGoBackButton = screen.queryByTestId('go-back-btn');
+
+      expect(recipeGoBackButton).toBeInTheDocument();
+
+      await act(() => userEvent.click(recipeGoBackButton));
+
+      expect(history.location.pathname).toBe('/meals');
     });
   });
 });

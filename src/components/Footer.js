@@ -38,11 +38,19 @@ function Footer() {
   return (
     <footer data-testid="footer">
       <div className="footer-box">
-        <Link onClick={ () => handleClick('meals') } to="/meals">
-          <GiMeal data-testid="meals-bottom-btn" size={ 34 } />
+        <Link
+          data-testid="meals-bottom-btn"
+          onClick={ () => handleClick('meals') }
+          to="/meals"
+        >
+          <GiMeal size={ 34 } />
         </Link>
-        <Link onClick={ () => handleClick('drinks') } to="/drinks">
-          <BiDrink data-testid="drinks-bottom-btn" size={ 34 } />
+        <Link
+          data-testid="drinks-bottom-btn"
+          onClick={ () => handleClick('drinks') }
+          to="/drinks"
+        >
+          <BiDrink size={ 34 } />
         </Link>
       </div>
     </footer>

@@ -26,7 +26,7 @@ describe('Testando o componente RecipeInProgress', () => {
 
       expect(global.fetch).toHaveBeenCalledWith('https://www.themealdb.com/api/json/v1/1/lookup.php?i=53014');
 
-      const recipePhoto = await screen.findByTestId('recipe-photo');
+      const recipePhoto = await screen.findAllByTestId('recipe-photo');
       const recipeTitle = await screen.findByTestId('recipe-title');
       const recipeCategory = await screen.findByTestId('recipe-category');
       const recipeShareButton = await screen.findByTestId('share-btn');
@@ -35,7 +35,7 @@ describe('Testando o componente RecipeInProgress', () => {
       const recipeInstructions = await screen.findByTestId('instructions');
       const recipeYouTubePreview = await screen.findByTestId('video');
 
-      expect(recipePhoto).toBeInTheDocument();
+      expect(recipePhoto.length).toBeGreaterThanOrEqual(1);
       expect(recipeTitle).toBeInTheDocument();
       expect(recipeCategory).toBeInTheDocument();
       expect(recipeShareButton).toBeInTheDocument();
@@ -118,7 +118,7 @@ describe('Testando o componente RecipeInProgress', () => {
 
       expect(global.fetch).toHaveBeenCalledWith('https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=178332');
 
-      const recipePhoto = await screen.findByTestId('recipe-photo');
+      const recipePhoto = await screen.findAllByTestId('recipe-photo');
       const recipeTitle = await screen.findByTestId('recipe-title');
       const recipeCategory = await screen.findByTestId('recipe-category');
       const recipeShareButton = await screen.findByTestId('share-btn');
@@ -126,7 +126,7 @@ describe('Testando o componente RecipeInProgress', () => {
       const recipeIngredients = await container.querySelectorAll(RECIPE_INGREDIENTS);
       const recipeInstructions = await screen.findByTestId('instructions');
 
-      expect(recipePhoto).toBeInTheDocument();
+      expect(recipePhoto.length).toBeGreaterThanOrEqual(1);
       expect(recipeTitle).toBeInTheDocument();
       expect(recipeCategory).toBeInTheDocument();
       expect(recipeShareButton).toBeInTheDocument();

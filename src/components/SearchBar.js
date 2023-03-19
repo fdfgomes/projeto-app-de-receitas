@@ -7,7 +7,13 @@ import { fetchSearchResults, SEARCH_TYPES } from '../services/api';
 import '../styles/SearchBar.css';
 
 export default function SearchBar() {
-  const { setSelectedCategory, searchResults, setSearchResults } = useContext(Context);
+  const {
+    selectedCategory,
+    setSelectedCategory,
+    setPreviousSelectedCategory,
+    searchResults,
+    setSearchResults,
+  } = useContext(Context);
 
   const { pathname } = useLocation();
 
@@ -83,6 +89,7 @@ export default function SearchBar() {
         },
       }));
       // alterar categoria selecionada no ContextProvider
+      await setPreviousSelectedCategory(selectedCategory);
       setSelectedCategory(`${currentRoute} search results`);
     },
     [
@@ -90,6 +97,8 @@ export default function SearchBar() {
       pathname,
       searchTerm,
       searchType,
+      selectedCategory,
+      setPreviousSelectedCategory,
       setSearchResults,
       setSelectedCategory,
     ],

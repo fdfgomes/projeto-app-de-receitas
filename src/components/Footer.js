@@ -10,7 +10,10 @@ import Context from '../context/Context';
 function Footer() {
   const { pathname } = useLocation();
 
-  const { setSearchResults } = useContext(Context);
+  const {
+    setSelectedCategory,
+    setSearchResults,
+  } = useContext(Context);
 
   const resetSearchResults = useCallback((searchType) => {
     setSearchResults((currentState) => ({
@@ -24,11 +27,15 @@ function Footer() {
     }));
   }, [setSearchResults]);
 
-  const handleClick = useCallback((searchType) => {
-    if (pathname === `/${searchType}`) {
-      resetSearchResults(searchType);
-    }
-  }, [pathname, resetSearchResults]);
+  const handleClick = useCallback(
+    async (searchType) => {
+      if (pathname === `/${searchType}`) {
+        resetSearchResults(searchType);
+      }
+      setSelectedCategory('All');
+    },
+    [pathname, resetSearchResults, setSelectedCategory],
+  );
 
   return (
     <footer data-testid="footer">

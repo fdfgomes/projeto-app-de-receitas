@@ -26,6 +26,8 @@ function ContextProvider({ children }) {
     },
   });
 
+  const [previousSelectedCategory, setPreviousSelectedCategory] = useState('All');
+
   const [selectedCategory, setSelectedCategory] = useState('All');
 
   const [doneRecipes, setDoneRecipes] = useState(fetchDoneRecipes());
@@ -121,6 +123,8 @@ function ContextProvider({ children }) {
       setSearchResults,
       searchBarIsVisible,
       setSearchBarIsVisible,
+      previousSelectedCategory,
+      setPreviousSelectedCategory,
       selectedCategory,
       setSelectedCategory,
     }),
@@ -136,6 +140,8 @@ function ContextProvider({ children }) {
       setSearchResults,
       searchBarIsVisible,
       setSearchBarIsVisible,
+      previousSelectedCategory,
+      setPreviousSelectedCategory,
       selectedCategory,
       setSelectedCategory,
     ],

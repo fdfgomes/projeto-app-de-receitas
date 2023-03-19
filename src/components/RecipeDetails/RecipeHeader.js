@@ -16,7 +16,16 @@ function RecipeHeader({ data }) {
 
   const history = useHistory();
 
-  const { favoriteRecipes, setFavoriteRecipes } = useContext(Context);
+  const {
+    favoriteRecipes,
+    setFavoriteRecipes,
+    searchResults,
+    setSearchResults,
+    previousSelectedCategory,
+    setPreviousSelectedCategory,
+    selectedCategory,
+    setSelectedCategory,
+  } = useContext(Context);
 
   const isDrink = useMemo(() => !!data.idDrink, [data]);
 
@@ -60,6 +69,37 @@ function RecipeHeader({ data }) {
     toast.success('Link copied!');
   }, [pathname]);
 
+  const handleClickGoBack = useCallback(
+    async () => {
+      const searchResultsType = `${recipe.type}s`;
+      if (searchResults[searchResultsType].data.length === 1) {
+        await setSearchResults((currentState) => ({
+          ...currentState,
+          [searchResultsType]: {
+            ...currentState[searchResultsType],
+            data: [],
+            term: '',
+          },
+        }));
+      }
+      if (selectedCategory.includes('search results')) {
+        await setSelectedCategory(previousSelectedCategory);
+        setPreviousSelectedCategory('All');
+      }
+      history.goBack();
+    },
+    [
+      history,
+      previousSelectedCategory,
+      setPreviousSelectedCategory,
+      recipe.type,
+      searchResults,
+      selectedCategory,
+      setSearchResults,
+      setSelectedCategory,
+    ],
+  );
+
   return (
     <div className="recipe-header">
       {/* imagem da receita (mobile) */}
@@ -94,7 +134,7 @@ function RecipeHeader({ data }) {
       {/* botões de compartilhar e favoritar receita */}
       <div className="top-buttons">
         <button
-          onClick={ () => history.goBack() }
+          onClick={ handleClickGoBack }
           type="button"
         >
           <BiChevronLeft size={ 26 } />

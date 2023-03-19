@@ -26,13 +26,14 @@ export default function Recipes() {
     setSelectedCategory,
   } = useContext(Context);
 
-  const [recipes, setRecipes] = useState('');
+  const [recipes, setRecipes] = useState([]);
   const [category, setAvailableCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchPopularRecipes = useCallback(async () => {
     setIsLoading(true);
 
+    await setAvailableCategories([]);
     const availableCategories = await fetchAvailableCategories(pathname);
     setAvailableCategories(availableCategories);
 
@@ -72,11 +73,17 @@ export default function Recipes() {
     fetchPopularRecipes();
   }, [fetchPopularRecipes, pathname]);
 
+  const showLoadingAnimation = useMemo(() => !!(
+    isLoading
+    || searchResults.drinks.isLoading
+    || searchResults.meals.isLoading
+  ), [isLoading, searchResults]);
+
   return (
     <>
       <Header title={ isDrinksPage ? 'Drinks' : 'Meals' } />
       <main className="recipes">
-        { isLoading && <Loading /> }
+        { showLoadingAnimation && <Loading /> }
         {/* botões com as categorias disponíveis */}
         <div className="available-categories">
           <h1 className="title">
@@ -102,11 +109,11 @@ export default function Recipes() {
 
         {/* cards exibidos nas rotas /drinks e /meals */}
         <div className="search-results">
-          { !isLoading && (
+          { !showLoadingAnimation && (
             <div className="results-wrapper">
 
               {/* /meals */}
-              {!isDrinksPage && (
+              { !isDrinksPage && (
                 <>
                   {/* popular meals */}
                   { searchResults.meals.data.length === 0 && (
@@ -138,10 +145,10 @@ export default function Recipes() {
                   ) }
 
                 </>
-              )}
+              ) }
 
               {/* drinks */}
-              {isDrinksPage && (
+              { isDrinksPage && (
                 <>
                   {/* popular drinks */}
                   { searchResults.drinks.data.length === 0 && (
@@ -173,7 +180,7 @@ export default function Recipes() {
                   ) }
 
                 </>
-              )}
+              ) }
             </div>
           ) }
         </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext, useCallback, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import clipboardCopy from 'clipboard-copy';
 import toast from 'react-hot-toast';
@@ -6,6 +6,7 @@ import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 import Footer from '../components/Footer';
 import '../styles/DoneRecipes.css';
+import Context from '../context/Context';
 
 function formatDate(isoDate) {
   const date = new Date(isoDate);
@@ -16,44 +17,33 @@ function formatDate(isoDate) {
 }
 
 function DoneRecipes() {
-  const [doneRecipes, setDoneRecipes] = useState([]);
+  const { doneRecipes } = useContext(Context);
+
   const [recipes, setRecipes] = useState([]);
 
   const [selectedCategory, setSelectedCategory] = useState('all');
 
   useEffect(() => {
-    const storedDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
-    setDoneRecipes(storedDoneRecipes);
-  }, []);
-
-  useEffect(() => {
     setRecipes(doneRecipes);
   }, [doneRecipes]);
 
-  const filterTypes = {
+  const filterTypes = useMemo(() => ({
     all: () => setRecipes(doneRecipes),
     meal: () => setRecipes(doneRecipes
       .filter((targetRecipe) => targetRecipe.type === 'meal')),
     drink: () => setRecipes(doneRecipes
       .filter((targetRecipe) => targetRecipe.type === 'drink')),
-  };
+  }), [doneRecipes]);
 
-  const handleFilterTypes = ({ target }) => {
+  const handleClickFilter = useCallback(({ target }) => {
     const clickedTarget = target.name;
     setSelectedCategory(clickedTarget);
     filterTypes[clickedTarget]();
-  };
-
-  const generalHandler = () => {
-    setSelectedCategory('all');
-    setRecipes(doneRecipes);
-  };
+  }, [filterTypes]);
 
   return (
     <div>
-      <Header
-        title="Done Recipes"
-      />
+      <Header title="Done Recipes" />
       <main className="favorite-recipes">
         <div className="categories">
           <button
@@ -62,8 +52,8 @@ function DoneRecipes() {
             `.trim() }
             data-testid="filter-by-all-btn"
             name="all"
+            onClick={ (e) => handleClickFilter(e) }
             type="button"
-            onClick={ generalHandler }
           >
             All
           </button>
@@ -74,8 +64,8 @@ function DoneRecipes() {
             `.trim() }
             data-testid="filter-by-meal-btn"
             name="meal"
+            onClick={ (e) => handleClickFilter(e) }
             type="button"
-            onClick={ (e) => handleFilterTypes(e) }
           >
             Meals
           </button>
@@ -87,19 +77,19 @@ function DoneRecipes() {
             data-testid="filter-by-drink-btn"
             name="drink"
             type="button"
-            onClick={ (e) => handleFilterTypes(e) }
+            onClick={ (e) => handleClickFilter(e) }
           >
             Drinks
           </button>
         </div>
 
-        {recipes.length === 0 && (
+        { recipes.length === 0 && (
           <div className="message">
             <h2>
               No recipes found
             </h2>
           </div>
-        )}
+        ) }
 
         <section className="done-recipes">
           { recipes.map((recipe, index) => (

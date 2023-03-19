@@ -1,6 +1,6 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
-import { render, screen, waitFor } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import Login from '../pages/Login';
 import renderWithRouter from './helpers/RenderWithRouter';
 
@@ -12,8 +12,10 @@ describe('Testes da página de Login', () => {
     expect(screen.getByTestId('password-input')).toBeInTheDocument();
     expect(screen.getByTestId('login-submit-btn')).toBeInTheDocument();
   });
+
   it('o botão deve estar desabilitado e quando os inputs forem preenchidos, ele habilita. E se clicado, deve redirecionar para a pagina de receitas', async () => {
     const { history } = renderWithRouter(<Login />);
+
     const sendButton = screen.getByTestId('login-submit-btn');
 
     expect(sendButton).toBeDisabled();
@@ -22,14 +24,11 @@ describe('Testes da página de Login', () => {
     userEvent.type(screen.getByTestId('password-input'), '123456789');
 
     expect(sendButton).toBeEnabled();
-    userEvent.click(sendButton);
 
-    await waitFor(() => {
-      const { pathname } = history.location;
+    await act(() => userEvent.click(sendButton));
 
-      expect(pathname).toBe('/meals');
-    });
-  });
-  it('', () => {
+    const { pathname } = history.location;
+
+    expect(pathname).toBe('/meals');
   });
 });

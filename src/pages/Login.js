@@ -22,7 +22,7 @@ function Login() {
     enableButton();
   }, [password, email]);
 
-  const handleClick = useCallback(() => {
+  const handleSubmit = useCallback(() => {
     localStorage.setItem('user', JSON.stringify({ email }));
     history.push('/meals');
   }, [email, history]);
@@ -41,7 +41,7 @@ function Login() {
             Please enter your credentials to access your account
           </span>
         </div>
-        <form>
+        <form onSubmit={ handleSubmit }>
           <label htmlFor="emailInput">
             <input
               data-testid="email-input"
@@ -65,7 +65,7 @@ function Login() {
           <button
             data-testid="login-submit-btn"
             disabled={ isDisabled }
-            onClick={ () => handleClick() }
+            type="submit"
           >
             Sign in
           </button>

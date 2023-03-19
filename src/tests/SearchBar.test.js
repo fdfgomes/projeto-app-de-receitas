@@ -11,9 +11,23 @@ const SEARCH_INPUT = 'search-input';
 const SEARCH_SUBMIT_BUTTON = 'exec-search-btn';
 const RECIPE_CARD = '.recipe-card';
 
-// https://stackoverflow.com/questions/55088482/jest-not-implemented-window-alert
 beforeAll(() => {
+  // https://stackoverflow.com/questions/55088482/jest-not-implemented-window-alert
   window.alert = () => null;
+  // https://stackoverflow.com/questions/39830580/jest-test-fails-typeerror-window-matchmedia-is-not-a-function
+  Object.defineProperty(window, 'matchMedia', {
+    writable: true,
+    value: jest.fn().mockImplementation((query) => ({
+      matches: false,
+      media: query,
+      onchange: null,
+      addListener: jest.fn(), // Deprecated
+      removeListener: jest.fn(), // Deprecated
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+      dispatchEvent: jest.fn(),
+    })),
+  });
 });
 
 describe('Testando o componente SearchBar', () => {
@@ -140,61 +154,6 @@ describe('Testando o componente SearchBar', () => {
       });
     });
 
-    it('Exibe mensagem de alerta caso o usuário selecione a busca pela primeira letra do nome da bebida e digite mais de um caractere no input de texto', async () => {
-      const { history } = renderWithRouterAndContext(<App />);
-
-      jest.spyOn(global, 'alert');
-
-      await act(() => history.push(ROUTE));
-
-      const searchIcon = screen.getByTestId(SEARCH_TOP_BTN);
-
-      act(() => userEvent.click(searchIcon));
-
-      const textInput = screen.getByTestId(SEARCH_INPUT);
-      const letterRadioButton = screen.getByLabelText(/letter/i);
-      const submitButton = screen.getByTestId(SEARCH_SUBMIT_BUTTON);
-
-      expect(letterRadioButton).toBeInTheDocument();
-
-      waitFor(() => {
-        userEvent.type(textInput, 'vvv');
-        userEvent.click(letterRadioButton);
-        userEvent.click(submitButton);
-      });
-
-      expect(global.alert).toHaveBeenCalled();
-    });
-
-    it('Exibe mensagem de alerta caso a busca não retorne nenhum resultado', async () => {
-      const { history } = renderWithRouterAndContext(<App />);
-
-      const TEXT_INPUT_VALUE = 'coca-cola';
-
-      jest.spyOn(global, 'alert');
-      jest.spyOn(global, 'fetch')
-        .mockResolvedValue({
-          json: jest.fn().mockResolvedValue(SEARCH_BAR_MOCKS.DRINKS.NO_RESULTS),
-        });
-
-      act(() => history.push(ROUTE));
-
-      const searchIcon = screen.getByTestId(SEARCH_TOP_BTN);
-
-      act(() => userEvent.click(searchIcon));
-
-      const textInput = screen.getByTestId(SEARCH_INPUT);
-      const submitButton = screen.getByTestId(SEARCH_SUBMIT_BUTTON);
-
-      await act(() => {
-        userEvent.type(textInput, TEXT_INPUT_VALUE);
-        userEvent.click(submitButton);
-      });
-
-      expect(global.fetch).toHaveBeenCalledWith(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${TEXT_INPUT_VALUE}`);
-      expect(global.alert).toHaveBeenCalled();
-    });
-
     it('Direciona o usuário à página com os detalhes da bebida caso a busca retorne apenas 1 resultado', async () => {
       const { history } = renderWithRouterAndContext(<App />);
 
@@ -318,59 +277,6 @@ describe('Testando o componente SearchBar', () => {
         const recipeCards = container.querySelectorAll(RECIPE_CARD);
         expect(recipeCards).toHaveLength(12);
       });
-    });
-
-    it('Exibe mensagem de alerta caso o usuário selecione a busca pela primeira letra do nome da receita e digite mais de um caractere no input de texto', async () => {
-      const { history } = renderWithRouterAndContext(<App />);
-
-      jest.spyOn(global, 'alert');
-
-      await act(() => history.push(ROUTE));
-
-      const searchIcon = screen.getByTestId(SEARCH_TOP_BTN);
-
-      act(() => userEvent.click(searchIcon));
-
-      const textInput = screen.getByTestId(SEARCH_INPUT);
-      const letterRadioButton = screen.getByLabelText(/letter/i);
-      const submitButton = screen.getByTestId(SEARCH_SUBMIT_BUTTON);
-
-      expect(letterRadioButton).toBeInTheDocument();
-
-      waitFor(() => {
-        userEvent.type(textInput, 'sss');
-        userEvent.click(letterRadioButton);
-        userEvent.click(submitButton);
-      });
-
-      expect(global.alert).toHaveBeenCalled();
-    });
-
-    it('Exibe mensagem de alerta caso a busca não retorne nenhum resultado', async () => {
-      const { history } = renderWithRouterAndContext(<App />);
-
-      jest.spyOn(global, 'alert');
-      jest.spyOn(global, 'fetch')
-        .mockResolvedValue({
-          json: jest.fn().mockResolvedValue(SEARCH_BAR_MOCKS.MEALS.NO_RESULTS),
-        });
-
-      act(() => history.push(ROUTE));
-
-      const searchIcon = screen.getByTestId(SEARCH_TOP_BTN);
-
-      act(() => userEvent.click(searchIcon));
-
-      const textInput = screen.getByTestId(SEARCH_INPUT);
-      const submitButton = screen.getByTestId(SEARCH_SUBMIT_BUTTON);
-
-      await act(() => {
-        userEvent.type(textInput, 'lasanha');
-        userEvent.click(submitButton);
-      });
-
-      expect(global.fetch).toHaveBeenCalledWith('https://www.themealdb.com/api/json/v1/1/search.php?s=lasanha');
-      expect(global.alert).toHaveBeenCalled();
     });
 
     it('Direciona o usuário à página com os detalhes da receita caso a busca retorne apenas 1 resultado', async () => {

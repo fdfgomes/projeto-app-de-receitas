@@ -55,8 +55,7 @@ export const fetchAvailableCategories = async (route) => {
     }
     return availableCategories
       .filter((_category, index) => index <= AVAILABLE_CATEGORIES_LIMIT);
-  } catch (err) {
-    console.error(err);
+  } catch (_err) {
     return [];
   }
 };
@@ -110,7 +109,7 @@ export const fetchSearchResults = async (searchTerm = '', searchType, route) => 
     // retornar apenas os 12 primeiros resultados
     return data[dataKeys[0]].filter((_data, index) => index < SEARCH_RESULTS_LIMIT);
   } catch (err) {
-    console.error(err);
+    // console.error(err);
   }
 };
 

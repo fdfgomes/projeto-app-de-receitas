@@ -2,10 +2,8 @@ import React, { useCallback, useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { BiDrink } from 'react-icons/bi';
 import { GiMeal } from 'react-icons/gi';
-// import drinkIcon from '../images/drinkIcon.svg';
-// import mealIcon from '../images/mealIcon.svg';
-import '../styles/Footer.css';
 import Context from '../context/Context';
+import '../styles/Footer.css';
 
 function Footer() {
   const { pathname } = useLocation();
@@ -41,12 +39,10 @@ function Footer() {
     <footer data-testid="footer">
       <div className="footer-box">
         <Link onClick={ () => handleClick('meals') } to="/meals">
-          {/* <img src={ mealIcon } alt="meals" data-testid="meals-bottom-btn" /> */}
-          <GiMeal size={ 34 } />
+          <GiMeal data-testid="meals-bottom-btn" size={ 34 } />
         </Link>
         <Link onClick={ () => handleClick('drinks') } to="/drinks">
-          {/* <img src={ drinkIcon } alt="drinks" data-testid="drinks-bottom-btn" /> */}
-          <BiDrink size={ 34 } />
+          <BiDrink data-testid="drinks-bottom-btn" size={ 34 } />
         </Link>
       </div>
     </footer>

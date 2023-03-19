@@ -52,7 +52,7 @@ describe('Testando o componente Header', () => {
     routes.forEach(({ name, pathname }) => {
       act(() => history.push(pathname));
 
-      const title = screen.getByRole('heading', { level: 1, name: new RegExp(name, 'i') });
+      const title = screen.getByRole('heading', { level: 2, name: new RegExp(name, 'i') });
       const profileIcon = screen.getByTestId(PROFILE_TOP_BTN);
       const searchIcon = screen.getByTestId(SEARCH_TOP_BTN);
 
@@ -83,7 +83,7 @@ describe('Testando o componente Header', () => {
     routes.forEach(({ name, pathname }) => {
       act(() => history.push(pathname));
 
-      const title = screen.getByRole('heading', { level: 1, name: new RegExp(name, 'i') });
+      const title = screen.getByRole('heading', { level: 2, name: new RegExp(name, 'i') });
       const profileIcon = screen.getByTestId(PROFILE_TOP_BTN);
       const searchIcon = screen.queryByTestId(SEARCH_TOP_BTN);
 

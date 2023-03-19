@@ -23,12 +23,7 @@ function Header({ title }) {
         <div className="icons">
           {/* ícone profile */}
           <Link className="icon" to="/profile">
-            {/* <img
-              alt="Profile"
-              data-testid="profile-top-btn"
-              src={ profileIcon }
-            /> */}
-            <FaUserAlt size={ 22 } />
+            <FaUserAlt data-testid="profile-top-btn" size={ 22 } />
           </Link>
           {/* ícone search */}
           {
@@ -42,12 +37,7 @@ function Header({ title }) {
                 onClick={ () => setSearchBarIsVisible(!searchBarIsVisible) }
                 type="button"
               >
-                {/* <img
-                    alt="Search"
-                    data-testid="search-top-btn"
-                    src={ searchIcon }
-                  /> */}
-                <FiSearch size={ 26 } />
+                <FiSearch data-testid="search-top-btn" size={ 26 } />
               </button>
             )
           }

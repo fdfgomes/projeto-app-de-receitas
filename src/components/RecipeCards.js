@@ -9,7 +9,7 @@ export default function RecipeCards({ data, horizontal, type }) {
   return (
     <main>
       <div className={ `recipe-cards ${horizontal ? 'horizontal' : ''}` }>
-        { data.map((item, index) => (
+        { data?.map((item, index) => (
           <Link
             key={ isDrink ? `${index}-${item.idDrink}` : `${index}-${item.idMeal}` }
             to={ isDrink ? `/drinks/${item.idDrink}` : `/meals/${item.idMeal}` }

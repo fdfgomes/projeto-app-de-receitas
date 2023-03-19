@@ -24,7 +24,7 @@ describe('Testando o componente RecipeDetails', () => {
 
       expect(global.fetch).toHaveBeenCalledWith('https://www.themealdb.com/api/json/v1/1/lookup.php?i=53014');
 
-      const recipePhoto = screen.queryByTestId('recipe-photo');
+      const recipePhoto = screen.queryAllByTestId('recipe-photo');
       const recipeTitle = screen.queryByTestId('recipe-title');
       const recipeCategory = screen.queryByTestId('recipe-category');
       const recipeShareButton = screen.queryByTestId('share-btn');
@@ -33,7 +33,7 @@ describe('Testando o componente RecipeDetails', () => {
       const recipeInstructions = screen.queryByTestId('instructions');
       const recipeYouTubePreview = screen.queryByTestId('video');
 
-      expect(recipePhoto).toBeInTheDocument();
+      expect(recipePhoto.length).toBeGreaterThanOrEqual(1);
       expect(recipeTitle).toBeInTheDocument();
       expect(recipeCategory).toBeInTheDocument();
       expect(recipeShareButton).toBeInTheDocument();
@@ -106,7 +106,7 @@ describe('Testando o componente RecipeDetails', () => {
 
       expect(global.fetch).toHaveBeenCalledWith('https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=178332');
 
-      const recipePhoto = screen.queryByTestId('recipe-photo');
+      const recipePhoto = screen.queryAllByTestId('recipe-photo');
       const recipeTitle = screen.queryByTestId('recipe-title');
       const recipeCategory = screen.queryByTestId('recipe-category');
       const recipeShareButton = screen.queryByTestId('share-btn');
@@ -114,7 +114,7 @@ describe('Testando o componente RecipeDetails', () => {
       const recipeIngredients = container.querySelectorAll('[data-testid*=ingredient-name-and-measure]');
       const recipeInstructions = screen.queryByTestId('instructions');
 
-      expect(recipePhoto).toBeInTheDocument();
+      expect(recipePhoto.length).toBeGreaterThanOrEqual(1);
       expect(recipeTitle).toBeInTheDocument();
       expect(recipeCategory).toBeInTheDocument();
       expect(recipeShareButton).toBeInTheDocument();

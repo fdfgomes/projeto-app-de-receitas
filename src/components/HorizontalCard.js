@@ -115,17 +115,21 @@ export default function HorizontalCard({ filteredFavoriteRecipes }) {
             ) }
 
           <div className="buttons-share-and-favorite">
-            <button onClick={ () => handleClickShare(recipe) }>
+            <button
+              data-testid={ `${index}-horizontal-share-btn` }
+              onClick={ () => handleClickShare(recipe) }
+            >
               <img
                 alt="Share button"
-                data-testid={ `${index}-horizontal-share-btn` }
                 src={ shareIcon }
               />
             </button>
-            <button onClick={ () => toggleFavorite(recipe) }>
+            <button
+              data-testid={ `${index}-horizontal-favorite-btn` }
+              onClick={ () => toggleFavorite(recipe) }
+            >
               <img
                 alt="Favorite button"
-                data-testid={ `${index}-horizontal-favorite-btn` }
                 src={ isFavorited(recipe) ? blackHeartIcon : whiteHeartIcon }
               />
             </button>

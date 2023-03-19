@@ -2,9 +2,9 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 import Header from '../components/Header';
 import FilterBtns from '../components/FilterBtns';
 import HorizontalCard from '../components/HorizontalCard';
-import '../styles/FavoriteRecipes.css';
 import Footer from '../components/Footer';
 import Context from '../context/Context';
+import '../styles/FavoriteRecipes.css';
 
 function FavoriteRecipes() {
   const { favoriteRecipes } = useContext(Context);

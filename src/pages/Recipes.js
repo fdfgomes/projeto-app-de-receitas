@@ -1,4 +1,10 @@
-import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { useLocation } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -14,6 +20,27 @@ import {
 import '../styles/SearchResults.css';
 import '../styles/Recipes.css';
 
+const skeletonCategories = [
+  {
+    strCategory: '',
+  },
+  {
+    strCategory: '',
+  },
+  {
+    strCategory: '',
+  },
+  {
+    strCategory: '',
+  },
+  {
+    strCategory: '',
+  },
+  {
+    strCategory: '',
+  },
+];
+
 export default function Recipes() {
   const { pathname } = useLocation();
 
@@ -27,79 +54,106 @@ export default function Recipes() {
   } = useContext(Context);
 
   const [recipes, setRecipes] = useState([]);
-  const [category, setAvailableCategories] = useState([]);
+  const [category, setAvailableCategories] = useState(skeletonCategories);
   const [isLoading, setIsLoading] = useState(true);
+
+  const [
+    availableCategoriesAreLoading,
+    setAvailableCategoriesAreLoading,
+  ] = useState(false);
 
   const fetchPopularRecipes = useCallback(async () => {
     setIsLoading(true);
 
-    await setAvailableCategories([]);
+    setAvailableCategoriesAreLoading(true);
+    await setAvailableCategories(skeletonCategories);
     const availableCategories = await fetchAvailableCategories(pathname);
     setAvailableCategories(availableCategories);
+    setAvailableCategoriesAreLoading(false);
 
-    const popularRecipes = await fetchSearchResults(
-      '',
-      SEARCH_TYPES.NAME,
-      pathname,
+    const popularRecipes = (
+      await fetchSearchResults('', SEARCH_TYPES.NAME, pathname)
     ) ?? [];
+
     setRecipes(popularRecipes);
 
     setIsLoading(false); // Necessário para não chamar o componente enquanto o estado não tiver com as receitas
   }, [pathname]);
 
-  const filterRecipesByCategory = useCallback(async (clickedCategory) => {
-    setIsLoading(true);
-    // resetar pesquisa
-    await setSearchResults((currentState) => ({
-      ...currentState,
-      [isDrinksPage ? 'drinks' : 'meals']: {
-        data: [],
-        term: '',
-      },
-    }));
-    let filteredRecipes = [];
-    if (selectedCategory === clickedCategory || clickedCategory === 'All') {
-      setSelectedCategory('All');
-      filteredRecipes = await fetchSearchResults('', SEARCH_TYPES.NAME, pathname);
-    } else {
-      setSelectedCategory(clickedCategory);
-      filteredRecipes = await fetchRecipesByCategory(clickedCategory, pathname);
-    }
-    setRecipes(filteredRecipes);
-    setIsLoading(false);
-  }, [isDrinksPage, pathname, selectedCategory, setSearchResults, setSelectedCategory]);
+  const filterRecipesByCategory = useCallback(
+    async (clickedCategory) => {
+      setIsLoading(true);
+      // resetar pesquisa
+      await setSearchResults((currentState) => ({
+        ...currentState,
+        [isDrinksPage ? 'drinks' : 'meals']: {
+          data: [],
+          term: '',
+        },
+      }));
+      let filteredRecipes = [];
+      if (selectedCategory === clickedCategory || clickedCategory === 'All') {
+        setSelectedCategory('All');
+        filteredRecipes = await fetchSearchResults(
+          '',
+          SEARCH_TYPES.NAME,
+          pathname,
+        );
+      } else {
+        setSelectedCategory(clickedCategory);
+        filteredRecipes = await fetchRecipesByCategory(
+          clickedCategory,
+          pathname,
+        );
+      }
+      setRecipes(filteredRecipes);
+      setIsLoading(false);
+    },
+    [
+      isDrinksPage,
+      pathname,
+      selectedCategory,
+      setSearchResults,
+      setSelectedCategory,
+    ],
+  );
 
   useEffect(() => {
     fetchPopularRecipes();
   }, [fetchPopularRecipes, pathname]);
 
-  const showLoadingAnimation = useMemo(() => !!(
-    isLoading
-    || searchResults.drinks.isLoading
-    || searchResults.meals.isLoading
-  ), [isLoading, searchResults]);
+  const showLoadingAnimation = useMemo(
+    () => !!(
+      isLoading
+        || searchResults.drinks.isLoading
+        || searchResults.meals.isLoading
+    ),
+    [isLoading, searchResults],
+  );
 
   return (
     <>
       <Header title={ isDrinksPage ? 'Drinks' : 'Meals' } />
       <main className="recipes">
-        { showLoadingAnimation && <Loading /> }
+        {showLoadingAnimation && <Loading />}
         {/* botões com as categorias disponíveis */}
         <div className="available-categories">
-          <h1 className="title">
-            Categories
-          </h1>
+          <h1 className="title">Categories</h1>
           <div className="category-group">
-            { category.map((item, index) => (
+            {category.map((item, index) => (
               <button
                 type="button"
                 className={ `
-                        btn-category
-                        ${selectedCategory === item.strCategory ? 'selected' : ''}
-                      `.trim() }
+                  btn-category
+                  ${selectedCategory === item.strCategory ? 'selected' : ''}
+                  ${availableCategoriesAreLoading ? 'animate-pulse' : ''}
+                `.trim() }
                 data-testid={ `${item.strCategory}-category-filter` }
                 key={ index }
                 onClick={ () => filterRecipesByCategory(item.strCategory) }
+                style={ {
+                  width: availableCategoriesAreLoading ? '60px' : 'fit-content',
+                } }
               >
                 {item.strCategory}
               </button>
@@ -107,82 +161,70 @@ export default function Recipes() {
           </div>
         </div>
 
+        {/* título da seção */}
+        {!isDrinksPage ? (
+          <h1 className="title">
+            {selectedCategory === 'All' && 'Popular meals'}
+            {selectedCategory !== 'All' && `${selectedCategory}s`}
+          </h1>
+        ) : (
+          <h1 className="title">
+            {selectedCategory === 'All' && 'Popular drinks'}
+            {selectedCategory !== 'All' && `${selectedCategory}s`}
+          </h1>
+        )}
+
         {/* cards exibidos nas rotas /drinks e /meals */}
         <div className="search-results">
-          { !showLoadingAnimation && (
+          {!showLoadingAnimation && (
             <div className="results-wrapper">
-
               {/* /meals */}
-              { !isDrinksPage && (
+              {!isDrinksPage && (
                 <>
                   {/* popular meals */}
-                  { searchResults.meals.data.length === 0 && (
-                    <>
-                      <h1 className="title">
-                        { selectedCategory === 'All' && 'Popular meals' }
-                        { selectedCategory !== 'All' && `${selectedCategory}s` }
-                      </h1>
-                      <RecipeCards
-                        data={ recipes }
-                        type="Meals"
-                      />
-                    </>
-                  ) }
+                  {searchResults.meals.data.length === 0 && (
+                    <RecipeCards data={ recipes } type="Meals" />
+                  )}
                   {/* resultados da pesquisa */}
-                  { searchResults.meals.data.length > 0 && (
+                  {searchResults.meals.data.length > 0 && (
                     <>
                       <h1 className="title primary">
                         Results for
-                        <em>
-                          { searchResults.meals.term }
-                        </em>
+                        <em>{searchResults.meals.term}</em>
                       </h1>
                       <RecipeCards
                         data={ searchResults.meals.data }
                         type="Meals"
                       />
                     </>
-                  ) }
-
+                  )}
                 </>
-              ) }
+              )}
 
               {/* drinks */}
-              { isDrinksPage && (
+              {isDrinksPage && (
                 <>
                   {/* popular drinks */}
-                  { searchResults.drinks.data.length === 0 && (
-                    <>
-                      <h1 className="title">
-                        { selectedCategory === 'All' && 'Popular drinks' }
-                        { selectedCategory !== 'All' && `${selectedCategory}s` }
-                      </h1>
-                      <RecipeCards
-                        data={ recipes }
-                        type="Drinks"
-                      />
-                    </>
-                  ) }
+                  {searchResults.drinks.data.length === 0 && (
+                    <RecipeCards data={ recipes } type="Drinks" />
+                  )}
                   {/* resultados da pesquisa */}
-                  { searchResults.drinks.data.length > 0 && (
+                  {searchResults.drinks.data.length > 0 && (
                     <>
                       <h1 className="title primary">
                         Results for
-                        <em>
-                          { searchResults.drinks.term }
-                        </em>
+                        <em>{searchResults.drinks.term}</em>
                       </h1>
                       <RecipeCards
                         data={ searchResults.drinks.data }
                         type="Drinks"
                       />
                     </>
-                  ) }
-
+                  )}
                 </>
-              ) }
+              )}
             </div>
-          ) }
+          )}
         </div>
       </main>
       <Footer />

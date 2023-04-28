@@ -8,18 +8,36 @@
   width: calc(100% + 8px);
 }
 
+.recipes .title {
+  color: #584e28;
+  font-size: 30px;
+  font-weight: 400;
+  margin: 13px 0 18px;
+}
+
 .recipes .available-categories .title {
   color: #584e28;
-  font-family: system-ui , -apple-system , Ubuntu , sans-serif;
   font-weight: 400;
   margin: 13px 0 21px;
 }
 
+.recipes .available-categories .category-group {
+  height: 100%;
+  min-height: calc(40px);
+  overflow-x: auto;
+}
+
 .recipes .available-categories .category-group .btn-category {
+  align-items: center;
   background-color: #e1dabd;
   border: none;
-  border-radius: 14px;
-  padding: 8px 14px;
+  border-radius: 12px;
+  display: flex;
+  flex-shrink: 0;
+  font-size: 14px;
+  justify-content: center;
+  min-width: 60px;
+  padding: 8px 12px;
 
   /* https://www.digitalocean.com/community/tutorials/css-prevent-line-break */
   white-space: nowrap;

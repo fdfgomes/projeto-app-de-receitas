@@ -1,7 +1,7 @@
 .recipe-cards {
   display: grid;
   gap: 12px;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(7, 1fr);
   width: 100%;
 }
 
@@ -14,16 +14,18 @@
   text-decoration: none;
 }
 
-.recipe-cards .recipe-card, .recipe-cards .recipe-card img {
-  border: none;
+.recipe-cards .recipe-card .img-wrapper {
+  background-color: #e1dabd;
   border-radius: 24px;
+}
+
+.recipe-cards .recipe-card {
+  border: none;
   position: relative;
-  width: 100%;
 }
 
 .recipe-cards .recipe-card .recipe-categories {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
   gap: 10px;
   left: 10px;
   position: absolute;
@@ -36,56 +38,51 @@
   backdrop-filter: blur(4px);
   background-color: rgba(255, 255, 255, 0.6);
   border: none;
-  border-radius: 12px;
+  border-radius: 8px;
   cursor: default;
-  padding: 4px 12px;
+  font-size: 14px;
+  padding: 4px 8px;
+  width: fit-content;
 }
 
 .recipe-cards .recipe-card img {
+  border-radius: 24px;
   width: 100%;
 }
 
 .recipe-cards .recipe-card .recipe-name {
   color: #584e28;
-  font-family: system-ui , -apple-system , Ubuntu , sans-serif;
   font-size: 30px;
-  font-weight: 400;
+  font-weight: 500;
   padding: 4px 0;
 }
 
-
-@media only screen and ( min-width : 450px ) {
-
+@media only screen and ( max-width: 1400px ) {
   .recipe-cards {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(6, 1fr);
   }
 }
 
-@media only screen and ( min-width : 450px ) {
-
+@media only screen and ( max-width: 1200px ) {
   .recipe-cards {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(5, 1fr);
   }
 }
 
-@media only screen and ( min-width : 600px ) {
-
+@media only screen and ( max-width: 950px ) {
   .recipe-cards {
     grid-template-columns: repeat(4, 1fr);
   }
 }
 
-@media only screen and ( min-width : 800px ) {
-
+@media only screen and ( max-width: 700px ) {
   .recipe-cards {
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
-@media only screen and ( min-width : 1200px ) {
-
-  .recipe-cards.horizontal {
-    grid-template-columns: repeat(6, 1fr);
-    overflow-x: hidden;
+@media only screen and ( max-width: 400px ) {
+  .recipe-cards {
+    grid-template-columns: repeat(2, 1fr);
   }
 }

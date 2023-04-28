@@ -30,11 +30,13 @@ export default function RecipeCards({ data, horizontal, type }) {
                   </button>
                 )}
               </div>
-              <img
-                alt={ `${isDrink ? item.strDrink : item.strMeal} recipe` }
-                data-testid={ `${index}-card-img` }
-                src={ isDrink ? item.strDrinkThumb : item.strMealThumb }
-              />
+              <div className="img-wrapper">
+                <img
+                  alt={ `${isDrink ? item.strDrink : item.strMeal} recipe` }
+                  data-testid={ `${index}-card-img` }
+                  src={ isDrink ? item.strDrinkThumb : item.strMealThumb }
+                />
+              </div>
               <h2
                 className="recipe-name"
                 data-testid={ `${index}-card-name` }

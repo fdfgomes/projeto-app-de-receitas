@@ -5,19 +5,10 @@
   height: 100%;
   margin: 0 -8px 50px;
   min-height: calc(100vh - 56px - 50px);
-  padding: 10px 14px 8px;
+  padding: 22px 20px 8px;
 }
 
-.search-results .title {
-  color: #584e28;
-  font-family: system-ui , -apple-system , Ubuntu , sans-serif;
-  font-size: 30px;
-  font-weight: 400;
-  margin: 13px 0 21px;
-}
-
-@media only screen and ( min-width : 800px ) {
-
+@media only screen and (min-width: 800px) {
   .search-results {
     min-height: calc(100vh - 56px - 13px - 21px - 81px - 84px);
   }

@@ -3,7 +3,7 @@ import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import renderWithRouterAndContext from './helpers/renderWithRouterAndContext';
 import App from '../App';
-import fetch from '../../cypress/mocks/fetch';
+import fetch from './mocks/fetch';
 
 // Meals Category
 const ALL_CATEGORY = 'All-category-filter';
@@ -142,7 +142,7 @@ describe('Testa funcionamento da pagina de receitas', () => {
     expect(screen.queryAllByTestId(/-recipe-card$/i)).toHaveLength(12);
   });
 
-  it('Testa se as categorias /drinks funcionam corretamentes', async () => {
+  it('Testa se as categorias /drinks funcionam corretamente', async () => {
     jest.spyOn(global, 'fetch');
     global.fetch = jest.fn(fetch);
 

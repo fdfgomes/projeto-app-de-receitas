@@ -124,11 +124,49 @@ export default function Recipes() {
 
   const showLoadingAnimation = useMemo(
     () => !!(
-      isLoading
-        || searchResults.drinks.isLoading
-        || searchResults.meals.isLoading
+      isLoading || searchResults.drinks.isLoading || searchResults.meals.isLoading
     ),
     [isLoading, searchResults],
+  );
+
+  const sectionTitle = useMemo(
+    () => {
+      if (!isDrinksPage) {
+        if (searchResults.meals.data.length > 0) {
+          return (
+            <>
+              Results for
+              <em>{searchResults.meals.term}</em>
+            </>
+          );
+        }
+        if (selectedCategory === 'All') {
+          return 'Popular meals';
+        }
+      }
+      if (isDrinksPage) {
+        if (selectedCategory === 'All') {
+          return 'Popular drinks';
+        }
+        if (searchResults.drinks.data.length > 0) {
+          return (
+            <>
+              Results for
+              <em>{searchResults.drinks.term}</em>
+            </>
+          );
+        }
+      }
+      return selectedCategory !== 'All' && `${selectedCategory}s`;
+    },
+    [
+      isDrinksPage,
+      searchResults.meals.data,
+      searchResults.meals.term,
+      searchResults.drinks.data,
+      searchResults.drinks.term,
+      selectedCategory,
+    ],
   );
 
   return (
@@ -142,7 +180,6 @@ export default function Recipes() {
           <div className="category-group">
             {category.map((item, index) => (
               <button
-                type="button"
                 className={ `
                   btn-category
                   ${selectedCategory === item.strCategory ? 'selected' : ''}
@@ -154,31 +191,22 @@ export default function Recipes() {
                 style={ {
                   width: availableCategoriesAreLoading ? '60px' : 'fit-content',
                 } }
+                type="button"
               >
                 {item.strCategory}
               </button>
             ))}
           </div>
         </div>
-
-        {/* título da seção */}
-        {!isDrinksPage ? (
-          <h1 className="title">
-            {selectedCategory === 'All' && 'Popular meals'}
-            {selectedCategory !== 'All' && `${selectedCategory}s`}
-          </h1>
-        ) : (
-          <h1 className="title">
-            {selectedCategory === 'All' && 'Popular drinks'}
-            {selectedCategory !== 'All' && `${selectedCategory}s`}
-          </h1>
-        )}
-
         {/* cards exibidos nas rotas /drinks e /meals */}
         <div className="search-results">
           {!showLoadingAnimation && (
             <div className="results-wrapper">
-              {/* /meals */}
+              {/* título da seção */}
+              <h1 className="title">
+                {sectionTitle}
+              </h1>
+              {/* rota /meals */}
               {!isDrinksPage && (
                 <>
                   {/* popular meals */}
@@ -187,21 +215,14 @@ export default function Recipes() {
                   )}
                   {/* resultados da pesquisa */}
                   {searchResults.meals.data.length > 0 && (
-                    <>
-                      <h1 className="title primary">
-                        Results for
-                        <em>{searchResults.meals.term}</em>
-                      </h1>
-                      <RecipeCards
-                        data={ searchResults.meals.data }
-                        type="Meals"
-                      />
-                    </>
+                    <RecipeCards
+                      data={ searchResults.meals.data }
+                      type="Meals"
+                    />
                   )}
                 </>
               )}
-
-              {/* drinks */}
+              {/* rota /drinks */}
               {isDrinksPage && (
                 <>
                   {/* popular drinks */}
@@ -210,16 +231,10 @@ export default function Recipes() {
                   )}
                   {/* resultados da pesquisa */}
                   {searchResults.drinks.data.length > 0 && (
-                    <>
-                      <h1 className="title primary">
-                        Results for
-                        <em>{searchResults.drinks.term}</em>
-                      </h1>
-                      <RecipeCards
-                        data={ searchResults.drinks.data }
-                        type="Drinks"
-                      />
-                    </>
+                    <RecipeCards
+                      data={ searchResults.drinks.data }
+                      type="Drinks"
+                    />
                   )}
                 </>
               )}

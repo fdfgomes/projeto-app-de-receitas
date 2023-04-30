@@ -16,38 +16,40 @@ function Header({ title }) {
 
   return isExact
     && (
-      <header className="header">
-        {/* título da página */}
-        <h2 data-testid="page-title">{ title }</h2>
-        {/* ícones */}
-        <div className="icons">
-          {/* ícone profile */}
-          <Link className="icon" to="/profile">
-            <FaUserAlt data-testid="profile-top-btn" size={ 22 } />
-          </Link>
-          {/* ícone search */}
-          {
-            ![
-              '/profile',
-              '/done-recipes',
-              '/favorite-recipes',
-            ].includes(pathname) && (
-              <button
-                className="icon icon-button"
-                onClick={ () => setSearchBarIsVisible(!searchBarIsVisible) }
-                type="button"
-              >
-                <FiSearch data-testid="search-top-btn" size={ 26 } />
-              </button>
-            )
-          }
-        </div>
+      <>
+        <header className="header">
+          {/* título da página */}
+          <h2 data-testid="page-title">{ title }</h2>
+          {/* ícones */}
+          <div className="icons">
+            {/* ícone profile */}
+            <Link className="icon" to="/profile">
+              <FaUserAlt data-testid="profile-top-btn" size={ 22 } />
+            </Link>
+            {/* ícone search */}
+            {
+              ![
+                '/profile',
+                '/done-recipes',
+                '/favorite-recipes',
+              ].includes(pathname) && (
+                <button
+                  className="icon icon-button"
+                  onClick={ () => setSearchBarIsVisible(!searchBarIsVisible) }
+                  type="button"
+                >
+                  <FiSearch data-testid="search-top-btn" size={ 26 } />
+                </button>
+              )
+            }
+          </div>
+        </header>
         {
           searchBarIsVisible
           && ['/drinks', '/meals'].includes(pathname)
           && <SearchBar />
         }
-      </header>
+      </>
     );
 }
 

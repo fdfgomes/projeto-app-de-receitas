@@ -28,7 +28,7 @@ function RecipeCard({ item, index, isDrink }) {
           <LazyLoadImage
             alt={ `${isDrink ? item.strDrink : item.strMeal} recipe` }
             data-testid={ `${index}-card-img` }
-            effect="blur"
+            effect="opacity"
             src={ isDrink ? item.strDrinkThumb : item.strMealThumb }
           />
         </div>

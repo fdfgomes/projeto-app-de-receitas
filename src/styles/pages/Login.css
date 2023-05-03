@@ -1,0 +1,101 @@
+.login {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+}
+
+.login .wrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+}
+
+.login .logo {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  justify-content: center;
+}
+
+.login .logo .image {
+  margin-bottom: 20px;
+  width: 192px;
+}
+
+.login .logo .title {
+  color: var(--brown-1);
+  font-family: Mulled Wine Season , sans-serif;
+  font-size: 40px;
+}
+
+.login .logo .subtitle {
+  color: var(--brown-3);
+  font-family: Glacial Indifference , sans-serif;
+  font-size: 18px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.login .separator {
+  align-self: center;
+  background-color: var(--brown-2);
+  height: 1px;
+  margin: 24px 0;
+  width: 75%;
+}
+
+.login .greetings {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 10px 0 20px;
+  position: relative;
+  width: 90%;
+}
+
+.login .greetings .message {
+  color: var(--brown-4);
+  font-family: Glacial Indifference , sans-serif;
+  font-size: 18px;
+  text-align: center;
+}
+
+.login form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 400px;
+  width: 95%;
+}
+
+form label {
+  display: flex;
+  justify-content: center;
+}
+
+form input, form button {
+  border-radius: 12px;
+  padding: 12px;
+  width: 90%;
+}
+
+form button, button {
+  color: var(--button-label);
+}
+
+form button:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+form input {
+  border: 1px solid var(--brown-2);
+}
+
+form input[type=text]:focus, form input[type=email]:focus, form input[type=password] {
+  outline-color: var(--brown-4);
+}

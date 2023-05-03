@@ -30,7 +30,7 @@
 }
 
 .recipe-header .recipe-name h1 {
-  color: #584e28;
+  color: var(--heading-2);
   font-weight: 400;
 }
 

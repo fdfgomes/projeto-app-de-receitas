@@ -21,7 +21,7 @@ function Profile() {
       <Header title="Profile" />
       <main className="profile">
         {/* <h2>Profile</h2> */}
-        <FaUserCircle color="#7b6e38" size={ 150 } />
+        <FaUserCircle className="profile-avatar" size={ 150 } />
         {/* email do usuário */}
         <h4 data-testid="profile-email">{email}</h4>
         {/* div com os links de redirecionamento */}

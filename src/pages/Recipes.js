@@ -182,6 +182,7 @@ export default function Recipes() {
             ))}
           </div>
         </div>
+
         {/* cards exibidos nas rotas /drinks e /meals */}
         <div className="search-results">
           {!showLoadingAnimation && (

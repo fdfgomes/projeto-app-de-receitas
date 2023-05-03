@@ -20,7 +20,7 @@ footer {
 }
 
 .footer-box a, .footer-box a:visited {
-  color: #7b6e38;
+  color: var(--heading-2);
 }
 
 /* fiz um css básico para fixar o footer no final da página */

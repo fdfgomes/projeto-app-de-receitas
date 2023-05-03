@@ -1,6 +1,18 @@
 @import url('https://fonts.cdnfonts.com/css/glacial-indifference-2');
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 
+:root {
+  --brown-1: #8b5e34;
+  --brown-2: rgba(139, 94, 52, 0.2);
+  --brown-3: rgba(139, 94, 52, 0.6);
+  --brown-4: rgba(139, 94, 52, 0.9);
+  --heading: #603808;
+  --heading-2: rgba(96, 56, 8, 0.8725);
+  --button-label: #583101;
+  --button-bg: #e1dabd;
+  --button-selected-bg: rgba(123, 110, 56, 0.4);
+}
+
 * {
   font-family: 'Inter', sans-serif;
 }
@@ -9,10 +21,6 @@ body {
   background-color: #f7f5ed;
   font-family: 'Inter', sans-serif;
   margin: 0;
-}
-
-form input[type=text]:focus, form input[type=email]:focus, form input[type=password] {
-  outline-color: #7b6e38;
 }
 
 form button {

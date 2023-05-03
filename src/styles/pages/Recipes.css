@@ -9,15 +9,16 @@
 }
 
 .recipes .title {
-  color: #584e28;
+  color: var(--heading-2);
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 30px;
-  font-weight: 400;
+  font-weight: 500;
   margin: 13px 0 18px;
 }
 
 .recipes .available-categories .title {
-  color: #584e28;
-  font-weight: 400;
+  color: var(--heading-2);
+  font-weight: 500;
   margin: 13px 0 21px;
 }
 
@@ -32,9 +33,10 @@
   background-color: #e1dabd;
   border: none;
   border-radius: 12px;
+  color: var(--button-label);
   display: flex;
   flex-shrink: 0;
-  font-size: 14px;
+  font-size: 15px;
   justify-content: center;
   min-width: 60px;
   padding: 8px 12px;
@@ -52,7 +54,7 @@
 }
 
 .recipes .available-categories .category-group .btn-category.selected {
-  background-color: rgba(123, 110, 56, 0.4);
+  background-color: var(--button-selected-bg);
   color: #121008;
 }
 

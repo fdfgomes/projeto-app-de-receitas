@@ -53,7 +53,7 @@
 }
 
 .recipe-cards .recipe-card .recipe-name {
-  color: #584e28;
+  color: var(--heading-2);
   /* https://stackoverflow.com/questions/3922739/limit-text-length-to-n-lines-using-css */
   display: -webkit-box;
   font-size: 30px;

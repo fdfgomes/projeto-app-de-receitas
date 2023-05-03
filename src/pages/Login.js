@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import logoImage from '../images/logo-image.png';
 import setPageTitle from '../utils/setPageTitle';
 import { APP_NAME } from '../constants';
+import '../styles/pages/Login.css';
 
 function Login() {
   const history = useHistory();

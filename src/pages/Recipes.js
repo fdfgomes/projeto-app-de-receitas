@@ -18,27 +18,8 @@ import {
   SEARCH_TYPES,
 } from '../services/api';
 import '../styles/pages/Recipes.css';
-
-const skeletonCategories = [
-  {
-    strCategory: '',
-  },
-  {
-    strCategory: '',
-  },
-  {
-    strCategory: '',
-  },
-  {
-    strCategory: '',
-  },
-  {
-    strCategory: '',
-  },
-  {
-    strCategory: '',
-  },
-];
+import { APP_SHORT_NAME, SKELETON_CATEGORIES } from '../constants';
+import setPageTitle from '../utils/setPageTitle';
 
 export default function Recipes() {
   const { pathname } = useLocation();
@@ -53,7 +34,7 @@ export default function Recipes() {
   } = useContext(Context);
 
   const [recipes, setRecipes] = useState([]);
-  const [category, setAvailableCategories] = useState(skeletonCategories);
+  const [category, setAvailableCategories] = useState(SKELETON_CATEGORIES);
   const [isLoading, setIsLoading] = useState(true);
 
   const [
@@ -65,7 +46,7 @@ export default function Recipes() {
     setIsLoading(true);
 
     setAvailableCategoriesAreLoading(true);
-    await setAvailableCategories(skeletonCategories);
+    await setAvailableCategories(SKELETON_CATEGORIES);
     const availableCategories = await fetchAvailableCategories(pathname);
     setAvailableCategories(availableCategories);
     setAvailableCategoriesAreLoading(false);
@@ -167,6 +148,10 @@ export default function Recipes() {
       selectedCategory,
     ],
   );
+
+  useEffect(() => {
+    setPageTitle(`${isDrinksPage ? 'Drinks' : 'Meals'} - ${APP_SHORT_NAME}`);
+  }, [isDrinksPage]);
 
   return (
     <>

@@ -10,6 +10,8 @@ import Video from '../components/RecipeDetails/Video';
 import { fetchRecipeDetails } from '../services';
 import { recipeIsInProgress } from '../helpers/recipeHelpers';
 import '../styles/pages/RecipeDetails.css';
+import setPageTitle from '../utils/setPageTitle';
+import { APP_SHORT_NAME } from '../constants';
 
 function RecipeDetails() {
   const { id } = useParams();
@@ -38,6 +40,25 @@ function RecipeDetails() {
   useEffect(() => {
     fetchDetails();
   }, [fetchDetails]);
+
+  useEffect(() => {
+    let pageTitle = APP_SHORT_NAME;
+
+    if (recipeIsLoading) {
+      pageTitle = `Loading... - ${APP_SHORT_NAME}`;
+    }
+
+    if (!recipeIsLoading && (recipeInfo.strDrink || recipeInfo.strMeal)) {
+      if (isDrink) {
+        pageTitle = `${recipeInfo.strDrink} - ${APP_SHORT_NAME}`;
+      }
+      if (!isDrink) {
+        pageTitle = `${recipeInfo.strMeal} - ${APP_SHORT_NAME}`;
+      }
+    }
+
+    setPageTitle(pageTitle);
+  }, [isDrink, recipeInfo, recipeIsLoading]);
 
   return (
     <main className="recipe-details">

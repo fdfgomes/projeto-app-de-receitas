@@ -8,6 +8,8 @@ import Instructions from '../components/RecipeDetails/Instructions';
 import Video from '../components/RecipeDetails/Video';
 import Context from '../context/Context';
 import { fetchRecipeDetails } from '../services';
+import setPageTitle from '../utils/setPageTitle';
+import { APP_SHORT_NAME } from '../constants';
 
 function RecipeInProgress() {
   const { id } = useParams();
@@ -62,6 +64,25 @@ function RecipeInProgress() {
   useEffect(() => {
     fetchDetails(id);
   }, [fetchDetails, id]);
+
+  useEffect(() => {
+    let pageTitle = APP_SHORT_NAME;
+
+    if (recipeIsLoading) {
+      pageTitle = `Loading... - ${APP_SHORT_NAME}`;
+    }
+
+    if (!recipeIsLoading && (recipeInfo.strDrink || recipeInfo.strMeal)) {
+      if (isDrink) {
+        pageTitle = `${recipeInfo.strDrink} - ${APP_SHORT_NAME}`;
+      }
+      if (!isDrink) {
+        pageTitle = `${recipeInfo.strMeal} - ${APP_SHORT_NAME}`;
+      }
+    }
+
+    setPageTitle(pageTitle);
+  }, [isDrink, recipeInfo, recipeIsLoading]);
 
   return (
     <main className="recipe-details">

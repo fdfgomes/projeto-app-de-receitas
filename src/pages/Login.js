@@ -1,12 +1,17 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import logoImage from '../images/logo-image.png';
+import setPageTitle from '../utils/setPageTitle';
+import { APP_NAME } from '../constants';
 
 function Login() {
   const history = useHistory();
+
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+
   const [isDisabled, setIsDisabled] = useState(true);
+
+  const [password, setPassword] = useState('');
 
   useEffect(() => {
     const enableButton = () => {
@@ -26,6 +31,10 @@ function Login() {
     localStorage.setItem('user', JSON.stringify({ email }));
     history.push('/meals');
   }, [email, history]);
+
+  useEffect(() => {
+    setPageTitle(APP_NAME);
+  }, []);
 
   return (
     <main className="login">

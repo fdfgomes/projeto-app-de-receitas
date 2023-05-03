@@ -7,6 +7,8 @@ import shareIcon from '../images/shareIcon.svg';
 import Footer from '../components/Footer';
 import '../styles/pages/DoneRecipes.css';
 import Context from '../context/Context';
+import setPageTitle from '../utils/setPageTitle';
+import { APP_SHORT_NAME } from '../constants';
 
 function formatDate(isoDate) {
   const date = new Date(isoDate);
@@ -40,6 +42,10 @@ function DoneRecipes() {
     setSelectedCategory(clickedTarget);
     filterTypes[clickedTarget]();
   }, [filterTypes]);
+
+  useEffect(() => {
+    setPageTitle(`Done Recipes - ${APP_SHORT_NAME}`);
+  }, []);
 
   return (
     <div>

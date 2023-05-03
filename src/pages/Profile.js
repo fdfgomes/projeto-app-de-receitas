@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { AiFillHeart, AiOutlineCheck } from 'react-icons/ai';
 import { FaUserCircle } from 'react-icons/fa';
@@ -6,9 +6,15 @@ import { IoExitOutline } from 'react-icons/io5';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import '../styles/pages/Profile.css';
+import setPageTitle from '../utils/setPageTitle';
+import { APP_SHORT_NAME } from '../constants';
 
 function Profile() {
   const { email } = JSON.parse(localStorage.getItem('user')) ?? '';
+
+  useEffect(() => {
+    setPageTitle(`Profile - ${APP_SHORT_NAME}`);
+  }, []);
 
   return (
     <>

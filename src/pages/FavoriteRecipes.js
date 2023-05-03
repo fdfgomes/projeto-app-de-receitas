@@ -5,6 +5,8 @@ import HorizontalCard from '../components/HorizontalCard';
 import Footer from '../components/Footer';
 import Context from '../context/Context';
 import '../styles/pages/FavoriteRecipes.css';
+import setPageTitle from '../utils/setPageTitle';
+import { APP_SHORT_NAME } from '../constants';
 
 function FavoriteRecipes() {
   const { favoriteRecipes } = useContext(Context);
@@ -35,6 +37,10 @@ function FavoriteRecipes() {
   useEffect(() => {
     setFilteredFavoriteRecipes(favoriteRecipes);
   }, [favoriteRecipes]);
+
+  useEffect(() => {
+    setPageTitle(`Favorite Recipes - ${APP_SHORT_NAME}`);
+  }, []);
 
   return (
     <>

@@ -70,7 +70,7 @@
 }
 
 .favorite-recipe-card .recipe-name {
-  align-items: end;
+  align-items: flex-end;
   color: #584e28;
   display: flex;
   grid-column: 2;
@@ -91,7 +91,7 @@
 }
 
 .favorite-recipe-card .buttons-share-and-favorite {
-  align-items: start;
+  align-items: flex-start;
   display: flex;
   grid-column: 2;
 }

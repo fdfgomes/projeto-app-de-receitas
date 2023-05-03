@@ -4,10 +4,8 @@ import PropTypes from 'prop-types';
 import { FaUserAlt } from 'react-icons/fa';
 import { FiSearch } from 'react-icons/fi';
 import Context from '../context/Context';
-// import profileIcon from '../images/profileIcon.svg';
-// import searchIcon from '../images/searchIcon.svg';
 import SearchBar from './SearchBar';
-import '../styles/Header.css';
+import '../styles/components/Header.css';
 
 function Header({ title }) {
   const { isExact, path: pathname } = useRouteMatch();

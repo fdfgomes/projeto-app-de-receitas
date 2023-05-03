@@ -59,3 +59,13 @@
 .recipes .available-categories .category-group .btn-category:last-of-type {
   margin-right: 8px;
 }
+
+.recipes .search-results {
+  background-color: white;
+  border-top-left-radius: 38px;
+  border-top-right-radius: 38px;
+  height: 100%;
+  margin: 0 -8px 50px;
+  min-height: calc(100vh - 55px - 13px - 97px - 24px - 55px);
+  padding: 6px 20px 8px 20px;
+}

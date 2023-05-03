@@ -4,7 +4,7 @@ import { FiSearch } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 import Context from '../context/Context';
 import { fetchSearchResults, SEARCH_TYPES } from '../services/api';
-import '../styles/SearchBar.css';
+import '../styles/components/SearchBar.css';
 
 export default function SearchBar() {
   const {

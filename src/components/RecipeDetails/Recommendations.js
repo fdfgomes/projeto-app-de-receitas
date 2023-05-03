@@ -2,9 +2,9 @@ import { useCallback, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { fetchRecomendations } from '../../services';
 import RecipeCards from '../RecipeCards';
-import '../../styles/RecipeDetails/RecipeRecommendations.css';
+import '../../styles/pages/RecipeDetails/Recommendations.css';
 
-function RecipeRecomendations() {
+function Recommendations() {
   const { pathname } = useLocation();
   const [recommendations, setRecommendations] = useState([]);
 
@@ -41,4 +41,4 @@ function RecipeRecomendations() {
   );
 }
 
-export default RecipeRecomendations;
+export default Recommendations;

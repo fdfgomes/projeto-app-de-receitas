@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
-import '../../styles/RecipeDetails/RecipeButton.css';
+import '../../styles/pages/RecipeDetails/Button.css';
 
-export default function RecipeButton({ disabled, id, label, onClick }) {
+export default function Button({ disabled, id, label, onClick }) {
   return (
     <button
       className="recipe-button"
@@ -15,7 +15,7 @@ export default function RecipeButton({ disabled, id, label, onClick }) {
   );
 }
 
-RecipeButton.propTypes = {
+Button.propTypes = {
   disabled: PropTypes.bool.isRequired,
   id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,

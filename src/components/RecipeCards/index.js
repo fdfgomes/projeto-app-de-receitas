@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import '../../styles/RecipeCards.css';
+import '../../styles/components/RecipeCards.css';
 import RecipeCard from './RecipeCard';
 
 export default function RecipeCards({ data, horizontal, type }) {

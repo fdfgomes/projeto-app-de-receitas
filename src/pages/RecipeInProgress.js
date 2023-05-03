@@ -1,11 +1,11 @@
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import Loading from '../components/Loading';
-import RecipeButton from '../components/RecipeDetails/RecipeButton';
-import RecipeHeader from '../components/RecipeDetails/RecipeHeader';
-import RecipeIngredients from '../components/RecipeDetails/RecipeIngredients';
-import RecipeInstructions from '../components/RecipeDetails/RecipeInstructions';
-import RecipeYoutube from '../components/RecipeDetails/RecipeYoutube';
+import Button from '../components/RecipeDetails/Button';
+import Header from '../components/RecipeDetails/Header';
+import Ingredients from '../components/RecipeDetails/Ingredients';
+import Instructions from '../components/RecipeDetails/Instructions';
+import Video from '../components/RecipeDetails/Video';
 import Context from '../context/Context';
 import { fetchRecipeDetails } from '../services';
 
@@ -68,21 +68,21 @@ function RecipeInProgress() {
       { recipeIsLoading && <Loading /> }
       { !recipeIsLoading && (
         <>
-          <RecipeHeader data={ recipeInfo } />
-          <RecipeIngredients
+          <Header data={ recipeInfo } />
+          <Ingredients
             ingredients={ recipeInfo.ingredients }
             isDrink={ isDrink }
             isRecipeInProgress
             recipeId={ id }
           />
-          <RecipeInstructions
+          <Instructions
             strInstructions={ recipeInfo.strInstructions }
           />
-          <RecipeYoutube
+          <Video
             strYoutube={ recipeInfo.strYoutube }
             isDrink={ isDrink }
           />
-          <RecipeButton
+          <Button
             disabled={ !allCheckboxesAreChecked }
             id="finish-recipe-btn"
             label="Finish recipe"

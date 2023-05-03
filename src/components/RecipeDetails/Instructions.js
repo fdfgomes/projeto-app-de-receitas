@@ -1,7 +1,7 @@
 import propTypes from 'prop-types';
-import '../../styles/RecipeDetails/RecipeInstructions.css';
+import '../../styles/pages/RecipeDetails/Instructions.css';
 
-function RecipeInstructions({ strInstructions }) {
+function Instructions({ strInstructions }) {
   return (
     <div className="recipe-instructions">
       <h2 className="mealsInstructionsHeader">Instructions</h2>
@@ -12,8 +12,8 @@ function RecipeInstructions({ strInstructions }) {
   );
 }
 
-RecipeInstructions.propTypes = {
+Instructions.propTypes = {
   strInstructions: propTypes.string,
 }.isRequired;
 
-export default RecipeInstructions;
+export default Instructions;

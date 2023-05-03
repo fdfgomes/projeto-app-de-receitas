@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { BiDrink } from 'react-icons/bi';
 import { GiMeal } from 'react-icons/gi';
 import Context from '../context/Context';
-import '../styles/Footer.css';
+import '../styles/components/Footer.css';
 
 function Footer() {
   const { pathname } = useLocation();

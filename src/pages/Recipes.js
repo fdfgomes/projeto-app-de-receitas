@@ -17,8 +17,7 @@ import {
   fetchSearchResults,
   SEARCH_TYPES,
 } from '../services/api';
-import '../styles/SearchResults.css';
-import '../styles/Recipes.css';
+import '../styles/pages/Recipes.css';
 
 const skeletonCategories = [
   {

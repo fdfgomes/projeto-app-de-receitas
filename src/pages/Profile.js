@@ -5,7 +5,7 @@ import { FaUserCircle } from 'react-icons/fa';
 import { IoExitOutline } from 'react-icons/io5';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import '../styles/Profile.css';
+import '../styles/pages/Profile.css';
 
 function Profile() {
   const { email } = JSON.parse(localStorage.getItem('user')) ?? '';

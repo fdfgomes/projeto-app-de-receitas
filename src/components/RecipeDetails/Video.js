@@ -1,7 +1,7 @@
 import propTypes from 'prop-types';
 import YouTube from 'react-youtube';
 
-function RecipeYoutube({ strYoutube, isDrink }) {
+function Video({ strYoutube, isDrink }) {
   const opts = {
     width: '100%',
   };
@@ -22,9 +22,9 @@ function RecipeYoutube({ strYoutube, isDrink }) {
   );
 }
 
-RecipeYoutube.propTypes = {
+Video.propTypes = {
   strYoutube: propTypes.string,
   isDrink: propTypes.string,
 }.isRequired;
 
-export default RecipeYoutube;
+export default Video;

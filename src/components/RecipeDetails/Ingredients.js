@@ -1,9 +1,9 @@
 import { useCallback, useContext, useMemo } from 'react';
 import propTypes from 'prop-types';
 import Context from '../../context/Context';
-import '../../styles/RecipeDetails/RecipeIngredients.css';
+import '../../styles/pages/RecipeDetails/Ingredients.css';
 
-function RecipeIngredients({ ingredients, isDrink, isRecipeInProgress, recipeId }) {
+function Ingredients({ ingredients, isDrink, isRecipeInProgress, recipeId }) {
   const { inProgressRecipes, setInProgressRecipes } = useContext(Context);
 
   // constante que armazena o progresso da receita
@@ -78,7 +78,7 @@ function RecipeIngredients({ ingredients, isDrink, isRecipeInProgress, recipeId 
   );
 }
 
-RecipeIngredients.propTypes = {
+Ingredients.propTypes = {
   ingredients: propTypes.arrayOf(propTypes.shape({
     name: propTypes.string,
     measure: propTypes.string,
@@ -89,4 +89,4 @@ RecipeIngredients.propTypes = {
   recipeId: propTypes.string,
 }.isRequired;
 
-export default RecipeIngredients;
+export default Ingredients;

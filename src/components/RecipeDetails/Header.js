@@ -7,11 +7,11 @@ import Context from '../../context/Context';
 import shareIcon from '../../images/shareIcon.svg';
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
-import '../../styles/RecipeDetails/RecipeHeader.css';
+import '../../styles/pages/RecipeDetails/Header.css';
 
 const copy = require('clipboard-copy');
 
-function RecipeHeader({ data }) {
+function Header({ data }) {
   const { pathname } = useLocation();
 
   const history = useHistory();
@@ -169,7 +169,7 @@ function RecipeHeader({ data }) {
   );
 }
 
-RecipeHeader.propTypes = {
+Header.propTypes = {
   data: propTypes.shape({
     idDrink: propTypes.string,
     idMeal: propTypes.string,
@@ -183,4 +183,4 @@ RecipeHeader.propTypes = {
   }),
 }.isRequired;
 
-export default RecipeHeader;
+export default Header;

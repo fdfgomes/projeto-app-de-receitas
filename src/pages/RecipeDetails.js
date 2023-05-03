@@ -1,16 +1,15 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import Loading from '../components/Loading';
-import RecipeHeader from '../components/RecipeDetails/RecipeHeader';
-import RecipeIngredients from '../components/RecipeDetails/RecipeIngredients';
-import RecipeInstructions from '../components/RecipeDetails/RecipeInstructions';
-import RecipeButton from '../components/RecipeDetails/RecipeButton';
-import RecipeRecomendations
-  from '../components/RecipeDetails/RecipeRecomendations';
-import RecipeYoutube from '../components/RecipeDetails/RecipeYoutube';
+import Header from '../components/RecipeDetails/Header';
+import Ingredients from '../components/RecipeDetails/Ingredients';
+import Instructions from '../components/RecipeDetails/Instructions';
+import Button from '../components/RecipeDetails/Button';
+import Recommendations from '../components/RecipeDetails/Recommendations';
+import Video from '../components/RecipeDetails/Video';
 import { fetchRecipeDetails } from '../services';
 import { recipeIsInProgress } from '../helpers/recipeHelpers';
-import '../styles/RecipeDetails.css';
+import '../styles/pages/RecipeDetails.css';
 
 function RecipeDetails() {
   const { id } = useParams();
@@ -45,24 +44,24 @@ function RecipeDetails() {
       { recipeIsLoading && <Loading /> }
       { !recipeIsLoading && (
         <>
-          <RecipeHeader data={ recipeInfo } />
-          <RecipeIngredients
+          <Header data={ recipeInfo } />
+          <Ingredients
             ingredients={ recipeInfo.ingredients }
           />
-          <RecipeInstructions
+          <Instructions
             strInstructions={ recipeInfo.strInstructions }
           />
-          <RecipeYoutube
+          <Video
             strYoutube={ recipeInfo.strYoutube }
             isDrink={ isDrink }
           />
-          <RecipeButton
+          <Button
             disabled={ false }
             id="start-recipe-btn"
             label={ recipeIsInProgress(id) ? 'Continue Recipe' : 'Start Recipe' }
             onClick={ handleClickStartRecipe }
           />
-          <RecipeRecomendations />
+          <Recommendations />
         </>
       ) }
     </main>

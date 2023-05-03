@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 import Footer from '../components/Footer';
-import '../styles/DoneRecipes.css';
+import '../styles/pages/DoneRecipes.css';
 import Context from '../context/Context';
 
 function formatDate(isoDate) {

@@ -44,9 +44,9 @@ export default function HorizontalCard({ filteredFavoriteRecipes }) {
 
   const handleClickShare = (recipe) => {
     if (recipe.type === 'meal') {
-      copy(`http://localhost:3000/meals/${recipe.id}`);
+      copy(`${window.location.origin}/meals/${recipe.id}`);
     } else {
-      copy(`http://localhost:3000/drinks/${recipe.id}`);
+      copy(`${window.location.origin}/drinks/${recipe.id}`);
     }
     toast.success('Link copied!');
   };

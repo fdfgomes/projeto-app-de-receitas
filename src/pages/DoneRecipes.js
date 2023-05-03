@@ -160,7 +160,9 @@ function DoneRecipes() {
                 <button
                   type="button"
                   onClick={ () => {
-                    clipboardCopy(`http://localhost:3000/${recipe.type}s/${recipe.id}`);
+                    clipboardCopy(`
+                      ${window.location.origin}/${recipe.type}s/${recipe.id}
+                    `);
                     toast.success('Link copied!');
                   } }
                 >

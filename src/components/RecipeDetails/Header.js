@@ -64,7 +64,7 @@ function Header({ data }) {
 
   const handleClickShare = useCallback(() => {
     // remover o /in-progress do pathname na página de receita em progresso
-    const url = `http://localhost:3000${pathname.split('/in-progress')[0]}`;
+    const url = `${window.location.origin}${pathname.split('/in-progress')[0]}`;
     copy(url);
     toast.success('Link copied!');
   }, [pathname]);

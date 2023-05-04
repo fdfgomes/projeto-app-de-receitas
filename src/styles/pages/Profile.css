@@ -12,14 +12,14 @@
 }
 
 .profile h4 {
-  color: var(--brown-4)
+  color: var(--heading-2)
 }
 
 .profile a {
   align-items: center;
   background-color: white;
   border-radius: 12px;
-  color: rgba(0, 0, 0, 0.7);
+  color: var(--heading-2);
   display: flex;
   gap: 14px;
   max-width: 400px;
@@ -29,5 +29,5 @@
 }
 
 .profile a:hover {
-  color: var(--heading-2);
+  color: var(--heading);
 }

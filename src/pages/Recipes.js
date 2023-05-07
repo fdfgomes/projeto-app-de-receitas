@@ -116,6 +116,7 @@ export default function Recipes() {
           return (
             <>
               Results for
+              {' '}
               <em>{searchResults.meals.term}</em>
             </>
           );
@@ -132,6 +133,7 @@ export default function Recipes() {
           return (
             <>
               Results for
+              {' '}
               <em>{searchResults.drinks.term}</em>
             </>
           );

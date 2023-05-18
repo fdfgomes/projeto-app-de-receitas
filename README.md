@@ -17,12 +17,12 @@ Tivemos, no total, 9 dias para desenvolver a aplicação.
 
 Após lermos e entendermos os requisitos do projeto, nós dividimos as tarefas individuais conforme as telas e componentes necessários para montar a aplicação. De maneira que cada um ficou responsável pela construção de uma pequena parte do projeto.
 
-#### Fui responsável por desenvolver:
+#### Fui responsável por implementar:
 
 - o componente _`Header.js`_;
 - o componente _`SearchBar.js`_;
 - a tela _`RecipeInProgress.js`_;
-- toda a parte de estilização _`(CSS)`_ da aplicação.
+- a estilização _`(CSS)`_ da aplicação.
 
 #### _Follow-up_ do progresso de desenvolvimento
 

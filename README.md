@@ -36,6 +36,6 @@ Utilizamos o [Trello](https://trello.com/) para registro e _follow-up_ do progre
 
 # Resultado final
 
-- [https://recipes-app-d90ff.web.app/](https://recipes-app-d90ff.web.app/)
+- [https://recipes-app-fdfgomes.web.app/](https://recipes-app-fdfgomes.web.app/)
 
 <img src="preview/resultado-final.png" />

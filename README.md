@@ -28,7 +28,7 @@ Após lermos, entendermos e conversarmos sobre os requisitos do projeto, optamos
 
 #### Processo de _follow-up_ do progresso de desenvolvimento
 
-Utilizamos o [Trello](https://trello.com/) <img src="preview/trello.png" height="16em" /> para registro e _follow-up_ de status de cada requisito. Fizemos, também, _daily meetings_, utilizando o [Zoom](https://zoom.us/) <img src="preview/zoom.png" height="16em" />, para atualizarmos o time sobre o progresso de desenvolvimento, alinhamento de metas e espectativas e comunicarmos à equipe eventualidades que pudessem nos impedir de cumprir o(s) prazos alinhados previamente. Para nos comunicarmos assicronamente utilizamos o [Slack](https://slack.com/intl/pt-br) <img src="preview/slack.png" height="16em" />.
+Utilizamos o [Trello](https://trello.com/) <img src="preview/trello.png" height="16em" /> para registro e _follow-up_ de status de cada requisito. Fizemos, também, _daily meetings_, por meio do [Zoom](https://zoom.us/) <img src="preview/zoom.png" height="16em" />, para atualizarmos o time sobre o progresso de desenvolvimento, alinhamento de metas e espectativas e comunicarmos à equipe eventualidades que pudessem nos impedir de cumprir o(s) prazos alinhados previamente. Para nos comunicarmos assicronamente utilizamos o [Slack](https://slack.com/intl/pt-br) <img src="preview/slack.png" height="16em" />.
 
 ## Tecnologias utilizadas
 

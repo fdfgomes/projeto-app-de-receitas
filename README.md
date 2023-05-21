@@ -30,15 +30,15 @@ Após lermos, entendermos e conversarmos sobre os requisitos do projeto, optamos
 
 Utilizamos o [Trello](https://trello.com/) <img src="preview/trello.png" height="16em" /> para registro e _follow-up_ de status de cada requisito. Fizemos, também, _daily meetings_, por meio do [Zoom](https://zoom.us/) <img src="preview/zoom.png" height="16em" />, para atualizarmos o time sobre o progresso de desenvolvimento, alinhamento de metas e espectativas e comunicarmos à equipe eventualidades que pudessem nos impedir de cumprir o(s) prazos alinhados previamente. Para nos comunicarmos assicronamente utilizamos o [Slack](https://slack.com/intl/pt-br) <img src="preview/slack.png" height="16em" />.
 
-## Tecnologias utilizadas
+### Tecnologias utilizadas
 
 - React <img src="https://skillicons.dev/icons?i=react" height="19em" />;
 - ContextAPI para o gerenciamento de estados <img src="https://skillicons.dev/icons?i=react" height="19em" />;
 - RTL para os testes unitários <img src="preview/rtl.png" height="19em" />;
 - CSS para a estilização <img src="https://skillicons.dev/icons?i=css" height="19em" />.
 
-# Resultado final
+## Resultado final
 
-> _Confira a aplicação funcionando em: [https://recipes-app-fdfgomes.web.app/](https://recipes-app-fdfgomes.web.app/)_
+Confira a aplicação funcionando em: [https://recipes-app-fdfgomes.web.app/](https://recipes-app-fdfgomes.web.app/)
 
 <img src="preview/screenshots.png" />

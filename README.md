@@ -47,7 +47,7 @@ Confira a aplicação funcionando em: [https://recipes-app-fdfgomes.web.app/](ht
 
 # Rodando o projeto localmente
 
-O primeiro passo é clonar o repositório e em seguida instalar as dependências do projeto:
+O primeiro passo é clonar o repositório, em seguida instalar as dependências do projeto:
 
 ```
 git clone git@github.com:fdfgomes/TRYBE-recipes-app.git

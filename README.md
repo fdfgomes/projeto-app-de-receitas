@@ -42,3 +42,27 @@ Utilizamos o [Trello](https://trello.com/) <img src="preview/trello.png" height=
 Confira a aplicação funcionando em: [https://recipes-app-fdfgomes.web.app/](https://recipes-app-fdfgomes.web.app/)
 
 <img src="preview/screenshots.png" />
+
+<br />
+
+# Rodando o projeto localmente
+
+#### Primeiro clone o repositório, em seguida instale as dependências do projeto:
+
+```
+git clone git@github.com:fdfgomes/TRYBE-recipes-app.git
+cd TRYBE-recipes-app
+npm install
+```
+
+#### Para **inicializar o servidor de desenvolvimento** utilize o comando:
+
+```
+npm start
+```
+
+#### Para executar os testes unitários utilize o comando:
+
+```
+npm test
+```

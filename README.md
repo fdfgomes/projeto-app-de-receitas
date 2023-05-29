@@ -11,7 +11,7 @@ Foi construído em conjunto com os colegas de turma:
 - [Felipe Favato](https://github.com/FelipeFavato)
 - [Ismael Soares](https://github.com/ismasoares)
 
-A proposta era construir um aplicativo de receitas utilizando as APIs [https://www.themealdb.com/api.php](https://www.themealdb.com/api.php) e [https://www.thecocktaildb.com/api.php](https://www.thecocktaildb.com/api.php), onde a pessoa usuária pudesse pesquisar por receitas de comidas e bebidas, favoritá-las, iniciar e acompanhar o progresso de preparo de uma receita.
+A proposta era construir um aplicativo de receitas utilizando as APIs [https://www.themealdb.com/api.php](https://www.themealdb.com/api.php) e [https://www.thecocktaildb.com/api.php](https://www.thecocktaildb.com/api.php), onde a pessoa usuária pudesse pesquisar por receitas de comidas e bebidas, iniciar e acompanhar seu progresso de preparo.
 
 Tivemos, no total, 9 dias para desenvolver a aplicação.
 

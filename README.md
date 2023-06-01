@@ -41,6 +41,11 @@ Utilizamos o [Trello](https://trello.com/) <img src="preview/trello.png" height=
 
 Confira a aplicação funcionando em: [https://recipes-app-fdfgomes.web.app/](https://recipes-app-fdfgomes.web.app/)
 
+_**Obs.:** Na tela inicial utilize as credenciais abaixo para prosseguir:_
+
+- _**email:** email@exemplo.com_
+- _**senha:** 1234567_
+
 <img src="preview/screenshots.png" />
 
 <br />

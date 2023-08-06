@@ -55,8 +55,8 @@ _**Obs.:** Na tela inicial utilize as credenciais abaixo para prosseguir:_
 #### Primeiro clone o repositório, em seguida instale as dependências do projeto:
 
 ```
-git clone git@github.com:fdfgomes/TRYBE-recipes-app.git
-cd TRYBE-recipes-app
+git clone git@github.com:fdfgomes/recipes-app.git
+cd recipes-app
 npm install
 ```
 
